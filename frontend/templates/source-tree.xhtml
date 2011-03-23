@@ -7,7 +7,18 @@
 			<th>message</th>
 		</tr>
 
-{% for item in commit .tree.values() %}
+{% if breadcrumbs %}
+	<tr>
+		<td class="icon">&nbsp;</td>
+		<td class="content">
+			<a href="/{{ repo }}/tree/{{ treeid }}/{{ '/'.join(breadcrumbs[:-1])  }}">..</a>
+		</td>
+		<td class="age">&nbsp;</td>
+		<td class="message">&nbsp;</td>
+	</tr>
+{% endif %}
+
+{% for item in tree %}
 	<tr>
 		<td class="icon">
 			{% if item is git_tree %}
@@ -17,11 +28,9 @@
 			{% endif %}
 		</td>
 		<td class="content">
-			{% if item is git_tree %}
-			<a href="/{{ repo }}/tree/{{ treeid }}/{{ item.name }}">{{ item.name }}/</a>
-			{% else %}
-			<a href="/{{ repo }}/blob/{{ treeid }}/{{ item.name }}">{{ item.name }}</a>
-			{% endif %}
+			<a href="/{{ repo }}/{% if item is git_tree %}tree{% else %}blob{% endif %}/{{ treeid }}/{% if breadcrumbs %}{{ '/'.join(breadcrumbs) }}/{% endif %}{{ item.name }}">
+				{{ item.name }}{% if item is git_tree %}/{% endif %}
+			</a>
 		</td>
 		<td class="age">&nbsp;</td>
 		<td class="message">&nbsp;</td>
