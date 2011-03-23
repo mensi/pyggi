@@ -33,4 +33,8 @@ def create_app(**kwargs):
 			except:
 				pass
 
+	# register some filters
+	from lib.filters import format_datetime
+	app.jinja_env.filters['dateformat'] = format_datetime
+
 	return app
