@@ -13,6 +13,13 @@ def format_datetime(value, format='iso8601'):
 
 	return time.strftime(format, value)
 
+def format_filesize(value):
+	for x in ['bytes', 'kb', 'mb', 'gb', 'tb']:
+		if value < 1024.0:
+			return "%3.1f %s" % (value, x)
+		value /= 1024.0
+
 def is_git_tree(value):
 	from git import Tree
 	return isinstance(value, Tree)
+

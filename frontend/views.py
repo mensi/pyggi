@@ -2,7 +2,7 @@
 
 import os
 
-from lib.decorators import templated
+from lib.decorators import templated, response_mimetype
 from lib.repository import GitRepository
 from flask import Module #, current_app#, redirect_url, url_for
 
@@ -49,4 +49,38 @@ def browse_sub(repository, tree, path):
 		tree = repo.getTreeByPath(path).values(),
 		breadcrumbs = path.split("/")[1:]
 	)
+
+@frontend.route("/<repository>/blob/<tree>/<path:path>")
+@templated("frontend/file.xhtml")
+def blob(repository, tree, path):
+	# check if the repository exists
+	repo_folder = GitRepository.getRepositoryFolder(repository)
+	if repo_folder is None:
+		pass
+
+	# the complete path, including the treeish
+	path = "/".join([tree,path])
+
+	repo = GitRepository(repo=repo_folder)
+	return dict( \
+		repo = repository,
+		treeid = tree,
+		commit = repo.getBranchHead(tree),
+		blob = repo.getBlobByPath(path),
+		breadcrumbs = path.split("/")[1:]
+	)
+
+@frontend.route("/<repository>/raw/<tree>/<path:path>")
+@response_mimetype("text/plain")
+def raw(repository, tree, path):
+	# check if the repository exists
+	repo_folder = GitRepository.getRepositoryFolder(repository)
+	if repo_folder is None:
+		pass
+
+	# the complete path, including the treeish
+	path = "/".join([tree,path])
+
+	repo = GitRepository(repo=repo_folder)
+	return repo.getBlobByPath(path).data
 

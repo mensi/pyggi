@@ -121,3 +121,94 @@ a:hover {
 	padding-bottom:	15px;
 	font-size:		19px;
 }
+
+#file {
+	border: 1px solid #CCC;
+	margin: 0px 0px;
+	margin-bottom: 1em;
+}
+
+#file .meta .info {
+	float: left;
+	font-family: Monaco, 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+	height: 33px;
+	line-height: 33px;
+}
+
+#file .meta {
+	background: #EEE;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #CCC;
+	color: #333;
+	font-size: 12px;
+	height: 33px;
+	line-height: 33px;
+	overflow: hidden;
+	padding: 0px 5px;
+	text-shadow: rgba(255, 255, 255, 0.496094) 1px 1px 0px;
+}
+
+#file .meta .icon {
+	background: #F7F7F7;
+	border-bottom-color: #E5E5E5;
+	border-bottom-left-radius: 3px 3px;
+	border-bottom-right-radius: 3px 3px;
+	border: 1px solid;
+	border-right-color: #E5E5E5;
+	border-top-left-radius: 3px 3px;
+	border-top-right-radius: 3px 3px;
+	float: left;
+	line-height: 0;
+	margin: 5px 5px 0px 0px;
+	padding: 3px;
+}
+
+#file .actions {
+	float: right;
+	display: block;
+	height: 33px;
+	line-height: 33px;
+	list-style-type: disc;
+	width: 76px;
+	margin: 0;
+	font-family: helvetica, arial, freesans, clean, sans-serif;
+}
+
+#file .actions li {
+	list-style-type: none;
+	height: 33px;
+	line-height: 33px;
+	margin: 0px 0px 0px 7px;
+	float: left;
+	font-size: 11px;
+	display: list-item;
+}
+
+#file .actions li a {
+	font-weight: bold;
+}
+
+#file .data table {
+}
+
+#file .data .linenumber {
+	background-color: #ECECEC;
+	border-right: 1px solid #DDD;
+	color: #AAA;
+	padding: 1em 0.5em;
+	padding-top: 0;
+	padding-bottom: 0;
+	margin: 0;
+	text-align: right;
+}
+
+#file .data .code {
+	padding: 0;
+	margin: 0;
+	padding-left: 1em;
+	font-family: 'Bitstream Vera Sans Mono', Courier, monospace;
+	font-size: 90%;
+	white-space: pre;
+}
+

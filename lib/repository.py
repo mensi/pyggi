@@ -39,3 +39,6 @@ class GitRepository(object):
 		for crumb in breadcrumbs[1:]:
 			tree = tree[crumb]
 		return tree
+
+	def getBlobByPath(self, path):
+		return self.getTreeByPath(path)

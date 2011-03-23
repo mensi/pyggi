@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template
+from flask import render_template, make_response
 from functools import wraps
 
 def templated(template):
@@ -23,4 +23,16 @@ def templated(template):
 			return render_template(template, **context)
 
 		return template_function
+	return decorator
+
+def response_mimetype(mimetype):
+	def decorator(f):
+		@wraps(f)
+		def wrapped(*args, **kwargs):
+			result = f(*args, **kwargs)
+			response = make_response(result)
+			response.mimetype = mimetype
+			return response
+
+		return wrapped
 	return decorator
