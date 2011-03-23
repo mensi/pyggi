@@ -23,7 +23,7 @@ def create_app(**kwargs):
 	# form ("module:name","prefix") where name is the name of the module
 	# object that should be imported
 	if 'MODULES' in app.config:
-		for module_desc,prefix in app.config['MODULES']:
+		for module_desc in app.config['MODULES']:
 			# split at ':'
 			module_name, module_import = module_desc.split(':', 1)
 
@@ -31,7 +31,7 @@ def create_app(**kwargs):
 			# in our application. otherwise ignore and continue
 			try:
 				_import = __import__(module_name, globals(), locals(), [module_import], -1)
-				app.register_module(getattr(_import, module_import), url_prefix=prefix)
+				app.register_module(getattr(_import, module_import))
 			except:
 				pass
 
