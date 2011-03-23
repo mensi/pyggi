@@ -1,0 +1,10 @@
+#commit {
+}
+
+#commit .envelope {
+	background-color: #EAF2F5;
+	border-bottom: 1px solid #BEDCE7;
+	border-left: 1px solid #BEDCE7;
+	border-right: 1px solid #BEDCE7;
+	padding: 0px 0.7em 0.7em;
+}
