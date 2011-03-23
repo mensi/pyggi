@@ -1,0 +1,18 @@
+{% extends "frontend/base.xhtml" %}
+
+{% block content %}
+
+<div class="message">{{ commit.message }}</div>
+
+<div class="author">
+	{{ commit.author.name }}<br />
+	<abbr title="{{ commit.committed_date|dateformat }}">{{ commit.committed_date|dateformat('iso8601-full') }}</abbr>
+</div>
+
+<div class="info">
+	commit: {{ commit.id }}<br />
+	tree: {{ commit.tree.id }}<br />
+	parents: {{ commit.parents }}
+</div>
+
+{% endblock %}
