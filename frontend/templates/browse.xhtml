@@ -3,19 +3,7 @@
 {% block content %}
 
 {% include "frontend/commit.xhtml" %}
-
-<div class="breadcrumbs">
-{% if breadcrumbs %}
-	<a href="/{{ repo }}/tree/{{ treeid }}/"><b>{{ repo }}</b></a> /
-	{% for crumb in breadcrumbs[:-1] %}
-		<a href="/{{ repo }}/tree/{{ treeid }}/{{ '/'.join(breadcrumbs[:loop.index]) }}">{{ crumb }}</a> /
-	{% endfor %}
-	{{ breadcrumbs[-1] }}
-{% else %}
-	<b>{{ repo }}</b> /
-{% endif %}
-</div>
-
+{% include "frontend/breadcrumbs.xhtml" %}
 {% include "frontend/source-tree.xhtml" %}
 
 {% endblock %}
