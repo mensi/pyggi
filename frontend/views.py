@@ -70,6 +70,27 @@ def blob(repository, tree, path):
 		breadcrumbs = path.split("/")[1:]
 	)
 
+@frontend.route("/<repository>/blame/<tree>/<path:path>")
+@templated("frontend/blame.xhtml")
+def blame(repository, tree, path):
+	# check if the repository exists
+	repo_folder = GitRepository.getRepositoryFolder(repository)
+	if repo_folder is None:
+		pass
+
+	# the complete path, including the treeish
+	path = "/".join([tree,path])
+
+	repo = GitRepository(repo=repo_folder)
+	return dict( \
+		repo = repository,
+		treeid = tree,
+		commit = repo.getBranchHead(tree),
+		blame = repo.getBlame(path),
+		blob = repo.getBlobByPath(path),
+		breadcrumbs = path.split("/")[1:]
+	)
+
 @frontend.route("/<repository>/raw/<tree>/<path:path>")
 @response_mimetype("text/plain")
 def raw(repository, tree, path):

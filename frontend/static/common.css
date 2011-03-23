@@ -126,6 +126,13 @@ a:hover {
 	border: 1px solid #CCC;
 	margin: 0px 0px;
 	margin-bottom: 1em;
+
+}
+
+#file .data {
+	width: 918px;
+	overflow-x: auto;
+	overflow-y: auto;
 }
 
 #file .meta .info {
@@ -170,7 +177,7 @@ a:hover {
 	height: 33px;
 	line-height: 33px;
 	list-style-type: disc;
-	width: 76px;
+	width: 125px;
 	margin: 0;
 	font-family: helvetica, arial, freesans, clean, sans-serif;
 }
@@ -211,4 +218,123 @@ a:hover {
 	font-size: 90%;
 	white-space: pre;
 }
+
+#blame {
+	border-left: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+	margin: 0px 0px;
+	margin-bottom: 1em;
+}
+
+#blame .data {
+	width: 918px;
+	overflow-x: auto;
+	overflow-y: auto;
+	border-right: 1px solid #ccc;
+}
+
+#blame .commitinfo {
+	background-color: #f8f8f8;
+}
+
+#blame .commitinfo code {
+	font-size: 12px;
+}
+
+#blame .commitinfo .date {
+	font-size: 11px;
+	color: #666;
+	font-family: helvetica, arial, freesans, clean, sans-serif;
+}
+
+#blame .commitinfo .message {
+	font-size: 11px;
+	font-family: helvetica, arial, freesans, clean, sans-serif;
+}
+
+#blame .linenumber {
+	background-color: #ECECEC;
+	border-right: 1px solid #DDD;
+	color: #AAA;
+	padding: 1em 0.5em;
+	padding-top: 0;
+	padding-bottom: 0;
+	margin: 0;
+	text-align: right;
+}
+
+#blame .code {
+	padding: 0;
+	margin: 0;
+	padding-left: 1em;
+	font-family: 'Bitstream Vera Sans Mono', Courier, monospace;
+	font-size: 90%;
+	white-space: pre;
+	background-color: #f8f8ff;
+}
+
+#blame .first {
+	border-top: 1px solid #CCC;
+}
+
+#blame .meta .info {
+	float: left;
+	font-family: Monaco, 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+	height: 33px;
+	line-height: 33px;
+}
+
+#blame .meta {
+	background: #EEE;
+	border-top: 1px solid #ccc;
+	color: #333;
+	font-size: 12px;
+	height: 33px;
+	line-height: 33px;
+	overflow: hidden;
+	padding: 0px 5px;
+	text-shadow: rgba(255, 255, 255, 0.496094) 1px 1px 0px;
+}
+
+#blame .meta .icon {
+	background: #F7F7F7;
+	border-bottom-color: #E5E5E5;
+	border-bottom-left-radius: 3px 3px;
+	border-bottom-right-radius: 3px 3px;
+	border: 1px solid;
+	border-right-color: #E5E5E5;
+	border-top-left-radius: 3px 3px;
+	border-top-right-radius: 3px 3px;
+	float: left;
+	line-height: 0;
+	margin: 5px 5px 0px 0px;
+	padding: 3px;
+}
+
+#blame .actions {
+	float: right;
+	display: block;
+	height: 33px;
+	line-height: 33px;
+	list-style-type: disc;
+	width: 130px;
+	margin: 0;
+	font-family: helvetica, arial, freesans, clean, sans-serif;
+}
+
+#blame .actions li {
+	list-style-type: none;
+	height: 33px;
+	line-height: 33px;
+	margin: 0px 0px 0px 7px;
+	float: left;
+	font-size: 11px;
+	display: list-item;
+}
+
+#blame .actions li a {
+	font-weight: bold;
+}
+
 

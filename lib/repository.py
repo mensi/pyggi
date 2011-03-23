@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from git import Repo
+from git import Repo, Blob
 from flask import current_app
 
 class GitRepository(object):
@@ -42,3 +42,8 @@ class GitRepository(object):
 
 	def getBlobByPath(self, path):
 		return self.getTreeByPath(path)
+
+	def getBlame(self, path):
+		breadcrumbs = path.split("/")
+		return Blob.blame(self.repo, breadcrumbs[0], '/'.join(breadcrumbs[1:]))
+

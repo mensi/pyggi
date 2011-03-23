@@ -1,0 +1,54 @@
+{% extends "frontend/base.xhtml" %}
+
+{% block content %}
+
+{% include "frontend/commit.xhtml" %}
+{% include "frontend/breadcrumbs.xhtml" %}
+
+<div id="blame">
+	<div class="meta">
+		<div class="info">
+			<span class="icon"><img alt="file" src="{{ url_for('static', filename='images/txt.png') }}" width="16" height="16" /></span>
+			<span class="mode">{{ blob.mode }} |</span>
+			<span>{{ blob.size|sizeformat }}</span>
+		</div>
+		<ul class="actions">
+			<li><a href="/{{ repo }}/raw/{{ treeid }}/{{ '/'.join(breadcrumbs)  }}">raw</a>&nbsp;&nbsp;| </li>
+			<li><a href="/{{ repo }}/blob/{{ treeid }}/{{ '/'.join(breadcrumbs) }}">normal</a>&nbsp;&nbsp;| </li>
+			<li>history</li>
+		</ul>
+	</div>
+
+
+<div class="data">
+<table cellspacing="0" cellpadding="0">
+{% set lcounter = 0 %}
+{% for blameinfo in blame %}
+	<tr>
+		<td nowrap class="commitinfo first">
+			<code>
+				{{ blameinfo[0].id|truncate(8, true, '') }} 
+				&#187;
+				{{ blameinfo[0].author.name }}
+			</code>
+			<br />
+			<span class="date">{{ blameinfo[0].committed_date|dateformat("%Y-%m-%d") }}</span>
+			<span class="message">{{ blameinfo[0].message|truncate(35, true) }}</span>
+		</td>
+		<td nowrap class="linenumber first">{{ lcounter + 1 }}</td>
+		<td nowrap class="code first" width="100%">{{ blameinfo[1][0] }}
+	</tr>
+	{% for blameline in blameinfo[1][1:] %}
+	<tr>
+		<td nowrap class="commitinfo">&nbsp;</td>
+		<td nowrap class="linenumber">{{ lcounter + loop.index + 1 }}</td>
+		<td nowrap class="code">{{ blameline }}</td>
+	</tr>
+	{% endfor %}
+	{% set lcounter = lcounter + blameinfo[1]|length %}
+{% endfor %}
+</table>
+</div>
+
+</div>
+{% endblock %}
