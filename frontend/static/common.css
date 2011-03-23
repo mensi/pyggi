@@ -17,6 +17,7 @@ a:hover {
 
 #commit {
 	overflow: hidden;
+	padding-bottom: 50px;
 }
 
 #commit .envelope {
@@ -73,3 +74,45 @@ a:hover {
 	border-left: 1px solid #BEDCE7;
 }
 
+.tree-browser {
+	font-family: Monaco, 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+	font-size: 90%;
+	border-left: 1px solid #D8D8D8;
+	border-right: 1px solid #D8D8D8;
+	border-top: 1px solid #D8D8D8;
+	margin-bottom: 1em;
+	margin: 0px 0px 1em;
+	width: 920px;
+}
+
+.tree-browser th {
+	background-color: #EAEAEA;
+	border-bottom: 1px solid #D8D8D8;
+	color: #999;
+	font-weight: normal;
+	padding: 0.5em 0.3em;
+	text-align: left;
+}
+
+.tree-browser td {
+	background: #F8F8F8;
+	border-bottom: 1px solid #E1E1E1;
+	color: #484848;
+	padding: 0.5em 0.3em;
+}
+
+.tree-browser .content {
+	width: 157px;
+}
+
+.tree-browser .icon {
+	width: 16px;
+}
+
+.tree-browser .age {
+	width: 167px;
+}
+
+.tree-browser .message {
+	width: 554px;
+}

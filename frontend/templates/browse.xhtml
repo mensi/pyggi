@@ -2,26 +2,8 @@
 
 {% block content %}
 
-<div id="commit">
+{% include "frontend/commit.xhtml" %}
 
-<div class="envelope commit">
-	<div class="human">
-		<div class="message"><pre>{{ commit.message }}</pre></div>
-		<div class="actor">
-			<div class="author">{{ commit.author.name }}</div>
-			<div class="date">
-				<abbr title="{{ commit.committed_date|dateformat }}">{{ commit.committed_date|dateformat('iso8601-full') }}</abbr>
-			</div>
-		</div>
-	</div>
-
-	<div class="machine">
-		<span>c</span>ommit:&nbsp;&nbsp;{{ commit.id|truncate(20, true, '') }}<br />
-		<span>t</span>ree:&nbsp;&nbsp;&nbsp;&nbsp;{{ commit.tree.id|truncate(20, true, '') }}<br />
-		<span>p</span>arents:&nbsp;{% for parent in commit.parents %}<a href="/{{ repo }}/tree/{{ parent.id }}" hotkey="p">{{ parent.id|truncate(20, true, '') }}</a>{% endfor %}
-	</div>
-</div>
-
-</div>
+{% include "frontend/source-tree.xhtml" %}
 
 {% endblock %}

@@ -25,5 +25,6 @@ def browser(repository, tree):
 	repo = GitRepository(repo=repo_folder)
 	return dict( \
 		repo = repository,
+		treeid = tree,
 		commit=repo.getBranchHead(tree)
 	)
