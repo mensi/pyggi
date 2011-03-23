@@ -18,4 +18,5 @@ class GitRepository(object):
 	def getHead(self):
 		return self.repo.commits()[0]
 
-
+	def getBranchHead(self, name):
+		return self.repo.commits(name)[0]
