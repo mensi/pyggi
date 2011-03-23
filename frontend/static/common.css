@@ -17,7 +17,6 @@ a:hover {
 
 #commit {
 	overflow: hidden;
-	padding-bottom: 50px;
 }
 
 #commit .envelope {
@@ -115,4 +114,10 @@ a:hover {
 
 .tree-browser .message {
 	width: 554px;
+}
+
+.breadcrumbs {
+	padding-top:	15px;
+	padding-bottom:	15px;
+	font-size:		19px;
 }
