@@ -4,23 +4,21 @@
 
 <div id="commit">
 
-<div class="envelope">
-	<div class="message">
-		{{ commit.message }}
+<div class="envelope commit">
+	<div class="human">
+		<div class="message"><pre>{{ commit.message }}</pre></div>
+		<div class="actor">
+			<div class="author">{{ commit.author.name }}</div>
+			<div class="date">
+				<abbr title="{{ commit.committed_date|dateformat }}">{{ commit.committed_date|dateformat('iso8601-full') }}</abbr>
+			</div>
+		</div>
 	</div>
 
-	<div class="author">
-		{{ commit.author.name }}
-	</div>
-
-	<div class="date">
-		<abbr title="{{ commit.committed_date|dateformat }}">{{ commit.committed_date|dateformat('iso8601-full') }}</abbr>
-	</div>
-
-	<div class="info">
-		commit: {{ commit.id }}<br />
-		tree: {{ commit.tree.id }}<br />
-		parents: {% for parent in commit.parents %} {{ parent.id }} {% endfor %}
+	<div class="machine">
+		<span>c</span>ommit:&nbsp;&nbsp;{{ commit.id|truncate(20, true, '') }}<br />
+		<span>t</span>ree:&nbsp;&nbsp;&nbsp;&nbsp;{{ commit.tree.id|truncate(20, true, '') }}<br />
+		<span>p</span>arents:&nbsp;{% for parent in commit.parents %}{{ parent.id|truncate(20, true, '') }}{% endfor %}
 	</div>
 </div>
 

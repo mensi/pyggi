@@ -1,10 +1,75 @@
+body {
+	font: normal normal normal 13.34px/normal helvetica, arial, freesans, clean, sans-serif;
+}
+
+a {
+	color: #4183C4;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.site {
+	width: 920px;
+}
+
 #commit {
+	overflow: hidden;
 }
 
 #commit .envelope {
+	height: 81px;
 	background-color: #EAF2F5;
+	border-top: 1px solid #BEDCE7;
 	border-bottom: 1px solid #BEDCE7;
 	border-left: 1px solid #BEDCE7;
 	border-right: 1px solid #BEDCE7;
 	padding: 0px 0.7em 0.7em;
+	overflow: ;
 }
+
+#commit .human {
+	float: left;
+	padding-top: 0.7em;
+	width: 50em;
+}
+
+#commit .human .message {
+	font-family: Monaco, 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+	font-size: 80%;
+}
+
+#commit .human .message pre {
+	white-space: pre-wrap;
+	width: 48em;
+	word-wrap: break-word;
+}
+
+#commit .human .actor {
+	clear: left;
+	margin-top: 0.75em;
+}
+
+#commit .human .actor .author {
+	line-height: 1.5em;
+}
+
+#commit .human .actor .date {
+	color: #888;
+	font-size: 90%;
+	line-height: 1em;
+}
+
+#commit .machine {
+	font-family: Monaco, 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+	font-size: 0.85em;
+	line-height: 1.5em;
+	padding: 0.8em 0px 0.8em 1.2em;
+	width: 18em;
+	float: right;
+	color: gray;
+	border-left: 1px solid #BEDCE7;
+}
+
