@@ -51,7 +51,7 @@ def browse_sub(repository, tree, path):
 	)
 
 @frontend.route("/<repository>/blob/<tree>/<path:path>")
-@templated("frontend/file.xhtml")
+@templated("frontend/blob.xhtml")
 def blob(repository, tree, path):
 	# check if the repository exists
 	repo_folder = GitRepository.getRepositoryFolder(repository)

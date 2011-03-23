@@ -1,3 +1,10 @@
+{% extends "frontend/base.xhtml" %}
+
+{% block content %}
+
+{% include "frontend/commit.xhtml" %}
+{% include "frontend/breadcrumbs.xhtml" %}
+
 <div id="file">
 	<div class="meta">
 		<div class="info">
@@ -23,3 +30,4 @@
 	</div>
 
 </div>
+{% endblock %}
