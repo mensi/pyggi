@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import time
 
 def format_datetime(value, format='iso8601'):

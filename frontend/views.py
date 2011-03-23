@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from lib.decorators import templated
 from flask import Module
 

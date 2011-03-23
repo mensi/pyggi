@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from git import Repo
 
 class GitRepository(object):
