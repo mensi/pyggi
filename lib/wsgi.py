@@ -36,7 +36,8 @@ def create_app(**kwargs):
 				pass
 
 	# register some filters
-	from lib.filters import format_datetime
+	from lib.filters import format_datetime, is_git_tree
 	app.jinja_env.filters['dateformat'] = format_datetime
+	app.jinja_env.tests['git_tree'] = is_git_tree
 
 	return app

@@ -12,3 +12,7 @@ def format_datetime(value, format='iso8601'):
 		format = "%a %b %d %H:%M:%S %Z %Y"
 
 	return time.strftime(format, value)
+
+def is_git_tree(value):
+	from git import Tree
+	return isinstance(value, Tree)
