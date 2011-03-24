@@ -4,6 +4,10 @@
 
 {% include "frontend/commit.xhtml" %}
 
+<div class="breadcrumbs">
+	Commit <code>{{ treeid|truncate(20, true, '') }}</code>
+</div>
+
 <style type="text/css" media="screen">
 	.meta {
 		background: #EEE url("{{ url_for('static', filename='images/bg_file.gif') }}") repeat-x 0px 0px;
