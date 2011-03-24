@@ -33,8 +33,8 @@
 	<tr>
 		<td nowrap class="commitinfo first">
 			<code>
-				{{ blameinfo[0].id|truncate(8, true, '') }} 
-				&#187;
+				<a href="/{{ repo }}/commit/{{ blameinfo[0].id }}/">{{ blameinfo[0].id|truncate(8, true, '') }}</a>
+				<a href="/{{ repo }}/blame/{{ blameinfo[0].id }}/{{ '/'.join(breadcrumbs) }}">&#187;</a>
 				{{ blameinfo[0].author.name }}
 			</code>
 			<br />

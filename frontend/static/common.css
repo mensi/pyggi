@@ -240,6 +240,7 @@ a:hover {
 
 #blame .commitinfo {
 	background-color: #f8f8f8;
+	padding: 0.2em 0.5em;
 }
 
 #blame .commitinfo code {
