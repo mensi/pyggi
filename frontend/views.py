@@ -66,6 +66,25 @@ def browse_sub(repository, tree, path):
 		breadcrumbs = path.split("/")[1:]
 	)
 
+@frontend.route("/<repository>/history/<tree>/<path:path>")
+@templated("frontend/history.xhtml")
+def history(repository, tree, path):
+	# check if the repository exists
+	repo_folder = GitRepository.getRepositoryFolder(repository)
+	if repo_folder is None:
+		pass
+
+	# the complete path, including the treeish
+	path = "/".join([tree, path])
+
+	repo = GitRepository(repo=repo_folder)
+	return dict( \
+		repo = repository,
+		treeid = tree,
+		history = repo.getHistory(path),
+		breadcrumbs = path.split("/")[1:]
+	)
+
 @frontend.route("/<repository>/blob/<tree>/<path:path>")
 @templated("frontend/blob.xhtml")
 def blob(repository, tree, path):

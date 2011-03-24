@@ -20,7 +20,7 @@
 	<div class="machine">
 		<span>c</span>ommit:&nbsp;&nbsp;<a href="/{{ repo }}/commit/{{ commit.id }}/" hotkey="c">{{ commit.id|truncate(20, true, '') }}</a><br />
 		<span>t</span>ree:&nbsp;&nbsp;&nbsp;&nbsp;<a href="/{{ repo }}/tree/{{ commit.id }}/">{{ commit.tree.id|truncate(20, true, '') }}</a><br />
-		<span>p</span>arents:&nbsp;{% for parent in commit.parents[:1] %}<a href="/{{ repo }}/tree/{{ parent.id }}/" hotkey="p">{{ parent.id|truncate(20, true, '') }}</a>{% endfor %}
+		<span>p</span>arent:&nbsp;{% for parent in commit.parents[:1] %}<a href="/{{ repo }}/tree/{{ parent.id }}/" hotkey="p">{{ parent.id|truncate(20, true, '') }}</a>{% endfor %}
 	</div>
 </div>
 

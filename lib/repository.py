@@ -47,3 +47,6 @@ class GitRepository(object):
 		breadcrumbs = path.split("/")
 		return Blob.blame(self.repo, breadcrumbs[0], '/'.join(breadcrumbs[1:]))
 
+	def getHistory(self, path):
+		breadcrumbs = path.split("/")
+		return self.repo.commits(breadcrumbs[0], '/'.join(breadcrumbs[1:]))
