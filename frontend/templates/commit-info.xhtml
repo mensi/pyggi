@@ -27,7 +27,13 @@
 			{% elif diff.rename_from %}<span class="stat-icon renamed" title="renamed">R</span>
 			{% else %}<span class="stat-icon modified" title="modified">M</span>{% endif %}
 		</td>
-		<td><a href="#diff-{{ loop.index }}">{{ diff.b_path }}</a></td>
+		<td>
+			{% if diff.rename_from %}
+			<a href="#diff-{{ loop.index }}">{{ diff.rename_from }} &rarr; {{ diff.rename_to }}</a>
+			{% else %}
+			<a href="#diff-{{ loop.index }}">{{ diff.b_path }}</a>
+			{% endif %}
+		</td>
 	</tr>
 {% endfor %}
 </table>
