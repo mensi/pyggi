@@ -8,6 +8,8 @@
 	Commit <code>{{ treeid|truncate(20, true, '') }}</code>
 </div>
 
+Showing {{ commit.stats.total['files'] }} changed files with {{ commit.stats.total['insertions'] }} additions and {{ commit.stats.total['deletions'] }} deletions.
+
 <style type="text/css" media="screen">
 	.meta {
 		background: #EEE url("{{ url_for('static', filename='images/bg_file.gif') }}") repeat-x 0px 0px;
@@ -33,6 +35,9 @@
 			{% else %}
 			<a href="#diff-{{ loop.index }}">{{ diff.b_path }}</a>
 			{% endif %}
+		</td>
+		<td class="diffstat">
+			<div class="stats">{{ commit.stats.files[diff.b_path]['insertions'] }} insertions &amp; {{ commit.stats.files[diff.b_path]['deletions'] }} deletions</div>
 		</td>
 	</tr>
 {% endfor %}
