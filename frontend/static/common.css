@@ -1,5 +1,6 @@
 body {
 	font: normal normal normal 13.34px/normal helvetica, arial, freesans, clean, sans-serif;
+	text-align: center;
 }
 
 a {
@@ -13,6 +14,9 @@ a:hover {
 
 .site {
 	width: 920px;
+	text-align: left;
+	margin: 0px auto 0px auto;
+	padding-bottom: 25px;
 }
 
 #commit {
