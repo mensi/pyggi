@@ -8,7 +8,26 @@
 	.meta {
 		background: #EEE url("{{ url_for('static', filename='images/bg_file.gif') }}") repeat-x 0px 0px;
 	}
+
+	#diff-toc .stat-icon {
+		background-image: url("{{ url_for('static', filename='images/file_modes.png') }}");
+	}
 </style>
+
+<table cellspacing="0" cellpadding="0" id="diff-toc">
+{% for diff in diffs %}
+	<tr>
+		<td class="status">
+			{% if diff.new_file %}<span class="stat-icon added" title="added">A</span>
+			{% elif diff.deleted_file %}<span class="stat-icon removed" title="removed">D</span>
+			{% elif diff.rename_from %}<span class="stat-icon renamed" title="renamed">R</span>
+			{% else %}<span class="stat-icon modified" title="modified">M</span>{% endif %}
+		</td>
+		<td><a href="#diff-{{ loop.index }}">{{ diff.b_path }}</a></td>
+	</tr>
+{% endfor %}
+</table>
+
 
 {% for diff in diffs %}
 <div id="diff-{{ loop.index }}" class="diff-container">
@@ -16,16 +35,27 @@
 <div class="meta">
 	<div class="info">
 		<span class="icon"><img alt="file" src="{{ url_for('static', filename='images/txt.png') }}" width="16" height="16" /></span>
-		<span>{{ diff.b_path }}</span>
+		{% if diff.rename_from %}
+			<span>{{ diff.rename_from }} &rarr; {{ diff.rename_to }}</span>
+		{% else %}
+			<span>{{ diff.b_path }}</span>
+		{% endif %}
 	</div>
 	<ul class="actions">
 		<li><a href="/{{ repo }}/blob/{{ treeid }}/{{ diff.b_path }}"><b>View file @</b> {{ treeid|truncate(8, true, '') }}</a></li>
 	</ul>
 </div>
+
 <div class="diff-code">
-{% for line in diff.diff.split("\n")[2:] %}
-{{ line|diffformat|safe }}
-{% endfor %}
+{% if diff.rename_from %}
+<div class="diff-note">File renamed without changes</div>
+{% elif diff.diff.startswith("Binary") %}
+<div class="diff-note">Binary file not shown</div>
+{% else %}
+	{% for line in diff.diff.split("\n")[2:] %}
+		{{ line|diffformat|safe }}
+	{% endfor %}
+{% endif %}
 </div>
 
 </div>
