@@ -443,7 +443,7 @@ a:hover {
 
 #diff-toc .diffstat .stats {
 	color: ghostwhite;
-	background-color: #555;
+	background-color: #444;
 	font-size: 10px;
 	padding: 2px 7px;
 	-moz-border-radius: 3px;
@@ -481,3 +481,35 @@ a:hover {
 	text-align: right;
 }
 
+.repo {
+	border: 1px solid #DDD;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	margin: 0px 0px 10px;
+	width: 450px;
+}
+
+.repo-top {
+	padding: 7px 7px;
+	padding-bottom: 14px;
+}
+
+.repo-top a {
+	font-weight: bold;
+	font-size: 105%;
+}
+
+.repo-bottom {
+	border-top: 1px solid #DDD;
+	color: #444;
+	padding: 7px 7px;
+	background-color: #efefef;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAFAFA), to(#EFEFEF));
+}
+
+.repo-bottom .date {
+	color: #888;
+	font-size: 11px;
+	margin: 0px;
+}

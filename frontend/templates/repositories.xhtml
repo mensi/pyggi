@@ -1,0 +1,19 @@
+{% extends "frontend/base.xhtml" %}
+
+{% block content %}
+
+<div style="margin: 0px auto 0px auto; width: 450px;">
+{% for repo in repositories %}
+<div class="repo">
+	<div class="repo-top">
+		<a href="/{{ repo.name }}/tree/master">{{ repo.name }}</a>
+	</div>
+	<div class="repo-bottom">
+		<p style="padding: 0; margin: 0; margin-bottom: 5px;"><code>{{ repo.description }}</code></p>
+		<div class="date">Last updated {{ repo.head.commit.committed_date|dateformat('%B %d, %Y') }}</div>
+	</div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

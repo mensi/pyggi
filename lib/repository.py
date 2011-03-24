@@ -16,6 +16,11 @@ class GitRepository(object):
 		# load up repo
 		self.repo = Repo(kwargs['repo'])
 
+		# next up, write some information down, for easy acces
+		self.description = self.repo.description
+		self.name = kwargs['repo'].split("/")[-1]
+		self.head = self.repo.heads[0]
+
 	@staticmethod
 	def getRepositoryFolder(repository):
 		import os
@@ -23,6 +28,14 @@ class GitRepository(object):
 		if not os.path.exists(repo_folder):
 			return None
 		return repo_folder
+
+	@staticmethod
+	def isGitRepository(repository):
+		try:
+			repo = Repo(GitRepository.getRepositoryFolder(repository))
+			return True
+		except:
+			return False
 
 	def getHead(self):
 		return self.repo.commits()[0]

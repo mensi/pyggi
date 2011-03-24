@@ -4,14 +4,25 @@ import os
 
 from lib.decorators import templated, response_mimetype
 from lib.repository import GitRepository
-from flask import Module #, current_app#, redirect_url, url_for
+from flask import Module, current_app#, redirect_url, url_for
 
 frontend = Module(__name__, 'frontend')
 
 @frontend.route("/")
-@templated("frontend/base.xhtml")
+@templated("frontend/repositories.xhtml")
 def index():
-	return dict()
+	# compute the names of repositories
+	repnames = [GitRepository.getRepositoryFolder(name) \
+		for name in os.walk(current_app.config['GIT_REPOSITORIES']).next()[1] \
+		if GitRepository.isGitRepository(name)
+	]
+	print repnames
+
+	return dict( \
+		repositories = [ \
+			GitRepository(repo=name) for name in repnames
+		]
+	)
 
 
 @frontend.route("/<repository>/tree/<tree>/")
