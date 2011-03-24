@@ -378,3 +378,7 @@ a:hover {
 	background-color: #EAF2F5;
 	color: #999;
 }
+
+#file .meta {
+	border-top: 0;
+}
