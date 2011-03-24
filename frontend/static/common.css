@@ -284,14 +284,14 @@ a:hover {
 	border-top: 1px solid #CCC;
 }
 
-#blame .meta .info {
+.meta .info {
 	float: left;
 	font-family: Monaco, 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
 	height: 33px;
 	line-height: 33px;
 }
 
-#blame .meta {
+.meta {
 	background: #EEE;
 	border-top: 1px solid #ccc;
 	color: #333;
@@ -303,7 +303,7 @@ a:hover {
 	text-shadow: rgba(255, 255, 255, 0.496094) 1px 1px 0px;
 }
 
-#blame .meta .icon {
+.meta .icon {
 	background: #F7F7F7;
 	border-bottom-color: #E5E5E5;
 	border-bottom-left-radius: 3px 3px;
@@ -318,7 +318,7 @@ a:hover {
 	padding: 3px;
 }
 
-#blame .actions {
+.meta .actions {
 	float: right;
 	display: block;
 	height: 33px;
@@ -329,7 +329,7 @@ a:hover {
 	font-family: helvetica, arial, freesans, clean, sans-serif;
 }
 
-#blame .actions li {
+.meta .actions li {
 	list-style-type: none;
 	height: 33px;
 	line-height: 33px;
@@ -343,4 +343,38 @@ a:hover {
 	font-weight: bold;
 }
 
+.diff-container {
+	border-left: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+	margin: 0px 0px;
+	margin-bottom: 1em;
+	margin-top: 20px;
+}
 
+.diff-code {
+	width: 918px;
+	overflow: auto;
+}
+
+.diff-code div {
+	font-family: 'Bitstream Vera Sans Mono', Courier, monospace;
+	font-size: 95%;
+	white-space: pre;
+	background-color: #f8f8ff;
+}
+
+.diff-code .diff-remove {
+	background-color: #FDD;
+	color: black;
+}
+
+.diff-code .diff-add {
+	background-color: #DFD;
+	color: black;
+}
+
+.diff-code .diff-change {
+	background-color: #EAF2F5;
+	color: #999;
+}

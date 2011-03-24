@@ -30,6 +30,22 @@ def browse(repository, tree):
 		tree = repo.getBranchHead(tree).tree.values(),
 	)
 
+@frontend.route("/<repository>/commit/<tree>/")
+@templated("frontend/commit-info.xhtml")
+def commit(repository, tree):
+	# check if the repository exists
+	repo_folder = GitRepository.getRepositoryFolder(repository)
+	if repo_folder is None:
+		pass
+
+	repo = GitRepository(repo=repo_folder)
+	return dict( \
+		repo = repository,
+		treeid = tree,
+		commit = repo.getBranchHead(tree),
+		diffs = repo.getBranchHead(tree).diffs
+	)
+
 @frontend.route("/<repository>/tree/<tree>/<path:path>/")
 @templated("frontend/browse.xhtml")
 def browse_sub(repository, tree, path):
