@@ -27,7 +27,7 @@ a:hover {
 	border-left: 1px solid #BEDCE7;
 	border-right: 1px solid #BEDCE7;
 	padding: 0px 0.7em 0.7em;
-	overflow: ;
+	overflow: hidden;
 }
 
 #commit .human {
@@ -267,7 +267,9 @@ a:hover {
 #blame .code {
 	padding: 0;
 	margin: 0;
-	padding-left: 1em;
+	padding: 1em 0.5em;
+	padding-top: 0;
+	padding-bottom: 0;
 	font-family: 'Bitstream Vera Sans Mono', Courier, monospace;
 	font-size: 90%;
 	white-space: pre;
