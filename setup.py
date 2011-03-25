@@ -1,0 +1,13 @@
+from setuptools import setup, find_packages
+
+setup(
+	name='Pyggi',
+	version='0.1',
+	packages=[],
+	include_package_data=False,
+	install_requires=[\
+		'Flask>=0.6',
+		'GitPython>=0.3.1-beta2',
+	]
+)
+
