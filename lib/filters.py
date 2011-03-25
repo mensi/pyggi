@@ -20,6 +20,12 @@ def format_datetime(value, format='iso8601'):
 	if format == 'iso8601-full':
 		format = "%a %b %d %H:%M:%S %Z %Y"
 
+	# if we have a timestamp, we have to convert it
+	# to a time_struct
+	if isinstance(value, int):
+		from datetime import datetime
+		value = datetime.fromtimestamp(value).timetuple()
+
 	return time.strftime(format, value)
 
 def format_filesize(value):
