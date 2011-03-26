@@ -6,7 +6,53 @@
 	#repo ul.submenu {
 		background: ghostwhite url("/static/images/bg_browse.png") repeat-x 0px 100%;
 	}
-</style> 
+</style>
+
+<script type="text/javascript">
+	window.onload = function() {
+		$('#switch-branches').mouseenter(function(event) {
+			$('#tags').hide();
+			$('#branches').show();
+			$('#switch-branches').addClass('hovering');
+		});
+
+		$('#switch-branches').mouseleave(function(event) {
+			$('#branches').hide();
+			$('#switch-branches').removeClass('hovering');
+		});
+
+		$('#branches').mouseenter(function(event) {
+			$('#branches').show();
+			$('#switch-branches').addClass('hovering');
+		});
+
+		$('#branches').mouseleave(function(event) {
+			$('#branches').hide();
+			$('#switch-branches').removeClass('hovering');
+		});
+
+		$('#switch-tags').mouseenter(function(event) {
+			$('#tags').show();
+			$('#branches').hide();
+			$('#switch-tags').addClass('hovering');
+		});
+
+		$('#switch-tags').mouseleave(function(event) {
+			$('#tags').hide();
+			$('#switch-tags').removeClass('hovering');
+		});
+
+		$('#tags').mouseenter(function(event) {
+			$('#tags').show();
+			$('#switch-tags').addClass('hovering');
+		});
+
+		$('#tags').mouseleave(function(event) {
+			$('#tags').hide();
+			$('#switch-tags').removeClass('hovering');
+		});
+	}
+</script>
 
 <div id="repo">
 
@@ -29,18 +75,22 @@
 	</ul>
 
 	<ul class="submenu" id="source">
-		<li>Switch Branches ({{ commit.repo.branches|length }})</li>
-		<!--<ul class="switches" id="branches">
+		<li id="switch-branches">Switch Branches ({{ commit.repo.branches|length }})</li>
+		<ul class="switches" id="branches">
 			{% for branch in commit.repo.branches %}
 			<li><a href="/{{ repo }}/tree/{{ branch.name }}/">{{ branch.name }}</a></li>
+			{% else %}
+			<li><span>no branches</span></li>
 			{% endfor %}
-		</ul>-->
-		<li>Switch Tags ({{ commit.repo.tags|length }})</li>
-		<!--<ul class="switches" id="tags">
+		</ul>
+		<li id="switch-tags">Switch Tags ({{ commit.repo.tags|length }})</li>
+		<ul class="switches" id="tags" style="margin-left: 115px;">
 			{% for tag in commit.repo.tags %}
 			<li><a href="/{{ repo }}/tree/{{ tag.name }}/">{{ tag.name }}</a></li>
+			{% else %}
+			<li><span>no tags</span></li>
 			{% endfor %}
-		</ul>-->
+		</ul>
 	</ul>
 
 </div>

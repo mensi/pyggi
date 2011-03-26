@@ -595,4 +595,41 @@ a:hover {
 	line-height: 18px;
 	font-size: 11px;
 	color: #666;
+	padding: 5px;
+}
+
+#repo ul.submenu li.hovering {
+	background: #f8f8f8;
+	border: 1px solid #CCC;
+	padding: 4px;
+}
+
+#repo ul.switches {
+	background: #F8F8F8;
+	border: 1px solid #CCC;
+	min-width: 180px;
+	overflow: auto;
+	position: absolute;
+	top: 75px;
+	z-index: 4;
+	padding-left: 15px;
+	display: none
+}
+
+#repo ul.switches li {
+	display: block;
+	margin: 0;
+	padding: 0;
+	list-style-type: none
+}
+
+#repo ul.switches li:hover {
+	border: 0;
+	padding: 0;
+}
+
+#repo ul.switches li span {
+	color: #666;
+	font-size: 11px;
+	padding: 7px;
 }
