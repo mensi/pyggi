@@ -513,3 +513,86 @@ a:hover {
 	font-size: 11px;
 	margin: 0px;
 }
+
+#repo {
+	width: 920px;
+	margin: 0px 0px 10px;
+}
+
+#repo ul.menu {
+	background-color: #EAEAEA;
+
+	border: 1px solid #DDD;
+	border-bottom: 1px solid #DDD;
+
+	border-bottom-left-radius: 5px 5px;
+	border-bottom-right-radius: 5px 5px;
+	border-top-left-radius: 5px 5px;
+	border-top-right-radius: 5px 5px;
+	border-bottom-left-radius: 0px 0px;
+	border-bottom-right-radius: 0px 0px;
+
+	height: 26px;
+
+	margin: 10px 0px 0px;
+	padding: 6px 10px;
+	position: relative;
+}
+
+#repo ul.menu li {
+	display: inline;
+	list-style-type: none;
+	margin: 0px;
+	height: 26px;
+	line-height: 26px;
+}
+
+#repo ul.menu li.current-branch {
+	border-left: 1px solid #DDD;
+	font-size: 11px;
+	height: 26px;
+	padding: 6px 10px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+
+#repo ul.menu li.current-branch span {
+	color: #666;
+	cursor: pointer;
+	display: block;
+	height: 26px;
+	line-height: 26px;
+	padding-right: 5px;
+}
+
+#repo ul.menu li.button {
+	color: #777;
+	padding: 3px 3px;
+	font-size: 120%;
+	font-weight: bold;
+	margin-right: 10px;
+
+	text-shadow: rgba(255, 255, 255, 0.496094) 1px 1px 0px;
+}
+
+#repo ul.submenu {
+	margin: 0;
+	padding: 0;
+	height: 23px;
+	padding: 4px 0 0 6px;
+	border-bottom: 1px solid #D2D2D2;
+	border-top: 1px solid #FAFAFA;
+	border-left: 1px solid #DDD;
+	border-right: 1px solid #DDD;
+}
+
+#repo ul.submenu li {
+	display: inline;
+	list-style-type: none;
+	margin: 0px;
+	height: 23px;
+	line-height: 18px;
+	font-size: 11px;
+	color: #666;
+}

@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% include "frontend/repo.xhtml" %}
+
 <div class="breadcrumbs">
 	History for <a href="/{{ repo }}/blob/{{ treeid }}/{{ '/'.join(breadcrumbs) }}"><b>{{ repo }}</b> / {{ ' / '.join(breadcrumbs) }}</a>
 </div>

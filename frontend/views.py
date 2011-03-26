@@ -92,6 +92,7 @@ def history(repository, tree, path):
 	return dict( \
 		repo = repository,
 		treeid = tree,
+		commit = repo.getBranchHead(tree),
 		history = repo.getHistory(path),
 		breadcrumbs = path.split("/")[1:]
 	)

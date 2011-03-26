@@ -1,0 +1,46 @@
+<style type="text/css" media="screen"> 
+	#repo ul.menu li.current-branch {
+		background: ghostwhite url("/static/images/bg_browse.png") repeat-x 0px 100%;
+	}
+	
+	#repo ul.submenu {
+		background: ghostwhite url("/static/images/bg_browse.png") repeat-x 0px 100%;
+	}
+</style> 
+
+<div id="repo">
+
+	<ul class="menu">
+			<li class="button">Source</li>
+			<li class="button">Network</li>
+			<li class="current-branch">
+				<span><b>
+				{% if commit is git_branch %}
+				Branch:
+				{% elif (commit, treeid) is git_tag %}
+				Tag:
+				{% else %}
+				Tree:
+				{% endif %}
+				</b>
+				<code>{{ treeid|truncate(8, true, '') }}</code>
+				</span>
+			</li>
+	</ul>
+
+	<ul class="submenu" id="source">
+		<li>Switch Branches ({{ commit.repo.branches|length }})</li>
+		<!--<ul class="switches" id="branches">
+			{% for branch in commit.repo.branches %}
+			<li><a href="/{{ repo }}/tree/{{ branch.name }}/">{{ branch.name }}</a></li>
+			{% endfor %}
+		</ul>-->
+		<li>Switch Tags ({{ commit.repo.tags|length }})</li>
+		<!--<ul class="switches" id="tags">
+			{% for tag in commit.repo.tags %}
+			<li><a href="/{{ repo }}/tree/{{ tag.name }}/">{{ tag.name }}</a></li>
+			{% endfor %}
+		</ul>-->
+	</ul>
+
+</div>
