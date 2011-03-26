@@ -36,10 +36,12 @@ def create_app(**kwargs):
 				print e
 
 	# register some filters
-	from lib.filters import format_datetime, format_filesize, format_diff, is_git_tree
+	from lib.filters import format_datetime, format_filesize, format_diff, is_git_tree, is_branch, is_tag
 	app.jinja_env.filters['dateformat'] = format_datetime
 	app.jinja_env.filters['sizeformat'] = format_filesize
 	app.jinja_env.filters['diffformat'] = format_diff
 	app.jinja_env.tests['git_tree'] = is_git_tree
+	app.jinja_env.tests['git_branch'] = is_branch
+	app.jinja_env.tests['git_tag'] = is_tag
 
 	return app
