@@ -51,14 +51,26 @@
 			$('#tags').hide();
 			$('#switch-tags').removeClass('hovering');
 		});
+
+		$('#network').hide();
+	}
+
+	show_source = function() {
+		$('#source').show();
+		$('#network').hide();
+	}
+
+	show_network = function() {
+		$('#source').hide();
+		$('#network').show();
 	}
 </script>
 
 <div id="repo">
 
 	<ul class="menu">
-			<li class="button">Source</li>
-			<li class="button">Network</li>
+			<li class="button"><a href="#" onclick="javascript: show_source();">Source</a></li>
+			<li class="button"><a href="#" onclick="javascript: show_network();">Network</a></li>
 			<li class="current-branch">
 				<span><b>
 				{% if commit is git_branch %}
@@ -75,7 +87,7 @@
 	</ul>
 
 	<ul class="submenu" id="source">
-		<li id="switch-branches">Switch Branches ({{ commit.repo.branches|length }})</li>
+		<li id="switch-branches"><a href="#">Switch Branches ({{ commit.repo.branches|length }})</a></li>
 		<ul class="switches" id="branches">
 			{% for branch in commit.repo.branches %}
 			<li><a href="/{{ repo }}/tree/{{ branch.name }}/">{{ branch.name }}</a></li>
@@ -83,7 +95,7 @@
 			<li><span>no branches</span></li>
 			{% endfor %}
 		</ul>
-		<li id="switch-tags">Switch Tags ({{ commit.repo.tags|length }})</li>
+		<li id="switch-tags"><a href="#">Switch Tags ({{ commit.repo.tags|length }})</a></li>
 		<ul class="switches" id="tags" style="margin-left: 115px;">
 			{% for tag in commit.repo.tags %}
 			<li><a href="/{{ repo }}/tree/{{ tag.name }}/">{{ tag.name }}</a></li>
@@ -91,6 +103,10 @@
 			<li><span>no tags</span></li>
 			{% endfor %}
 		</ul>
+	</ul>
+
+	<ul class="submenu" id="network">
+		<li><a href="#">Graph</a></li>
 	</ul>
 
 </div>
