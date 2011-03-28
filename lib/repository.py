@@ -41,7 +41,11 @@ class GitRepository(object):
 		return self.repo.commits()[0]
 
 	def getBranchHead(self, name):
-		return self.repo.commits(name)[0]
+		from git import GitCommandError
+		try:
+			return self.repo.commits(name)[0]
+		except GitCommandError as error:
+			return None
 
 	def getTreeByPath(self, path):
 		"""
@@ -50,7 +54,10 @@ class GitRepository(object):
 		breadcrumbs = path.split("/")
 		tree = self.getBranchHead(breadcrumbs[0]).tree
 		for crumb in breadcrumbs[1:]:
-			tree = tree[crumb]
+			try:
+				tree = tree[crumb]
+			except KeyError as error:
+				return None
 		return tree
 
 	def getBlobByPath(self, path):

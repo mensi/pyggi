@@ -1,0 +1,13 @@
+{% extends "frontend/base.xhtml" %}
+
+{% block content %}
+
+{% include "frontend/commit.xhtml" %}
+
+{% if tree %}
+unknown tree {{ tree }}
+{% else %}
+no tree given
+{% endif %}
+
+{% endblock %}
