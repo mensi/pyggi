@@ -7,10 +7,12 @@
 {% block content %}
 
 	{% if commit %}
+		{% include "frontend/repo.xhtml" %}
 		{% include "frontend/commit.xhtml" %}
 	{% endif %}
 
 	<div class="error">
+		<h1>An error has occured!</h1>
 		{% block error %}{% endblock %}
 	</div>
 

@@ -645,3 +645,16 @@ a:hover {
 #repo ul a:hover {
 	text-decoration: none;
 }
+
+.error {
+	margin-top: 25px;
+	padding: 8px;
+	background-color: #FDD;
+	border: 1px solid #a40000;
+}
+
+.error h1 {
+	color: #cc0000;
+	margin-top: 0;
+	font-size: 150%;
+}
