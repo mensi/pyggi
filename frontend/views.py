@@ -23,6 +23,10 @@ def index():
 		]
 	)
 
+@frontend.route("/<repository>/")
+def repository(repository):
+	return redirect("/%s/tree/master/" % repository)
+
 @frontend.route("/<repository>/error/repo")
 @templated("frontend/errors/unknown_repo.xhtml")
 def error_unknown_repo(repository):
@@ -39,9 +43,9 @@ def error_unknown_tree(repository):
 		return redirect('/%s/error/repo' % repository)
 	repo = GitRepository(repo=repo_folder)
 
-	# the special tree 'HEAD' will always exist, and thus
+	# the special tree 'master' will always exist, and thus
 	# we can get a commit object
-	head = repo.getBranchHead("HEAD")
+	head = repo.getBranchHead("master")
 
 	# try to get the tree name
 	try:

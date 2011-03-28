@@ -1,0 +1,17 @@
+{% extends "frontend/base.xhtml" %}
+
+{% block title %}
+	Error
+{% endblock %}
+
+{% block content %}
+
+	{% if commit %}
+		{% include "frontend/commit.xhtml" %}
+	{% endif %}
+
+	<div class="error">
+		{% block error %}{% endblock %}
+	</div>
+
+{% endblock %}
