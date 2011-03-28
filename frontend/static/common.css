@@ -646,6 +646,13 @@ a:hover {
 	text-decoration: none;
 }
 
+#repo .summary {
+	border: 1px solid #DDD;
+	border-top: 0;
+	padding: 7px;
+	background: #fafafa;
+}
+
 .error {
 	margin-top: 25px;
 	padding: 8px;
