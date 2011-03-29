@@ -26,7 +26,12 @@
 	<tr>
 		<td class="icon">&nbsp;</td>
 		<td class="content">
-			<a href="{{ url_for('browse', repository=repo, tree=treeid, path='/'.join(breadcrumbs[:-1])) }}">..</a>
+			{% set path='/'.join(breadcrumbs[:-1]) %}
+			{% if path %}
+			<a href="{{ url_for('browse_sub', repository=repo, tree=treeid, path='/'.join(breadcrumbs[:-1])) }}">..</a>
+			{% else %}
+			<a href="{{ url_for('browse', repository=repo, tree=treeid) }}">..</a>
+			{% endif %}
 		</td>
 		<td class="age">&nbsp;</td>
 		<td class="message">&nbsp;</td>
