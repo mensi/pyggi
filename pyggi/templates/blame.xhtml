@@ -19,6 +19,7 @@
 		<div class="info">
 			<span class="icon"><img alt="file" src="{{ url_for('static', filename='images/txt.png') }}" width="16" height="16" /></span>
 			<span class="mode">{{ blob.mode }} |</span>
+			<span>{{ blob.mime_type }} |</span>
 			<span>{{ blob.size|sizeformat }}</span>
 		</div>
 		<ul class="actions">
@@ -30,6 +31,7 @@
 
 
 <div class="data">
+{% if blob.mime_type.startswith("text/") %}
 <table cellspacing="0" cellpadding="0">
 {% set lcounter = 0 %}
 {% for blameinfo in blame %}
@@ -57,6 +59,9 @@
 	{% set lcounter = lcounter + blameinfo[1]|length %}
 {% endfor %}
 </table>
+{% else %}
+<div class="note">no blame data for binary data</div>
+{% endif %}
 </div>
 
 </div>

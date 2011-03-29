@@ -172,7 +172,7 @@ def blob(repository, tree, path):
 		return redirect(url_for('not_found'))
 
 	# check for blob
-	blob = repo.getBlobBypath(path)
+	blob = repo.getBlobByPath(path)
 	if blob is None:
 		return redirect(url_for('not_found'))
 
@@ -191,6 +191,7 @@ def blame(repository, tree, path):
 	repo_folder = GitRepository.getRepositoryFolder(repository)
 	if repo_folder is None:
 		return redirect(url_for('not_found'))
+	repo = GitRepository(repo=repo_folder)
 
 	# the complete path, including the treeish
 	path = "/".join([tree,path])
@@ -201,7 +202,7 @@ def blame(repository, tree, path):
 		return redirect(url_for('not_found'))
 
 	# check for blob
-	blob = repo.getBlobBypath(path)
+	blob = repo.getBlobByPath(path)
 	if blob is None:
 		return redirect(url_for('not_found'))
 
@@ -210,7 +211,6 @@ def blame(repository, tree, path):
 	if blame is None:
 		return redirect(url_for('not_found'))
 
-	repo = GitRepository(repo=repo_folder)
 	return dict( \
 		repo = repository,
 		treeid = tree,
