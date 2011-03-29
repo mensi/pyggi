@@ -1,9 +1,9 @@
-{% extends "frontend/base.xhtml" %}
+{% extends "pyggi/base.xhtml" %}
 
 {% block content %}
 
-{% include "frontend/repo.xhtml" %}
-{% include "frontend/commit.xhtml" %}
+{% include "pyggi/repo.xhtml" %}
+{% include "pyggi/commit.xhtml" %}
 
 <div class="breadcrumbs">
 	Commit <code>{{ treeid|truncate(20, true, '') }}</code>
@@ -58,7 +58,7 @@ Showing {{ commit.stats.total['files'] }} changed files with {{ commit.stats.tot
 		{% endif %}
 	</div>
 	<ul class="actions">
-		<li><a href="/{{ repo }}/blob/{{ treeid }}/{{ diff.b_path }}"><b>View file @</b> {{ treeid|truncate(8, true, '') }}</a></li>
+		<li><a href="{{ url_for('blob', repository=repo, tree=treeid, path=diff.b_path) }}"><b>View file @</b> {{ treeid|truncate(8, true, '') }}</a></li>
 	</ul>
 </div>
 

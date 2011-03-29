@@ -1,10 +1,12 @@
-{% extends "frontend/base.xhtml" %}
+{% extends "pyggi/base.xhtml" %}
 
 {% block content %}
 
-{% include "frontend/repo.xhtml" %}
-{% include "frontend/commit.xhtml" %}
-{% include "frontend/breadcrumbs.xhtml" %}
+{% include "pyggi/repo.xhtml" %}
+{% include "pyggi/commit.xhtml" %}
+{% include "pyggi/breadcrumbs.xhtml" %}
+
+{% set path='/'.join(breadcrumbs) %}
 
 <style type="text/css" media="screen">
 	#file .meta {
@@ -20,9 +22,9 @@
 			<span>{{ blob.size|sizeformat }}</span>
 		</div>
 		<ul class="actions">
-			<li><a href="/{{ repo }}/raw/{{ treeid }}/{{ '/'.join(breadcrumbs)  }}">raw</a>&nbsp;&nbsp;| </li>
-			<li><a href="/{{ repo }}/blame/{{ treeid }}/{{ '/'.join(breadcrumbs) }}">blame</a>&nbsp;&nbsp;| </li>
-			<li><a href="/{{ repo }}/history/{{ treeid }}/{{ '/'.join(breadcrumbs) }}">history</a></li>
+			<li><a href="{{ url_for('raw', repository=repo, tree=treeid, path=path) }}">raw</a>&nbsp;&nbsp;| </li>
+			<li><a href="{{ url_for('blame', repository=repo, tree=treeid, path=path) }}">blame</a>&nbsp;&nbsp;| </li>
+			<li><a href="{{ url_for('history', repository=repo, tree=treeid, path=path) }}">history</a></li>
 		</ul>
 	</div>
 

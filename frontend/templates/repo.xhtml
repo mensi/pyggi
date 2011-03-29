@@ -1,10 +1,10 @@
 <style type="text/css" media="screen"> 
 	#repo ul.menu li.current-branch {
-		background: ghostwhite url("/static/images/bg_browse.png") repeat-x 0px 100%;
+		background: ghostwhite url({{ url_for('static', filename="images/bg_browse.png") }})  repeat-x 0px 100%;
 	}
 	
 	#repo ul.submenu {
-		background: ghostwhite url("/static/images/bg_browse.png") repeat-x 0px 100%;
+		background: ghostwhite url({{ url_for('static', filename="images/bg_browse.png") }}) repeat-x 0px 100%;
 	}
 </style>
 
@@ -90,7 +90,7 @@
 		<li id="switch-branches"><a href="#">Switch Branches ({{ commit.repo.branches|length }})</a></li>
 		<ul class="switches" id="branches">
 			{% for branch in commit.repo.branches %}
-			<li><a href="/{{ repo }}/tree/{{ branch.name }}/">{{ branch.name }}</a></li>
+			<li><a href="{{ url_for('browse', repository=repo, tree=branch.name) }}/">{{ branch.name }}</a></li>
 			{% else %}
 			<li><span>no branches</span></li>
 			{% endfor %}
@@ -98,7 +98,7 @@
 		<li id="switch-tags"><a href="#">Switch Tags ({{ commit.repo.tags|length }})</a></li>
 		<ul class="switches" id="tags" style="margin-left: 115px;">
 			{% for tag in commit.repo.tags %}
-			<li><a href="/{{ repo }}/tree/{{ tag.name }}/">{{ tag.name }}</a></li>
+			<li><a href="{{ url_for('browse', repository=repo, tree=tag.name) }}">{{ tag.name }}</a></li>
 			{% else %}
 			<li><span>no tags</span></li>
 			{% endfor %}

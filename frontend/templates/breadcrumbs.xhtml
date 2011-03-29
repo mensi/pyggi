@@ -1,8 +1,8 @@
 <div class="breadcrumbs">
 {% if breadcrumbs %}
-	<a href="/{{ repo }}/tree/{{ treeid }}/"><b>{{ repo }}</b></a> /
+	<a href="{{ url_for('browse', repository=repo, tree=treeid) }}"><b>{{ repo }}</b></a> /
 	{% for crumb in breadcrumbs[:-1] %}
-		<a href="/{{ repo }}/tree/{{ treeid }}/{{ '/'.join(breadcrumbs[:loop.index]) }}">{{ crumb }}</a> /
+		<a href="{{ url_for('browse_sub', repository=repo, tree=treeid, path='/'.join(breadcrumbs[:loop.index])) }}">{{ crumb }}</a> /
 	{% endfor %}
 	{{ breadcrumbs[-1] }}
 {% else %}

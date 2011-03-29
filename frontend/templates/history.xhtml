@@ -1,17 +1,17 @@
-{% extends "frontend/base.xhtml" %}
+{% extends "pyggi/base.xhtml" %}
 
 {% block content %}
 
-{% include "frontend/repo.xhtml" %}
+{% include "pyggi/repo.xhtml" %}
 
 <div class="breadcrumbs">
-	History for <a href="/{{ repo }}/blob/{{ treeid }}/{{ '/'.join(breadcrumbs) }}"><b>{{ repo }}</b> / {{ ' / '.join(breadcrumbs) }}</a>
+	History for <a href="{{ url_for('blob', repository=repo, tree=treeid, path='/'.join(breadcrumbs)) }}"><b>{{ repo }}</b> / {{ ' / '.join(breadcrumbs) }}</a>
 </div>
 
 <table cellspacing="0" cellpadding="0" width="100%" class="commits-condensed">
 {% for item in history %}
 	<tr>
-		<td class="commit {{ loop.cycle('','toggle') }}"><code><a href="/{{ repo }}/commit/{{ item.id }}/">{{ item.id|truncate(8, true, '') }}</a></code></td>
+		<td class="commit {{ loop.cycle('','toggle') }}"><code><a href="{{ url_for('commit', repository=repo, tree=item.id) }}/">{{ item.id|truncate(8, true, '') }}</a></code></td>
 		<td class="author {{ loop.cycle('','toggle') }}" nowrap>{{ item.author.name }}</td>
 		<td class="message {{ loop.cycle('','toggle') }}"><code>{{ item.message }}</code></td>
 		<td class="date {{ loop.cycle('','toggle') }}">{{ item.committed_date|dateformat }}</td>

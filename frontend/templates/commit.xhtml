@@ -18,10 +18,10 @@
 	</div>
 
 	<div class="machine">
-		<span>c</span>ommit:&nbsp;&nbsp;<a href="/{{ repo }}/commit/{{ commit.id }}/">{{ commit.id|truncate(20, true, '') }}</a><br />
-		<span>t</span>ree:&nbsp;&nbsp;&nbsp;&nbsp;<a href="/{{ repo }}/tree/{{ commit.id }}/">{{ commit.tree.id|truncate(20, true, '') }}</a><br />
+		<span>c</span>ommit:&nbsp;&nbsp;<a href="{{ url_for('commit', repository=repo, tree=commit.id) }}">{{ commit.id|truncate(20, true, '') }}</a><br />
+		<span>t</span>ree:&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ url_for('browse', repository=repo, tree=commit.id) }}">{{ commit.tree.id|truncate(20, true, '') }}</a><br />
 		{% for parent in commit.parents %}
-		<span>p</span>arent:&nbsp;&nbsp;<a href="/{{ repo }}/tree/{{ parent.id }}">{{ parent.id|truncate(20, true, '') }}</a></span>
+		<span>p</span>arent:&nbsp;&nbsp;<a href="{{ url_for('browse', repository=repo, tree=parent.id) }}">{{ parent.id|truncate(20, true, '') }}</a></span>
 		{% endfor %}
 	</div>
 </div>

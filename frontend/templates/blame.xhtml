@@ -1,10 +1,12 @@
-{% extends "frontend/base.xhtml" %}
+{% extends "pyggi/base.xhtml" %}
 
 {% block content %}
 
-{% include "frontend/repo.xhtml" %}
-{% include "frontend/commit.xhtml" %}
-{% include "frontend/breadcrumbs.xhtml" %}
+{% include "pyggi/repo.xhtml" %}
+{% include "pyggi/commit.xhtml" %}
+{% include "pyggi/breadcrumbs.xhtml" %}
+
+{% set path='/'.join(breadcrumbs) %}
 
 <style type="text/css" media="screen">
 	#blame .meta {
@@ -20,9 +22,9 @@
 			<span>{{ blob.size|sizeformat }}</span>
 		</div>
 		<ul class="actions">
-			<li><a href="/{{ repo }}/raw/{{ treeid }}/{{ '/'.join(breadcrumbs)  }}">raw</a>&nbsp;&nbsp;| </li>
-			<li><a href="/{{ repo }}/blob/{{ treeid }}/{{ '/'.join(breadcrumbs) }}">normal</a>&nbsp;&nbsp;| </li>
-			<li><a href="/{{ repo }}/history/{{ treeid }}/{{ '/'.join(breadcrumbs) }}">history</a></li>
+			<li><a href="{{ url_for('raw', repository=repo, tree=treeid, path=path) }}">raw</a>&nbsp;&nbsp;| </li>
+			<li><a href="{{ url_for('blob', repository=repo, tree=treeid, path=path) }}">normal</a>&nbsp;&nbsp;| </li>
+			<li><a href="{{ url_for('history', repository=repo, tree=treeid, path=path) }}">history</a></li>
 		</ul>
 	</div>
 
@@ -34,8 +36,8 @@
 	<tr>
 		<td nowrap class="commitinfo first">
 			<code>
-				<a href="/{{ repo }}/commit/{{ blameinfo[0].id }}/">{{ blameinfo[0].id|truncate(8, true, '') }}</a>
-				<a href="/{{ repo }}/blame/{{ blameinfo[0].id }}/{{ '/'.join(breadcrumbs) }}">&#187;</a>
+				<a href="{{ url_for('commit', repository=repo, tree=blameinfo[0].id) }}">{{ blameinfo[0].id|truncate(8, true, '') }}</a>
+				<a href="{{ url_for('blame', repository=repo, tree=blameinfo[0].id, path=path) }}">&#187;</a>
 				{{ blameinfo[0].author.name }}
 			</code>
 			<br />

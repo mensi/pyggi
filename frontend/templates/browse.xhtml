@@ -1,11 +1,64 @@
-{% extends "frontend/base.xhtml" %}
+{% extends "pyggi/base.xhtml" %}
 
 {% block content %}
 
 
-{% include "frontend/repo.xhtml" %}
-{% include "frontend/commit.xhtml" %}
-{% include "frontend/breadcrumbs.xhtml" %}
-{% include "frontend/source-tree.xhtml" %}
+{% include "pyggi/repo.xhtml" %}
+{% include "pyggi/commit.xhtml" %}
+{% include "pyggi/breadcrumbs.xhtml" %}
+
+<style type="text/css" media="screen">
+	.tree-browser td {
+		background: #F8F8F8 url("{{ url_for('static', filename="images/bg_browse.png") }}") repeat-x 0px 100%;
+	}
+</style>
+
+<table class="tree-browser" cellpadding="0" cellspacing="0">
+	<tbody>
+		<tr>
+			<th></th>
+			<th>name</th>
+			<th>age</th>
+			<th>message</th>
+		</tr>
+
+{% if breadcrumbs %}
+	<tr>
+		<td class="icon">&nbsp;</td>
+		<td class="content">
+			<a href="{{ url_for('browse', repository=repo, tree=treeid, path='/'.join(breadcrumbs[:-1])) }}">..</a>
+		</td>
+		<td class="age">&nbsp;</td>
+		<td class="message">&nbsp;</td>
+	</tr>
+{% else %}
+{% set breadcrumbs=[] %}
+{% endif %}
+
+{% for item in tree %}
+	<tr>
+		<td class="icon">
+			{% if item is git_tree %}
+			<img alt="directory" src="{{ url_for('static', filename='images/dir.png') }}" width="16" height="16" />
+			{% else %}
+			<img alt="file" src="{{ url_for('static', filename='images/txt.png') }}" width="16" height="16" />
+			{% endif %}
+		</td>
+		<td class="content">
+			{% if item is git_tree %}
+			<a href="{{ url_for('browse_sub', repository=repo, tree=treeid, path='/'.join(breadcrumbs+[item.name])) }}">
+			{% else %}
+			<a href="{{ url_for('blob', repository=repo, tree=treeid, path='/'.join(breadcrumbs+[item.name])) }}">
+			{% endif %}
+				{{ item.name }}{% if item is git_tree %}/{% endif %}
+			</a>
+		</td>
+		<td class="age">&nbsp;</td>
+		<td class="message">&nbsp;</td>
+	</tr>
+{% endfor %}
+
+	</tbody>
+</table>
 
 {% endblock %}

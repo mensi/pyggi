@@ -1,4 +1,4 @@
-{% extends "frontend/base.xhtml" %}
+{% extends "pyggi/base.xhtml" %}
 
 {% block content %}
 
@@ -6,7 +6,7 @@
 {% for repo in repositories %}
 <div class="repo">
 	<div class="repo-top">
-		<a href="/{{ repo.name }}/tree/master">{{ repo.name }}</a>
+		<a href="{{ url_for('repository', repository=repo.name) }}">{{ repo.name }}</a>
 	</div>
 	<div class="repo-bottom">
 		<p style="padding: 0; margin: 0; margin-bottom: 5px;"><code>{{ repo.description }}</code></p>
