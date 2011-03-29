@@ -107,7 +107,8 @@ class GitRepository(object):
 			file = self.repo.active_branch+"/README"
 			blob = self.getBlobByPath(file)
 			if not blob is None:
-				return Readme("README", blob.data, "plain")
+				from filters import html_escape_table
+				return Readme("README", "".join(html_escape_table.get(c,c) for c in blob.data), "plain")
 		except:
 			pass
 

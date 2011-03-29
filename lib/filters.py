@@ -10,7 +10,6 @@ html_escape_table = {
 	"<": "&lt;",
 }
 
-
 def format_datetime(value, format='iso8601'):
 	# convert format to iso8601 compliant
 	if format == 'iso8601':
