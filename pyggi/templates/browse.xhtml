@@ -61,4 +61,11 @@
 	</tbody>
 </table>
 
+{% if readme %}
+<div class="breadcrumbs" style="padding-bottom: 0;">{{ readme.name }}</div>
+<div id="readme" class="wikistyle">
+	{{ readme.data|safe }}
+</div>
+{% endif %}
+
 {% endblock %}

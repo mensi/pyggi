@@ -4,6 +4,12 @@ from git import Repo, Blob
 from flask import current_app
 from git import GitCommandError
 
+class Readme(object):
+	def __init__(self, name, data, type):
+		self.name = name
+		self.data = data
+		self.type = type
+
 class GitRepository(object):
 	def __init__(self, **kwargs):
 		"""
@@ -79,4 +85,25 @@ class GitRepository(object):
 			return self.repo.commits(breadcrumbs[0], '/'.join(breadcrumbs[1:]))
 		except GitCommandError as error:
 			return None
+
+	def getReadme(self):
+		try:
+			# test markdown
+			file = self.repo.active_branch+"/README.md"
+			blob = self.getBlobByPath(file)
+			if not blob is None:
+				import markdown
+				return Readme("README.md", markdown.markdown(blob.data, safe_mode="replace"), "markdown")
+
+			# test RST
+			file = self.repo.active_branch+"/README.rst"
+			blob = self.getBlobByPath(file)
+			if not blob is None:
+				import docutils.core
+				parts = docutils.core.publish_parts(blob.data, writer_name="html")
+				return Readme("README.rst", parts['body'], "RST")
+		except:
+			pass
+
+		return None
 

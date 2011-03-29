@@ -67,6 +67,7 @@ def browse(repository, tree):
 		repo = repository,
 		treeid = tree,
 		commit = head,
+		readme = repo.getReadme(),
 		tree = head.tree.values(),
 	)
 

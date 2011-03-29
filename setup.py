@@ -8,6 +8,8 @@ setup(
 	install_requires=[\
 		'Flask>=0.6',
 		'GitPython==0.1.7',
+		'Markdown>=2.0.3',
+		'docutils>=0.7',
 	]
 )
 
