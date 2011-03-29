@@ -52,17 +52,17 @@
 			$('#switch-tags').removeClass('hovering');
 		});
 
-		$('#network').hide();
+		$('#download').hide();
 	}
 
 	show_source = function() {
 		$('#source').show();
-		$('#network').hide();
+		$('#download').hide();
 	}
 
-	show_network = function() {
+	show_download = function() {
 		$('#source').hide();
-		$('#network').show();
+		$('#download').show();
 	}
 </script>
 
@@ -70,7 +70,7 @@
 
 	<ul class="menu">
 			<li class="button"><a href="#" onclick="javascript: show_source();">Source</a></li>
-			<li class="button"><a href="#" onclick="javascript: show_network();">Network</a></li>
+			<li class="button"><a href="#" onclick="javascript: show_download();">Download</a></li>
 			<li class="current-branch">
 				<span><b>
 				{% if commit is git_branch %}
@@ -105,8 +105,8 @@
 		</ul>
 	</ul>
 
-	<ul class="submenu" id="network">
-		<li><a href="#">Graph</a></li>
+	<ul class="submenu" id="download">
+		<li><a href="{{ url_for('download', repository=repo, tree=treeid) }}">as tar.gz</a></li>
 	</ul>
 
 	<div class="summary">

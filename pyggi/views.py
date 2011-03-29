@@ -242,3 +242,25 @@ def raw(repository, tree, path):
 	response.mimetype = blob.mime_type
 	return response
 
+@get("/<repository>/download/<tree>", endpoint='download')
+def download(repository, tree):
+	# check if the repository exists
+	repo_folder = GitRepository.getRepositoryFolder(repository)
+	if repo_folder is None:
+		return redirect(url_for('not_found'))
+	repo = GitRepository(repo=repo_folder)
+
+	# check tar.gz
+	data = repo.getTarGz(tree)
+	if data is None:
+		return redirect(url_for('not_found'))
+
+	# create a response with the correct mime type
+	# and a better filename
+	from flask import make_response
+	response = make_response(data)
+	response.mimetype = 'application/x-gzip'
+	response.headers['Content-Disposition'] = "attachment; filename=%s-%s.tar.gz" % (repository, tree[:8])
+	print response.headers
+
+	return response

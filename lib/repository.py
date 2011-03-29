@@ -44,6 +44,12 @@ class GitRepository(object):
 		except GitCommandError as error:
 			return None
 
+	def getTarGz(self, tree):
+		try:
+			return self.repo.archive_tar_gz(tree, self.name+"/")
+		except:
+			return None
+
 	def getTreeByPath(self, path):
 		"""
 			traverse tree defined by path
