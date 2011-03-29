@@ -102,6 +102,12 @@ class GitRepository(object):
 				import docutils.core
 				parts = docutils.core.publish_parts(blob.data, writer_name="html")
 				return Readme("README.rst", parts['body'], "RST")
+
+			# test plain
+			file = self.repo.active_branch+"/README"
+			blob = self.getBlobByPath(file)
+			if not blob is None:
+				return Readme("README", blob.data, "plain")
 		except:
 			pass
 
