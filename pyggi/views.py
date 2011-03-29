@@ -6,7 +6,7 @@ from lib.decorators import templated, response_mimetype
 from lib.repository import GitRepository
 from flask import Module, current_app, redirect, url_for
 
-frontend = Module(__name__, 'pyggi', url_prefix="/pyggi")
+frontend = Module(__name__, 'pyggi', url_prefix=None)
 
 def method_shortcut(method='GET'):
 	def ruler(route, endpoint=None, **options):

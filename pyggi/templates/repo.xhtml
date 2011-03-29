@@ -90,7 +90,7 @@
 		<li id="switch-branches"><a href="#">Switch Branches ({{ commit.repo.branches|length }})</a></li>
 		<ul class="switches" id="branches">
 			{% for branch in commit.repo.branches %}
-			<li><a href="{{ url_for('browse', repository=repo, tree=branch.name) }}/">{{ branch.name }}</a></li>
+			<li><a href="{{ url_for('browse', repository=repo, tree=branch.name) }}">{{ branch.name }}</a></li>
 			{% else %}
 			<li><span>no branches</span></li>
 			{% endfor %}
