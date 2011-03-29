@@ -130,17 +130,27 @@ def history(repository, tree, path):
 	# check if the repository exists
 	repo_folder = GitRepository.getRepositoryFolder(repository)
 	if repo_folder is None:
-		pass
+		return redirect(url_for('not_found'))
+	repo = GitRepository(repo=repo_folder)
 
 	# the complete path, including the treeish
 	path = "/".join([tree, path])
 
-	repo = GitRepository(repo=repo_folder)
+	# check for head
+	head = repo.getBranchHead(tree)
+	if head is None:
+		return redirect(url_for('not_found'))
+
+	# get history object
+	history = repo.getHistory(path)
+	if history is None:
+		return redirect(url_for('not_found'))
+
 	return dict( \
 		repo = repository,
 		treeid = tree,
-		commit = repo.getBranchHead(tree),
-		history = repo.getHistory(path),
+		commit = head,
+		history = history,
 		breadcrumbs = path.split("/")[1:]
 	)
 
@@ -150,17 +160,27 @@ def blob(repository, tree, path):
 	# check if the repository exists
 	repo_folder = GitRepository.getRepositoryFolder(repository)
 	if repo_folder is None:
-		pass
+		return redirect(url_for('not_found'))
+	repo = GitRepository(repo=repo_folder)
 
 	# the complete path, including the treeish
 	path = "/".join([tree,path])
 
-	repo = GitRepository(repo=repo_folder)
+	# check for head
+	head = repo.getBranchHead(tree)
+	if head is None:
+		return redirect(url_for('not_found'))
+
+	# check for blob
+	blob = repo.getBlobBypath(path)
+	if blob is None:
+		return redirect(url_for('not_found'))
+
 	return dict( \
 		repo = repository,
 		treeid = tree,
-		commit = repo.getBranchHead(tree),
-		blob = repo.getBlobByPath(path),
+		commit = head,
+		blob = blob,
 		breadcrumbs = path.split("/")[1:]
 	)
 
@@ -170,32 +190,55 @@ def blame(repository, tree, path):
 	# check if the repository exists
 	repo_folder = GitRepository.getRepositoryFolder(repository)
 	if repo_folder is None:
-		pass
+		return redirect(url_for('not_found'))
 
 	# the complete path, including the treeish
 	path = "/".join([tree,path])
+
+	# check for head
+	head = repo.getBranchHead(tree)
+	if head is None:
+		return redirect(url_for('not_found'))
+
+	# check for blob
+	blob = repo.getBlobBypath(path)
+	if blob is None:
+		return redirect(url_for('not_found'))
+
+	# check for blame
+	blame = repo.getBlame(path)
+	if blame is None:
+		return redirect(url_for('not_found'))
 
 	repo = GitRepository(repo=repo_folder)
 	return dict( \
 		repo = repository,
 		treeid = tree,
-		commit = repo.getBranchHead(tree),
-		blame = repo.getBlame(path),
-		blob = repo.getBlobByPath(path),
+		commit = head,
+		blame = blame,
+		blob = blob,
 		breadcrumbs = path.split("/")[1:]
 	)
 
 @get("/<repository>/raw/<tree>/<path:path>", endpoint='raw')
-@response_mimetype("text/plain")
 def raw(repository, tree, path):
 	# check if the repository exists
 	repo_folder = GitRepository.getRepositoryFolder(repository)
 	if repo_folder is None:
-		pass
+		return redirect(url_for('not_found'))
+	repo = GitRepository(repo=repo_folder)
 
 	# the complete path, including the treeish
 	path = "/".join([tree,path])
 
-	repo = GitRepository(repo=repo_folder)
-	return repo.getBlobByPath(path).data
+	# check blob
+	blob = repo.getBlobByPath(path)
+	if blob is None:
+		return redirect(url_for('not_found'))
+
+	# create a response with the correct mime type
+	from flask import make_response
+	response = make_response(blob.data)
+	response.mimetype = blob.mime_type
+	return response
 

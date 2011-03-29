@@ -2,6 +2,7 @@
 
 from git import Repo, Blob
 from flask import current_app
+from git import GitCommandError
 
 class GitRepository(object):
 	def __init__(self, **kwargs):
@@ -37,11 +38,7 @@ class GitRepository(object):
 		except:
 			return False
 
-	def getHead(self):
-		return self.repo.commits()[0]
-
 	def getBranchHead(self, name):
-		from git import GitCommandError
 		try:
 			return self.repo.commits(name)[0]
 		except GitCommandError as error:
@@ -64,9 +61,16 @@ class GitRepository(object):
 		return self.getTreeByPath(path)
 
 	def getBlame(self, path):
-		breadcrumbs = path.split("/")
-		return Blob.blame(self.repo, breadcrumbs[0], '/'.join(breadcrumbs[1:]))
+		try:
+			breadcrumbs = path.split("/")
+			return Blob.blame(self.repo, breadcrumbs[0], '/'.join(breadcrumbs[1:]))
+		except GitCommandError as error:
+			return None
 
 	def getHistory(self, path):
-		breadcrumbs = path.split("/")
-		return self.repo.commits(breadcrumbs[0], '/'.join(breadcrumbs[1:]))
+		try:
+			breadcrumbs = path.split("/")
+			return self.repo.commits(breadcrumbs[0], '/'.join(breadcrumbs[1:]))
+		except GitCommandError as error:
+			return None
+
