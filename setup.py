@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from setuptools import setup, find_packages
 
 setup(
@@ -10,6 +12,12 @@ setup(
 		'GitPython==0.1.7',
 		'Markdown>=2.0.3',
 		'docutils>=0.7',
-	]
+	],
+
+	# package metadata
+	author="Tobias Heinzen",
+	author_email="tobias.heinzen@0xdeadbeef.ch",
+	description="Pyggi - a lightweight git frontend",
+	license=""
 )
 
