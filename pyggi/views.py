@@ -262,6 +262,5 @@ def download(repository, tree):
 	response = make_response(data)
 	response.mimetype = 'application/x-gzip'
 	response.headers['Content-Disposition'] = "attachment; filename=%s-%s.tar.gz" % (repository, tree[:8])
-	print response.headers
 
 	return response
