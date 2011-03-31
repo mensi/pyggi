@@ -19,6 +19,10 @@ def method_shortcut(method='GET'):
 get = method_shortcut('GET')
 post = method_shortcut('POST')
 
+@get("/favicon.ico/")
+def favicon():
+	return redirect(url_for('static', filename="favicon.ico"))
+
 @get("/", endpoint='index')
 @templated("pyggi/repositories.xhtml")
 def index():
