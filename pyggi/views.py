@@ -23,24 +23,23 @@ post = method_shortcut('POST')
 @templated("pyggi/repositories.xhtml")
 def index():
 	# compute the names of repositories
-	repnames = [GitRepository.getRepositoryFolder(name) \
+	repnames = [name \
 		for name in os.walk(current_app.config['GIT_REPOSITORIES']).next()[1] \
 		if GitRepository.isGitRepository(name)
 	]
 
 	return dict( \
 		repositories = [ \
-			GitRepository(repo=name) for name in repnames
+			GitRepository.getRepository(name) for name in repnames
 		]
 	)
 
 @get("/<repository>/", endpoint='repository')
 def repository(repository):
 	# check repository
-	repo_folder = GitRepository.getRepositoryFolder(repository)
-	if repo_folder is None:
+	repo = GitRepository.getRepository(repository)
+	if repo is None:
 		return redirect(url_for('not_found'))
-	repo = GitRepository(repo=repo_folder)
 
 	return redirect(url_for('browse', repository=repository, tree=repo.repo.active_branch))
 
@@ -53,10 +52,9 @@ def not_found():
 @templated("pyggi/browse.xhtml")
 def browse(repository, tree):
 	# check if the repository exists
-	repo_folder = GitRepository.getRepositoryFolder(repository)
-	if repo_folder is None:
+	repo = GitRepository.getRepository(repository)
+	if repo is None:
 		return redirect(url_for('not_found'))
-	repo = GitRepository(repo=repo_folder)
 
 	# check if we can get the branch head
 	head = repo.getBranchHead(tree)
@@ -75,10 +73,9 @@ def browse(repository, tree):
 @templated("pyggi/commit-info.xhtml")
 def commit(repository, tree):
 	# check if the repository exists
-	repo_folder = GitRepository.getRepositoryFolder(repository)
-	if repo_folder is None:
+	repo = GitRepository.getRepository(repository)
+	if repo is None:
 		return redirect(url_for('not_found'))
-	repo = GitRepository(repo=repo_folder)
 
 	# check for tree
 	head = repo.getBranchHead(tree)
@@ -96,10 +93,9 @@ def commit(repository, tree):
 @templated("pyggi/browse.xhtml")
 def browse_sub(repository, tree, path):
 	# check if the repository exists
-	repo_folder = GitRepository.getRepositoryFolder(repository)
-	if repo_folder is None:
+	repo = GitRepository.getRepository(repository)
+	if repo is None:
 		return redirect(url_for('not_found'))
-	repo = GitRepository(repo=repo_folder)
 
 	# the complete path, including the treeish
 	path = "/".join([tree,path])
@@ -129,10 +125,9 @@ def browse_sub(repository, tree, path):
 @templated("pyggi/history.xhtml")
 def history(repository, tree, path):
 	# check if the repository exists
-	repo_folder = GitRepository.getRepositoryFolder(repository)
-	if repo_folder is None:
+	repo = GitRepository.getRepository(repository)
+	if repo is None:
 		return redirect(url_for('not_found'))
-	repo = GitRepository(repo=repo_folder)
 
 	# the complete path, including the treeish
 	path = "/".join([tree, path])
@@ -159,10 +154,9 @@ def history(repository, tree, path):
 @templated("pyggi/blob.xhtml")
 def blob(repository, tree, path):
 	# check if the repository exists
-	repo_folder = GitRepository.getRepositoryFolder(repository)
-	if repo_folder is None:
+	repo = GitRepository.getRepository(repository)
+	if repo is None:
 		return redirect(url_for('not_found'))
-	repo = GitRepository(repo=repo_folder)
 
 	# the complete path, including the treeish
 	path = "/".join([tree,path])
@@ -189,10 +183,9 @@ def blob(repository, tree, path):
 @templated("pyggi/blame.xhtml")
 def blame(repository, tree, path):
 	# check if the repository exists
-	repo_folder = GitRepository.getRepositoryFolder(repository)
-	if repo_folder is None:
+	repo = GitRepository.getRepository(repository)
+	if repo is None:
 		return redirect(url_for('not_found'))
-	repo = GitRepository(repo=repo_folder)
 
 	# the complete path, including the treeish
 	path = "/".join([tree,path])
@@ -224,10 +217,9 @@ def blame(repository, tree, path):
 @get("/<repository>/raw/<tree>/<path:path>", endpoint='raw')
 def raw(repository, tree, path):
 	# check if the repository exists
-	repo_folder = GitRepository.getRepositoryFolder(repository)
-	if repo_folder is None:
+	repo = GitRepository.getRepository(repository)
+	if repo is None:
 		return redirect(url_for('not_found'))
-	repo = GitRepository(repo=repo_folder)
 
 	# the complete path, including the treeish
 	path = "/".join([tree,path])
@@ -246,10 +238,9 @@ def raw(repository, tree, path):
 @get("/<repository>/download/<tree>", endpoint='download')
 def download(repository, tree):
 	# check if the repository exists
-	repo_folder = GitRepository.getRepositoryFolder(repository)
-	if repo_folder is None:
+	repo = GitRepository.getRepository(repository)
+	if repo is None:
 		return redirect(url_for('not_found'))
-	repo = GitRepository(repo=repo_folder)
 
 	# check tar.gz
 	data = repo.getTarGz(tree)

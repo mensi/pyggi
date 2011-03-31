@@ -29,18 +29,25 @@ class GitRepository(object):
 		self.head = self.repo.heads[0]
 
 	@staticmethod
+	def getRepository(repository):
+		if not GitRepository.isGitRepository(repository):
+			return None
+		return GitRepository(repo=GitRepository.getRepositoryFolder(repository))
+
+	@staticmethod
 	def getRepositoryFolder(repository):
 		import os
 		repo_folder = os.path.join(current_app.config['GIT_REPOSITORIES'], repository)
 		if not os.path.exists(repo_folder):
 			return None
+
 		return repo_folder
 
 	@staticmethod
 	def isGitRepository(repository):
 		try:
 			repo = Repo(GitRepository.getRepositoryFolder(repository))
-			return True
+			return True if not current_app.config['PRESERVE_DAEMON_EXPORT'] else repo.daemon_export
 		except:
 			return False
 
