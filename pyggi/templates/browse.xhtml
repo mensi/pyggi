@@ -69,7 +69,11 @@
 {% if readme %}
 <div class="breadcrumbs" style="padding-bottom: 0;">{{ readme.name }}</div>
 <div id="readme" class="wikistyle">
+	{% if readme.type == "plain" %}
+	<div class="pre">{{ readme.data|safe }}</div>
+	{% else %}
 	{{ readme.data|safe }}
+	{% endif %}
 </div>
 {% endif %}
 

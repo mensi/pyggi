@@ -666,6 +666,7 @@ a:hover {
 }
 
 
+
 .wikistyle h1,.wikistyle h2,.wikistyle h3,.wikistyle h4,.wikistyle h5,.wikistyle h6{border:0!important;}
 .wikistyle h1{font-size:170%!important;border-top:4px solid #aaa!important;padding-top:.5em!important;margin-top:1.5em!important;}
 .wikistyle h1:first-child{margin-top:0!important;padding-top:.25em!important;border-top:none!important;}
@@ -705,3 +706,7 @@ a:hover {
 .wikistyle .align-left{display:block;text-align:left;}
 .wikistyle .align-center{display:block;text-align:center;}
 .wikistyle .align-right{display:block;text-align:right;}
+
+#readme .pre {
+	white-space: pre;
+}
