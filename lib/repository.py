@@ -26,7 +26,9 @@ class GitRepository(object):
 		# next up, write some information down, for easy acces
 		self.description = self.repo.description
 		self.name = kwargs['repo'].split("/")[-1]
-		self.head = self.repo.heads[0]
+		self.is_empty = len(self.repo.heads) == 0
+		if not self.is_empty:
+			self.head = self.repo.heads[0]
 
 	@staticmethod
 	def getRepository(repository):
@@ -48,7 +50,7 @@ class GitRepository(object):
 		try:
 			repo = Repo(GitRepository.getRepositoryFolder(repository))
 			return True if not current_app.config['PRESERVE_DAEMON_EXPORT'] else repo.daemon_export
-		except:
+		except Exception as error:
 			return False
 
 	def getBranchHead(self, name):

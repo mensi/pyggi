@@ -9,8 +9,12 @@
 		<a href="{{ url_for('repository', repository=repo.name) }}">{{ repo.name }}</a>
 	</div>
 	<div class="repo-bottom">
+		{% if repo.is_empty %}
+		<p style="padding: 0; margin: 0; margin-bottom: 5px;"><code>empty repository</code></p>
+		{% else %}
 		<p style="padding: 0; margin: 0; margin-bottom: 5px;"><code>{{ repo.description }}</code></p>
 		<div class="date">Last updated {{ repo.head.commit.committed_date|dateformat('%B %d, %Y') }}</div>
+		{% endif %}
 	</div>
 </div>
 {% endfor %}
