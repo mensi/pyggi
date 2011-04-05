@@ -3,7 +3,55 @@ Pyggi is a lightweight git frontend
 
 ## Features
 
+- easy setup and configuration
+- full WSGI compliance
+- an easy-on-the-eyes UI
+
+## Dependencies
+
+- Flask			>= 0.6
+- GitPython		== 0.1.7
+
+We are currently depending on a specific version of GitPython. All the newer versions of GitPython are completely unusable. The newest version for example provides a wrong blame information. In addition, not all features that we are using are available in the new versions, yet.
+
+(optional)
+- Markdown		>= 2.0.3
+- docutils		>= 0.7
+
+You only need these packages if you want README files in repositories be formatted using these libraries.
+
+You can install all dependencies by executing
+
+	python setup.py install
+
+to let the setuptools resolve them all.
+
+## Installation
+
+Pyggi is fully WSGI compliant and can thus be easily integrated in your server infrastructure. Below is a sample configuration for Apache using mod_wsgi.
+
+<pre><code>
+<VirtualHost *>
+    ServerName example.com
+
+    WSGIDaemonProcess pyggi user=user1 group=group1 threads=5
+    WSGIScriptAlias / /var/www/pyggi/pyggi.wsgi
+
+    <Directory /var/www/pyggi>
+        WSGIProcessGroup pyggi
+        WSGIApplicationGroup %{GLOBAL}
+        Order deny,allow
+        Allow from all
+    </Directory>
+</VirtualHost>
+</code></pre>
+
+In addition you might have to change the git repository directory in "config.cfg" by setting the correct value for GIT_REPOSITORIES.
+
+That's it. There's nothing more to do.
+
 ## License
 
-The icons used are [famfamfam silk](http://www.famfamfam.com/lab/icons/silk/), which are licensed under a [Creative Commons Attribution 2.5 License](http://creativecommons.org/licenses/by/2.5/)
+The icons used are [famfamfam silk](http://www.famfamfam.com/lab/icons/silk/), which are licensed
+under a [Creative Commons Attribution 2.5 License](http://creativecommons.org/licenses/by/2.5/)
 
