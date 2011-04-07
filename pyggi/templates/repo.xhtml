@@ -1,3 +1,6 @@
+{% set commit = repository.commit(treeid) %}
+{% set repo = repository.name %}
+
 <style type="text/css" media="screen"> 
 	#repo ul.menu li.current-branch {
 		background: ghostwhite url({{ url_for('static', filename="images/bg_browse.png") }})  repeat-x 0px 100%;

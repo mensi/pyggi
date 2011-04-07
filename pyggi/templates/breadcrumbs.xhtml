@@ -1,3 +1,5 @@
+{% set repo = repository.name %}
+
 <div class="breadcrumbs">
 {% if breadcrumbs %}
 	<a href="{{ url_for('browse', repository=repo, tree=treeid) }}"><b>{{ repo }}</b></a> /

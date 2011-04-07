@@ -1,3 +1,6 @@
+{% set commit = repository.commit(treeid) %}
+{% set repo = repository.name %}
+
 <style type="text/css" media="screen">
 	#commit .envelope {
 		background: #EAF2F5 url("{{ url_for('static', filename='images/bg_commit.gif') }}") repeat-x 0px 100%;

@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template, make_response
+from flask import render_template, make_response, redirect
 from functools import wraps
+from lib.repository import RepositoryError
 
 def templated(template):
 	def decorator(f):
 		@wraps(f)
 		def template_function(*args, **kwargs):
+			# error when no template is given
 			if template is None:
-				# if no template is given, we should rais an error
-				#TODO: raise error
-				pass
+				raise Exception("no template given")
 
 			# get the context from the executed function
 			context = f(*args, **kwargs)
@@ -20,7 +20,13 @@ def templated(template):
 				return context
 
 			# render the context using given template
-			return render_template(template, **context)
+			try:
+				response = render_template(template, **context)
+				return response
+			except RepositoryError as error:
+				return redirect(url_for('not_found'))
+			except:
+				raise
 
 		return template_function
 	return decorator

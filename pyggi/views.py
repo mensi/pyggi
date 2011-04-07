@@ -3,7 +3,7 @@
 import os
 
 from lib.decorators import templated, response_mimetype
-from lib.repository import GitRepository
+from lib.repository.gitr import GitRepository
 from flask import Module, current_app, redirect, url_for
 
 frontend = Module(__name__, 'pyggi', url_prefix=None)
@@ -29,12 +29,12 @@ def index():
 	# compute the names of repositories
 	repnames = [name \
 		for name in os.walk(current_app.config['GIT_REPOSITORIES']).next()[1] \
-		if GitRepository.isGitRepository(name)
+		if GitRepository.isRepository(name)
 	]
 
 	return dict( \
 		repositories = [ \
-			GitRepository.getRepository(name) for name in repnames
+			GitRepository(repository=GitRepository.path(name)) for name in repnames
 		]
 	)
 
@@ -55,22 +55,14 @@ def not_found():
 @get("/<repository>/tree/<tree>/", endpoint='browse')
 @templated("pyggi/browse.xhtml")
 def browse(repository, tree):
-	# check if the repository exists
-	repo = GitRepository.getRepository(repository)
-	if repo is None:
-		return redirect(url_for('not_found'))
-
-	# check if we can get the branch head
-	head = repo.getBranchHead(tree)
-	if head is None:
+	try:
+		repo = GitRepository(repository=GitRepository.path(repository))
+	except:
 		return redirect(url_for('not_found'))
 
 	return dict( \
-		repo = repository,
-		treeid = tree,
-		commit = head,
-		readme = repo.getReadme(),
-		tree = head.tree.values(),
+		repository = repo,
+		treeid = tree
 	)
 
 @get("/<repository>/commit/<tree>/", endpoint='commit')
@@ -96,33 +88,15 @@ def commit(repository, tree):
 @get("/<repository>/tree/<tree>/<path:path>/", endpoint='browse_sub')
 @templated("pyggi/browse.xhtml")
 def browse_sub(repository, tree, path):
-	# check if the repository exists
-	repo = GitRepository.getRepository(repository)
-	if repo is None:
-		return redirect(url_for('not_found'))
-
-	# the complete path, including the treeish
-	path = "/".join([tree,path])
-
-	# check for tree
-	head = repo.getBranchHead(tree)
-	if head is None:
-		return redirect(url_for('not_found'))
-
-	# save the tree-id
-	treeid = tree
-
-	# get tree by path and check for error
-	tree = repo.getTreeByPath(path)
-	if tree is None:
+	try:
+		repo = GitRepository(repository=GitRepository.path(repository))
+	except:
 		return redirect(url_for('not_found'))
 
 	return dict( \
-		repo = repository,
-		treeid = treeid,
-		commit = head,
-		tree = tree.values(),
-		breadcrumbs = path.split("/")[1:]
+		repository = repo,
+		treeid = tree,
+		breadcrumbs = path.split("/")
 	)
 
 @get("/<repository>/history/<tree>/<path:path>", endpoint='history')
@@ -259,3 +233,4 @@ def download(repository, tree):
 	response.headers['Content-Disposition'] = "attachment; filename=%s-%s.tar.gz" % (repository, tree[:8])
 
 	return response
+

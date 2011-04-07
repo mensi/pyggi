@@ -7,6 +7,15 @@
 {% include "pyggi/commit.xhtml" %}
 {% include "pyggi/breadcrumbs.xhtml" %}
 
+{% if breadcrumbs %}
+	{% set tree = repository.tree('/'.join([treeid]+breadcrumbs)).values() %}
+{% else %}
+	{% set tree = repository.tree(treeid).values() %}
+{% endif %}
+
+{% set repo = repository.name %}
+{% set readme = repository.readme %}
+
 <style type="text/css" media="screen">
 	.tree-browser td {
 		background: #F8F8F8 url("{{ url_for('static', filename="images/bg_browse.png") }}") repeat-x 0px 100%;
