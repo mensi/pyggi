@@ -484,6 +484,7 @@ a:hover {
 .commits-condensed td.date {
 	color: #777;
 	text-align: right;
+	width: 120px;
 }
 
 .repo {

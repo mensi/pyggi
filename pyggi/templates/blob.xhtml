@@ -6,7 +6,9 @@
 {% include "pyggi/commit.xhtml" %}
 {% include "pyggi/breadcrumbs.xhtml" %}
 
-{% set path='/'.join(breadcrumbs) %}
+{% set repo = repository.name %}
+{% set path = '/'.join(breadcrumbs) %}
+{% set blob = repository.blob('/'.join([treeid]+breadcrumbs)) %}
 
 <style type="text/css" media="screen">
 	#file .meta {

@@ -2,7 +2,7 @@
 
 import os
 
-from lib.decorators import templated, response_mimetype
+from lib.decorators import templated
 from lib.repository.gitr import GitRepository
 from flask import Module, current_app, redirect, url_for
 
@@ -40,12 +40,8 @@ def index():
 
 @get("/<repository>/", endpoint='repository')
 def repository(repository):
-	# check repository
-	repo = GitRepository.getRepository(repository)
-	if repo is None:
-		return redirect(url_for('not_found'))
-
-	return redirect(url_for('browse', repository=repository, tree=repo.repo.active_branch))
+	repo = GitRepository(repository=GitRepository.path(repository))
+	return redirect(url_for('browse', repository=repository, tree=repo.active_branch))
 
 @get("/404", endpoint='not_found')
 @templated("pyggi/404.xhtml")
@@ -55,10 +51,7 @@ def not_found():
 @get("/<repository>/tree/<tree>/", endpoint='browse')
 @templated("pyggi/browse.xhtml")
 def browse(repository, tree):
-	try:
-		repo = GitRepository(repository=GitRepository.path(repository))
-	except:
-		return redirect(url_for('not_found'))
+	repo = GitRepository(repository=GitRepository.path(repository))
 
 	return dict( \
 		repository = repo,
@@ -68,30 +61,17 @@ def browse(repository, tree):
 @get("/<repository>/commit/<tree>/", endpoint='commit')
 @templated("pyggi/commit-info.xhtml")
 def commit(repository, tree):
-	# check if the repository exists
-	repo = GitRepository.getRepository(repository)
-	if repo is None:
-		return redirect(url_for('not_found'))
-
-	# check for tree
-	head = repo.getBranchHead(tree)
-	if head is None:
-		return redirect(url_for('not_found'))
+	repo = GitRepository(repository=GitRepository.path(repository))
 
 	return dict( \
-		repo = repository,
+		repository = repo,
 		treeid = tree,
-		commit = head,
-		diffs = head.diffs
 	)
 
 @get("/<repository>/tree/<tree>/<path:path>/", endpoint='browse_sub')
 @templated("pyggi/browse.xhtml")
 def browse_sub(repository, tree, path):
-	try:
-		repo = GitRepository(repository=GitRepository.path(repository))
-	except:
-		return redirect(url_for('not_found'))
+	repo = GitRepository(repository=GitRepository.path(repository))
 
 	return dict( \
 		repository = repo,
@@ -102,110 +82,40 @@ def browse_sub(repository, tree, path):
 @get("/<repository>/history/<tree>/<path:path>", endpoint='history')
 @templated("pyggi/history.xhtml")
 def history(repository, tree, path):
-	# check if the repository exists
-	repo = GitRepository.getRepository(repository)
-	if repo is None:
-		return redirect(url_for('not_found'))
-
-	# the complete path, including the treeish
-	path = "/".join([tree, path])
-
-	# check for head
-	head = repo.getBranchHead(tree)
-	if head is None:
-		return redirect(url_for('not_found'))
-
-	# get history object
-	history = repo.getHistory(path)
-	if history is None:
-		return redirect(url_for('not_found'))
+	repo = GitRepository(repository=GitRepository.path(repository))
 
 	return dict( \
-		repo = repository,
+		repository = repo,
 		treeid = tree,
-		commit = head,
-		history = history,
-		breadcrumbs = path.split("/")[1:]
+		breadcrumbs = path.split("/")
 	)
 
 @get("/<repository>/blob/<tree>/<path:path>", endpoint='blob')
 @templated("pyggi/blob.xhtml")
 def blob(repository, tree, path):
-	# check if the repository exists
-	repo = GitRepository.getRepository(repository)
-	if repo is None:
-		return redirect(url_for('not_found'))
-
-	# the complete path, including the treeish
-	path = "/".join([tree,path])
-
-	# check for head
-	head = repo.getBranchHead(tree)
-	if head is None:
-		return redirect(url_for('not_found'))
-
-	# check for blob
-	blob = repo.getBlobByPath(path)
-	if blob is None:
-		return redirect(url_for('not_found'))
+	repo = GitRepository(repository=GitRepository.path(repository))
 
 	return dict( \
-		repo = repository,
+		repository = repo,
 		treeid = tree,
-		commit = head,
-		blob = blob,
-		breadcrumbs = path.split("/")[1:]
+		breadcrumbs = path.split("/")
 	)
 
 @get("/<repository>/blame/<tree>/<path:path>", endpoint='blame')
 @templated("pyggi/blame.xhtml")
 def blame(repository, tree, path):
-	# check if the repository exists
-	repo = GitRepository.getRepository(repository)
-	if repo is None:
-		return redirect(url_for('not_found'))
-
-	# the complete path, including the treeish
-	path = "/".join([tree,path])
-
-	# check for head
-	head = repo.getBranchHead(tree)
-	if head is None:
-		return redirect(url_for('not_found'))
-
-	# check for blob
-	blob = repo.getBlobByPath(path)
-	if blob is None:
-		return redirect(url_for('not_found'))
-
-	# check for blame
-	blame = repo.getBlame(path)
-	if blame is None:
-		return redirect(url_for('not_found'))
+	repo = GitRepository(repository=GitRepository.path(repository))
 
 	return dict( \
-		repo = repository,
+		repository = repo,
 		treeid = tree,
-		commit = head,
-		blame = blame,
-		blob = blob,
-		breadcrumbs = path.split("/")[1:]
+		breadcrumbs = path.split("/")
 	)
 
 @get("/<repository>/raw/<tree>/<path:path>", endpoint='raw')
 def raw(repository, tree, path):
-	# check if the repository exists
-	repo = GitRepository.getRepository(repository)
-	if repo is None:
-		return redirect(url_for('not_found'))
-
-	# the complete path, including the treeish
-	path = "/".join([tree,path])
-
-	# check blob
-	blob = repo.getBlobByPath(path)
-	if blob is None:
-		return redirect(url_for('not_found'))
+	repo = GitRepository(repository=GitRepository.path(repository))
+	blob = repo.blob('/'.join([tree,path]))
 
 	# create a response with the correct mime type
 	from flask import make_response
@@ -215,15 +125,8 @@ def raw(repository, tree, path):
 
 @get("/<repository>/download/<tree>", endpoint='download')
 def download(repository, tree):
-	# check if the repository exists
-	repo = GitRepository.getRepository(repository)
-	if repo is None:
-		return redirect(url_for('not_found'))
-
-	# check tar.gz
-	data = repo.getTarGz(tree)
-	if data is None:
-		return redirect(url_for('not_found'))
+	repo = GitRepository(repository=GitRepository.path(repository))
+	data = repo.archive(tree)
 
 	# create a response with the correct mime type
 	# and a better filename

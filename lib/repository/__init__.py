@@ -7,17 +7,61 @@ class RepositoryError(Exception):
 	def __str__(self):
 		return repr(self.reason)
 
+	def __getattr__(self, name):
+		if not name in ["reason", "__str__"]:
+			raise self
+		return super(RepositoryError, self).__getattr__(name)
+
 class Repository(object):
 	def __init__(self, **options):
-		name = "Dummy repository"
-		description = "No description"
-		is_empty = True
+		self.name = "Dummy repository"
+		self.description = "No description"
+		self.is_empty = True
 
 	class Readme(object):
 		def __init__(self, **kwargs):
 			self.name = kwargs['name']
 			self.data = kwargs['data']
 			self.type = kwargs['type']
+
+	class Stats(object):
+		"""
+			A Stats object should have at least the following fields
+
+			files		a dictionary with the files in the commit as keys
+						and a dictionary with 'insertions','deletions' as keys
+						and integer as values that describe the number of changes
+
+							example: files = {'a': {'insertions': 3, 'deletions': 25}}
+
+			total		a dictionary with keys 'files', 'insertions' and 'deletions' as keys
+						and integer as values that describe the number of changes
+
+							example: total = {'files': 1, 'insertions': 3, 'deletions': 25}
+		"""
+		pass
+
+	class Diff(object):
+		"""
+			A Diff object should have at least the following fields
+
+			new_file		the filename of a newly created file or None if the
+							file existed before
+			deleted_file	the filename of the deleted file or None if the
+							file still exists
+
+			rename_to
+			rename_from		describes a rename of a file, or None if the
+							filename does not change
+
+			b_path			the path inside the git repository of this file
+
+			diff			a blob field that contains the text of a 'git diff' like
+							format
+
+			stats			a Repository.Stats object
+		"""
+		pass
 
 	class Tree(object):
 		"""
@@ -36,6 +80,9 @@ class Repository(object):
 			name				the name of this blob
 			id					the unique id of that blob
 			data				the data that this blob contains
+			size				the size in bytes of the file
+			mime_type			the mime_type of that file or 'text/plain' if
+								unknown
 		"""
 		pass
 
@@ -53,6 +100,8 @@ class Repository(object):
 			tree				a Repository.Tree like object
 			parents				a list of Repository.Commit objects that
 								are parents of this commit
+			diffs				a list of Repository.Diff objects that describe
+								the changes in this commit
 		"""
 		pass
 
@@ -99,6 +148,14 @@ class Repository(object):
 		"""
 		raise RepositoryError("Abstract Repository")
 
+	def archive(self, treeish):
+		"""
+			@param	treeish the id of a specific commit
+
+			return the data of a 'tar.gz' archive of the specified commit
+		"""
+		raise RepositoryError("Abstract Repository")
+
 	@property
 	def readme(self):
 		"""
@@ -117,9 +174,34 @@ class Repository(object):
 		"""
 		raise RepositoryError("Abstract Repository")
 
+	def history(self, path):
+		"""
+			@param path a path in the repository for which the history
+						should be acquired
+
+			return a list of Repository.Commit objects that compose of the
+					history for that path. The list should be sorted such that
+					the newest commit is the first element in the list.
+		"""
+		raise RepositoryError("Abstract Repository")
+
+	def blame(self, path):
+		"""
+			@param path a path in the repository for which the blame
+						information should be acquired
+
+			return a list of tuples that contain the blame information. the tuple
+					is composed of the following entries:
+						[0] ->	a Repository.Commit object
+						[1] ->	a list of strings that are the lines of
+								the file that were changed in the commit
+								(referenced by [0])
+		"""
+		raise RepositoryError("Abstract Repository")
+
 	def tree(self, path):
 		"""
-			@param path a path in thre repository for which a tree
+			@param path a path in the repository for which a tree
 						should be acquired.
 
 			return a Repository.Tree like object or raise a RepositoryError

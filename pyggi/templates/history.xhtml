@@ -4,6 +4,9 @@
 
 {% include "pyggi/repo.xhtml" %}
 
+{% set repo = repository.name %}
+{% set history = repository.history('/'.join([treeid]+breadcrumbs)) %}
+
 <div class="breadcrumbs">
 	History for <a href="{{ url_for('blob', repository=repo, tree=treeid, path='/'.join(breadcrumbs)) }}"><b>{{ repo }}</b> / {{ ' / '.join(breadcrumbs) }}</a>
 </div>

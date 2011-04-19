@@ -61,6 +61,27 @@ class GitRepository(Repository):
 
 		return None
 
+	def archive(self, treeish):
+		try:
+			return self.repo.archive_tar_gz(treeish, self.name+"/")
+		except GitCommandError as error:
+			return RepositoryError("Repository '%s' has no tree '%s'" % (self.name, treeish))
+
+	def history(self, path):
+		try:
+			breadcrumbs = path.split("/")
+			return self.repo.commits(breadcrumbs[0], '/'.join(breadcrumbs[1:]))
+		except GitCommandError as error:
+			return RepositoryError("Repository '%s' has no path '%s'" % (self.name, path))
+
+	def blame(self, path):
+		try:
+			from git import Blob
+			breadcrumbs = path.split("/")
+			return Blob.blame(self.repo, breadcrumbs[0], '/'.join(breadcrumbs[1:]))
+		except GitCommandError as error:
+			return RepositoryError("Repository '%s' has no blame '%s'" % (self.name, path))
+
 	@staticmethod
 	def isRepository(name):
 		try:
@@ -82,4 +103,4 @@ class GitRepository(Repository):
 		try:
 			return self.repo.commits(treeish)[0]
 		except GitCommandError as error:
-			return RepositoryError("Repository '%s' has no tree '%s'" % (name, treeish))
+			return RepositoryError("Repository '%s' has no tree '%s'" % (self.name, treeish))
