@@ -69,10 +69,16 @@
 	}
 </script>
 
+
 <div id="repo">
 
 	<ul class="menu">
-			<li class="button"><a href="#" onclick="javascript: show_source();">Source</a></li>
+			<li class="button"><a href="{{ url_for('browse', repository=repo, tree=repository.active_branch) }}" onclick="javascript: show_source();">Source</a></li>
+			{% if repository.license %}
+				{% set ltree = repository.license.split("/",1)[0] %}
+				{% set lpath = repository.license.split("/",1)[1] %}
+				<li class="button"><a href="{{ url_for('blob', repository=repo, tree=ltree, path=lpath) }}">License</a></li>
+			{% endif %}
 			<li class="button"><a href="#" onclick="javascript: show_download();">Download</a></li>
 			<li class="current-branch">
 				<span><b>

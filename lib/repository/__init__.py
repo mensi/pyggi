@@ -88,6 +88,7 @@ class Repository(object):
 			id					the unique id of that blob
 			data				the data that this blob contains
 			size				the size in bytes of the file
+			mode				the mode of the file
 			mime_type			the mime_type of that file or 'text/plain' if
 								unknown
 			is_tree = False
@@ -164,6 +165,14 @@ class Repository(object):
 			@param	treeish the id of a specific commit
 
 			return the data of a 'tar.gz' archive of the specified commit
+		"""
+		raise RepositoryError("Abstract Repository")
+
+	@property
+	def license(self):
+		"""
+			return the path to the LICENSE file in the active branch or None
+					if no LICENSE file is available.
 		"""
 		raise RepositoryError("Abstract Repository")
 
