@@ -6,18 +6,18 @@
 """
 
 from flask import current_app
-from git import Repo, GitCommandError, NoSuchPathError
+from git import Repo, GitCommandError
 from lib.repository import RepositoryError, Repository
 
 class GitRepository(Repository):
 	def __init__(self, **options):
 		self.options = options
 
-		# try to load the git repository
-		try:
-			self.repo = Repo(self.options['repository'])
-		except NoSuchPathError as error:
+		# check if it's really a repository
+		if not GitRepository.isRepository(self.options['repository'].split("/")[-1]):
 			raise RepositoryError("Repository '%s' is not a Git Repository" % self.options['repository'])
+
+		self.repo = Repo(self.options['repository'])
 
 		# next up prepare some fields
 		self.description = self.repo.description
