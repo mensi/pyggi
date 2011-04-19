@@ -31,6 +31,17 @@ class GitRepository(Repository):
 
 		return self.repo.heads[0]
 
+	@property
+	def license(self):
+		try:
+			path = self.active_branch+"/LICENSE"
+			if not self.blob(path) is None:
+				return path
+		except RepositoryError as error:
+			pass
+
+		return None
+
 	def tree(self, path):
 		breadcrumbs = path.split("/")
 		tree = self.commit(breadcrumbs[0]).tree
@@ -43,10 +54,10 @@ class GitRepository(Repository):
 		from git import Blob, Tree
 		if isinstance(tree, Tree):
 			items = tree.values()
-			trees = sorted([x for x in items if isinstance(x, Tree)], key=lambda x: x.id, reverse=True)
+			trees = sorted([x for x in items if isinstance(x, Tree)], key=lambda x: x.name)
 			for t in trees:
 				t.is_tree = True
-			blobs = sorted([x for x in items if isinstance(x, Blob)], key=lambda x: x.id, reverse=True)
+			blobs = sorted([x for x in items if isinstance(x, Blob)], key=lambda x: x.name)
 			tree.values = trees+blobs
 
 		tree.is_tree = True
