@@ -51,6 +51,8 @@ That's it. There's nothing more to do.
 
 ## License
 
+pyggi is licensed under the BSD License. See LICENSE for more information.
+
 The icons used are [famfamfam silk](http://www.famfamfam.com/lab/icons/silk/), which are licensed
 under a [Creative Commons Attribution 2.5 License](http://creativecommons.org/licenses/by/2.5/)
 
