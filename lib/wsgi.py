@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+"""
+	:copyright: (c) 2011 by Tobias Heinzen 
+	:license: BSD, see LICENSE for more details
+"""
+
 from flask import Flask
 
 def create_app(**kwargs):

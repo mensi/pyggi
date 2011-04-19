@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+"""
+	:copyright: (c) 2011 by Tobias Heinzen 
+	:license: BSD, see LICENSE for more details
+"""
+
 from flask import current_app
 from git import Repo, GitCommandError, NoSuchPathError
 from lib.repository import RepositoryError, Repository
