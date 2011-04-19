@@ -114,6 +114,10 @@ class GitRepository(Repository):
 
 	def commit(self, treeish):
 		try:
-			return self.repo.commits(treeish)[0]
+			commit =  self.repo.commits(treeish)[0]
+			commit.is_branch = commit.id in [x.commit.id for x in self.repo.branches]
+			commit.is_tag = commit in [x.name for x in self.repo.tags]
+
+			return commit
 		except GitCommandError as error:
 			return RepositoryError("Repository '%s' has no tree '%s'" % (self.name, treeish))

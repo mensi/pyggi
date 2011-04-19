@@ -46,15 +46,3 @@ def format_diff(value):
 
 	return '<div>%s</div>' % value
 
-
-def is_branch(value):
-	from git import Commit
-	if not isinstance(value, Commit): return False
-	return value.id in [x.commit.id for x in value.repo.branches]
-
-def is_tag(value):
-	from git import Commit
-	if not isinstance(value, tuple): return False
-	if not isinstance(value[0], Commit): return False
-	return value[1] in [x.name for x in value[0].repo.tags]
-

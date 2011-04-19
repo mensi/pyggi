@@ -76,9 +76,9 @@
 			<li class="button"><a href="#" onclick="javascript: show_download();">Download</a></li>
 			<li class="current-branch">
 				<span><b>
-				{% if commit is git_branch %}
+				{% if commit.is_branch %}
 				Branch:
-				{% elif (commit, treeid) is git_tag %}
+				{% elif commit.is_tag %}
 				Tag:
 				{% else %}
 				Tree:

@@ -105,6 +105,9 @@ class Repository(object):
 								are parents of this commit
 			diffs				a list of Repository.Diff objects that describe
 								the changes in this commit
+
+			is_branch			True if the commit is current head of the active branch
+			is_tag				True if the commit has a tag
 		"""
 		pass
 
