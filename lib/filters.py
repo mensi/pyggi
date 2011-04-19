@@ -35,6 +35,7 @@ def format_filesize(value):
 
 def format_diff(value):
 	# escape HTML, because format_diff shall be used with 'safe'
+	value = unicode(value, 'utf-8') # correct?
 	value = "".join(html_escape_table.get(c,c) for c in value)
 
 	if value.startswith("+") and not value.startswith("+++"):
