@@ -38,7 +38,7 @@ def create_app(**kwargs):
 				_import = __import__(module_name, globals(), locals(), [module_import], -1)
 				app.register_module(getattr(_import, module_import))
 			except Exception as e:
-				print e
+				pass
 
 	# register some filters
 	from lib.filters import format_datetime, format_filesize, format_diff

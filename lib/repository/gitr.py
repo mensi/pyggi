@@ -86,7 +86,7 @@ class GitRepository(Repository):
 				type = "markdown"
 			)
 		except Exception as errr:
-			print errr
+			pass
 
 		return None
 
