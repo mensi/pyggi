@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template, make_response, redirect
+from flask import render_template, make_response, redirect, url_for
 from functools import wraps
 from lib.repository import RepositoryError
 
@@ -13,7 +13,16 @@ def templated(template):
 				raise Exception("no template given")
 
 			# get the context from the executed function
-			context = f(*args, **kwargs)
+
+
+			context = None
+			try:
+				context = f(*args, **kwargs)
+			except RepositoryError as error:
+				return redirect(url_for('not_found'))
+			except:
+				raise
+
 			if context is None:
 				context = {}
 			elif not isinstance(context, dict):
