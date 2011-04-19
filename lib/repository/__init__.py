@@ -68,8 +68,10 @@ class Repository(object):
 			A Tree object should have at least the following fields
 
 			id					the unique id of that tree
-			values()			a method returning a list of Blob and Tree objects
+			values				a list of Blob and Tree objects, sorted by name
+								and Tree objects are grouped together before the Blob objects
 			name				the name of this tree
+			is_tree = True
 		"""
 		pass
 
@@ -83,6 +85,7 @@ class Repository(object):
 			size				the size in bytes of the file
 			mime_type			the mime_type of that file or 'text/plain' if
 								unknown
+			is_tree = False
 		"""
 		pass
 

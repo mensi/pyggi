@@ -8,9 +8,9 @@
 {% include "pyggi/breadcrumbs.xhtml" %}
 
 {% if breadcrumbs %}
-	{% set tree = repository.tree('/'.join([treeid]+breadcrumbs)).values() %}
+	{% set tree = repository.tree('/'.join([treeid]+breadcrumbs)).values %}
 {% else %}
-	{% set tree = repository.tree(treeid).values() %}
+	{% set tree = repository.tree(treeid).values %}
 {% endif %}
 
 {% set repo = repository.name %}
@@ -52,19 +52,19 @@
 {% for item in tree %}
 	<tr>
 		<td class="icon">
-			{% if item is git_tree %}
+			{% if item.is_tree %}
 			<img alt="directory" src="{{ url_for('static', filename='images/dir.png') }}" width="16" height="16" />
 			{% else %}
 			<img alt="file" src="{{ url_for('static', filename='images/txt.png') }}" width="16" height="16" />
 			{% endif %}
 		</td>
 		<td class="content">
-			{% if item is git_tree %}
+			{% if item.is_tree %}
 			<a href="{{ url_for('browse_sub', repository=repo, tree=treeid, path='/'.join(breadcrumbs+[item.name])) }}">
 			{% else %}
 			<a href="{{ url_for('blob', repository=repo, tree=treeid, path='/'.join(breadcrumbs+[item.name])) }}">
 			{% endif %}
-				{{ item.name }}{% if item is git_tree %}/{% endif %}
+				{{ item.name }}{% if item.is_tree %}/{% endif %}
 			</a>
 		</td>
 		<td class="age">&nbsp;</td>

@@ -34,10 +34,23 @@ class GitRepository(Repository):
 				tree = tree[crumb]
 			except KeyError as error:
 				raise RepositoryError("Repository '%s' has no tree '%s'" % (self.name, path))
+
+		from git import Blob, Tree
+		if isinstance(tree, Tree):
+			items = tree.values()
+			trees = sorted([x for x in items if isinstance(x, Tree)], key=lambda x: x.id, reverse=True)
+			for t in trees:
+				t.is_tree = True
+			blobs = sorted([x for x in items if isinstance(x, Blob)], key=lambda x: x.id, reverse=True)
+			tree.values = trees+blobs
+
+		tree.is_tree = True
 		return tree
 
 	def blob(self, path):
-		return self.tree(path)
+		blob = self.tree(path)
+		blob.is_tree = False
+		return blob
 
 	@property
 	def active_branch(self):
@@ -95,7 +108,7 @@ class GitRepository(Repository):
 		import os
 		folder = os.path.join(current_app.config['GIT_REPOSITORIES'], name)
 		if not os.path.exists(folder):
-			return none
+			return None
 
 		return folder
 

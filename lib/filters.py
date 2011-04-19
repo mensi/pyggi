@@ -46,9 +46,6 @@ def format_diff(value):
 
 	return '<div>%s</div>' % value
 
-def is_git_tree(value):
-	from git import Tree
-	return isinstance(value, Tree)
 
 def is_branch(value):
 	from git import Commit
