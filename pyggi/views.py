@@ -45,7 +45,14 @@ def index():
 
 @get("/<repository>/", endpoint='repository')
 def repository(repository):
-	repo = GitRepository(repository=GitRepository.path(repository))
+	from lib.repository import RepositoryError
+
+	try:
+		repo = GitRepository(repository=GitRepository.path(repository))
+	except RepositoryError:
+		return redirect(url_for('not_found'))
+	except:
+		raise
 	return redirect(url_for('browse', repository=repository, tree=repo.active_branch))
 
 @get("/404", endpoint='not_found')
