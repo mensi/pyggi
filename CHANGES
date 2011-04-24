@@ -6,6 +6,7 @@ Here you can see the full list of changes between each pyggi release.
 dev
 ---
 
+- adding clone urls to repository overview
 - truncate repo description to 50 chars (on repo overview)
 - only display README file on root path
 - display submodules in directory browser

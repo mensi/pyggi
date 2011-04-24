@@ -3,8 +3,9 @@ Pyggi is a lightweight git frontend
 
 ## Features
 
+- README markdown on front-page
 - easy setup and configuration
-- full WSGI compliance
+- full WSGI compliance (flask)
 - an easy-on-the-eyes UI
 
 ## Dependencies
