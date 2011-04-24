@@ -3,6 +3,13 @@ pyggi Changelog
 
 Here you can see the full list of changes between each pyggi release.
 
+dev
+---
+
+- truncate repo description to 50 chars (on repo overview)
+- only display README file on root path
+- display submodules in directory browser
+- BUGFIX: catching repository errors and redirect to 404
 
 Version 0.1
 -----------
