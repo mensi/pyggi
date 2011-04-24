@@ -67,6 +67,11 @@ class GitRepository(Repository):
 		self.is_empty = len(self.repo.heads) == 0
 
 	@property
+	def clone_urls(self):
+		urls = current_app.config['CLONE_URLS']
+		return dict([(proto, urls[proto].replace("%repo%", self.name)) for proto in urls.keys()])
+
+	@property
 	def head(self):
 		if self.is_empty:
 			raise RepositoryError("Repository '%s' is empty" % self.name)

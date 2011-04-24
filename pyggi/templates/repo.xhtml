@@ -1,5 +1,6 @@
 {% set commit = repository.commit(treeid) %}
 {% set repo = repository.name %}
+{% set clone = repository.clone_urls %}
 
 <style type="text/css" media="screen"> 
 	#repo ul.menu li.current-branch {
@@ -56,6 +57,11 @@
 		});
 
 		$('#download').hide();
+
+		{% if clone %}
+			{% set first = clone.keys()[0] %}
+			change_url('{{ clone[first] }}', 'proto-{{ first }}')
+		{% endif %}
 	}
 
 	show_source = function() {
@@ -67,6 +73,14 @@
 		$('#source').hide();
 		$('#download').show();
 	}
+
+	{% if clone %}
+		change_url = function(url, id) {
+			{% for key in clone %}$('#proto-{{ key }}').removeClass('selected');{% endfor %}
+			$('#'+id).addClass('selected');
+			$('#url-field').val(url);
+		}
+	{% endif %}
 </script>
 
 
@@ -120,6 +134,19 @@
 
 	<div class="summary">
 		<code><pre>{{ commit.repo.description }}</pre></code>
+	
+		{% if clone %}
+			<div class="rule"></div>
+			<div class="clone">
+				<ul>
+					{% for key in clone %}
+						<li id="proto-{{ key }}"><a href="javascript: change_url('{{ clone[key] }}', 'proto-{{ key }}');">{{ key }}</a></li>
+					{% endfor %}
+				</ul>
+				<input type="text" class="url-field" id="url-field" value="" />
+			</div>
+		{% endif %}
 	</div>
+
 
 </div>

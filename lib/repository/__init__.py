@@ -195,6 +195,15 @@ class Repository(object):
 		"""
 		raise RepositoryError("Abstract Repository")
 
+	@property
+	def clone_urls(self):
+		"""
+			return a dictionary that contains as keys a protocol
+					and as value an url, from where the repository
+					can be clone.
+		"""
+		raise RepositoryError("Abstract Repository")
+
 	def submodules(self, base, treeish):
 		"""
 			@param	base the base path from which the submodules should

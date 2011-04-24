@@ -525,6 +525,88 @@ a:hover {
 	margin: 0px 0px 10px;
 }
 
+#repo .rule {
+	border-bottom: 1px solid white;
+	border-top: 1px solid #DDD;
+	clear: both;
+	margin: 10px 0px;
+}
+
+#repo .clone {
+	height: 23px;
+}
+
+#repo .clone ul {
+	float: left;
+	height: 23px;
+	margin: 0;
+	padding: 0;
+}
+
+#repo .clone ul li {
+	border: none;
+	cursor: pointer;
+	float: left;
+	height: 23px;
+	list-style-type: none;
+	margin: 0px;
+	overflow: visible;
+	padding: 0px;
+	white-space: nowrap;
+}
+
+#repo .clone ul li:first-child a {
+	border-bottom-left-radius: 3px 3px;
+	border-left: 1px solid #D4D4D4;
+	border-top-left-radius: 3px 3px;
+}
+
+#repo .clone ul li a {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F4F4F4), to(#ECECEC));
+	border: 1px solid #D4D4D4;
+	border-left: none;
+	color: #333;
+	display: block;
+	font-size: 11px;
+	font-weight: bold;
+	height: 21px;
+	line-height: 21px;
+	margin: 0px;
+	padding: 0px 9px;
+	text-decoration: none;
+	text-shadow: white 1px 1px 0px;
+}
+
+#repo .clone ul li.selected a,
+#repo .clone ul li.selected a:hover {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#D7D7D7), to(#ABABAB));
+	border-bottom-color: #9A9A9A;
+	border-color: #C9C9C9 #C9C9C9 #9A9A9A;
+	color: black;
+	text-shadow: rgba(255, 255, 255, 0.597656) 1px 1px 0px;
+}
+
+#repo .clone ul li a:hover {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#599BDC), to(#3072B3));
+	border-bottom-color: #2A65A0;
+	border-color: #518CC6 #518CC6 #2A65A0;
+	color: white;
+	text-decoration: none;
+	text-shadow: rgba(0, 0, 0, 0.398438) -1px -1px 0px;
+}
+
+#repo .clone .url-field {
+	border: 1px solid #CCC;
+	border-left: none;
+	color: #666;
+	float: left;
+	font-family: Monaco, 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+	font-size: 11px;
+	height: 16px;
+	padding: 3px 5px 2px;
+	width: 330px;
+}
+
 #repo ul.menu {
 	background-color: #EAEAEA;
 
