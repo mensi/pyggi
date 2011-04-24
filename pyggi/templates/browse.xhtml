@@ -49,6 +49,17 @@
 {% set breadcrumbs=[] %}
 {% endif %}
 
+{% for item in repository.submodules('/'.join(breadcrumbs), treeid) %}
+	<tr>
+		<td class="icon">
+			<img alt="link" src="{{ url_for('static', filename='images/link.png') }}" width="16" height="16" />
+		</td>
+		<td class="content">
+			{{ item.path_name }} &rarr; {{ item.url }}
+		</td>
+	</tr>
+{% endfor %}
+
 {% for item in tree %}
 	<tr>
 		<td class="icon">

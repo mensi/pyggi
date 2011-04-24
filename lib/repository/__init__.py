@@ -29,6 +29,17 @@ class Repository(object):
 			self.data = kwargs['data']
 			self.type = kwargs['type']
 
+	class Submodule(object):
+		"""
+			A Submodule object should have at least the following fields
+
+			name		the name of the submodule
+			path_base	the base path were this submodule is located in
+			path_name	the name of the path that links to the submodule
+			url			the url from which this submodule is cloned
+		"""
+		pass
+
 	class Stats(object):
 		"""
 			A Stats object should have at least the following fields
@@ -181,6 +192,17 @@ class Repository(object):
 		"""
 			return a Repository.Readme like object if there is a readme
 					file in the repository or None otherwise
+		"""
+		raise RepositoryError("Abstract Repository")
+
+	def submodules(self, base, treeish):
+		"""
+			@param	base the base path from which the submodules should
+							be listed
+			@param	treeish from which tree shall the submodules be listed
+
+			return a list of Repository.Submodule that are in the base path, sorted
+					by their path name or an empty list.
 		"""
 		raise RepositoryError("Abstract Repository")
 

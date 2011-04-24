@@ -10,6 +10,48 @@ from git import Repo, GitCommandError
 from lib.repository import RepositoryError, Repository
 
 class GitRepository(Repository):
+	class Submodule(object):
+		def __init__(self, configuration):
+			"""
+				@param configuration a list of strings, that correspond
+										to the configuration block for this
+										submodule
+			"""
+
+			import re
+			modulere = re.compile('\[submodule\s*"(.*?)"\]')
+			pathre = re.compile("\s*path\s*=\s*(.*)")
+			urlre = re.compile("\s*url\s*=\s*(.*)")
+
+			name = [
+						match[0]
+						for match in [modulere.findall(line) for line in configuration]
+						if len(match) == 1
+					]
+			path = [
+						match[0]
+						for match in [pathre.findall(line) for line in configuration]
+						if len(match) == 1
+					]
+			url = [
+						match[0]
+						for match in [urlre.findall(line) for line in configuration]
+						if len(match) == 1
+					]
+
+			if len(name) == 0 or len(path) == 0 or len(url) == 0:
+				raise RepositoryError("Corrupt submodule")
+
+			self.name = name[0]
+			path = path[0].rsplit("/", 1)
+			if len(path) == 1:
+				self.path_base = ""
+				self.path_name = path[0]
+			else:
+				self.path_base = path[0]
+				self.path_name = path[1]
+			self.url  = url[0]
+
 	def __init__(self, **options):
 		self.options = options
 
@@ -41,6 +83,29 @@ class GitRepository(Repository):
 			pass
 
 		return None
+
+	def submodules(self, base, tree):
+		try:
+			result = []
+			path = tree+"/.gitmodules"
+			data = self.blob(path).data.split("\n")
+
+			previous = -1
+			for n in xrange(0,len(data)):
+				line = data[n]
+				if line.startswith("[submodule"):
+					if not previous == -1:
+						result.append(GitRepository.Submodule(data[previous:n]))
+					previous = n
+
+			if not previous == -1:
+				result.append(GitRepository.Submodule(data[previous:len(data)]))
+
+			return sorted([x for x in result if x.path_base == base], key=lambda x: x.path_name)
+		except RepositoryError as error:
+			pass
+
+		return []
 
 	def tree(self, path):
 		breadcrumbs = path.split("/")

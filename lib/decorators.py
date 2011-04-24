@@ -18,8 +18,6 @@ def templated(template):
 				raise Exception("no template given")
 
 			# get the context from the executed function
-
-
 			context = None
 			try:
 				context = f(*args, **kwargs)
