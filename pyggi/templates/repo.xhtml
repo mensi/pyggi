@@ -58,10 +58,6 @@
 
 		$('#download').hide();
 
-		{% if clone %}
-			{% set first = clone.keys()[0] %}
-			change_url('{{ clone[first] }}', 'proto-{{ first }}')
-		{% endif %}
 	}
 
 	show_source = function() {
@@ -136,14 +132,15 @@
 		<code><pre>{{ commit.repo.description }}</pre></code>
 	
 		{% if clone %}
+			{% set first = clone.keys()[0] %}
 			<div class="rule"></div>
 			<div class="clone">
 				<ul>
 					{% for key in clone %}
-						<li id="proto-{{ key }}"><a href="javascript: change_url('{{ clone[key] }}', 'proto-{{ key }}');">{{ key }}</a></li>
+						<li id="proto-{{ key }}" {% if key == first %}class="selected"{% endif %}><a href="javascript: change_url('{{ clone[key] }}', 'proto-{{ key }}');">{{ key }}</a></li>
 					{% endfor %}
 				</ul>
-				<input type="text" class="url-field" id="url-field" value="" />
+				<input type="text" class="url-field" id="url-field" value="{{ clone[first] }}" />
 			</div>
 		{% endif %}
 	</div>
