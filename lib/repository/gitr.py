@@ -202,7 +202,7 @@ class GitRepository(Repository):
 		try:
 			commit =  self.repo.commits(treeish)[0]
 			commit.is_branch = commit.id in [x.commit.id for x in self.repo.branches]
-			commit.is_tag = commit in [x.name for x in self.repo.tags]
+			commit.is_tag = treeish in [x.name for x in self.repo.tags]
 
 			return commit
 		except GitCommandError as error:

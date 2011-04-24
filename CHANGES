@@ -11,6 +11,7 @@ dev
 - only display README file on root path
 - display submodules in directory browser
 - BUGFIX: catching repository errors and redirect to 404
+- BUGFIX: tags are now marked correctly as such
 
 Version 0.1
 -----------

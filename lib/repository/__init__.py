@@ -106,6 +106,16 @@ class Repository(object):
 		"""
 		pass
 
+	class Branch(object):
+		"""
+			A Branch object should have at least the following fields
+
+			name				the name of this branch
+			commit				a link to the commit that this branch
+								refers to (Repository.Commit)
+		"""
+		pass
+
 	class Commit(object):
 		"""
 			A Commit object should have at least the following fields
@@ -140,7 +150,8 @@ class Repository(object):
 	def branches(self):
 		"""
 			return a list of branches of the repository or raise
-					a RepositoryError
+					a RepositoryError. An entry in the list
+					is a Repository.Branch like object
 		"""
 		raise RepositoryError("Abstract Repository")
 
@@ -156,7 +167,8 @@ class Repository(object):
 	def tags(self):
 		"""
 			return a list of tags of the repository or raise
-					a RepositoryError
+					a RepositoryError. An entry in the list
+					is a Repository.Branch like object
 		"""
 		raise RepositoryError("Abstract Repository")
 
