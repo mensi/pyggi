@@ -32,12 +32,6 @@ def format_datetime(value, format='iso8601'):
 
 	return time.strftime(format, value)
 
-def format_filesize(value):
-	for x in ['bytes', 'kb', 'mb', 'gb', 'tb']:
-		if value < 1024.0:
-			return "%3.1f %s" % (value, x)
-		value /= 1024.0
-
 def format_diff(value):
 	# escape HTML, because format_diff shall be used with 'safe'
 	value = unicode(value, 'utf-8') # correct?

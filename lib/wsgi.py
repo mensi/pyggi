@@ -41,9 +41,8 @@ def create_app(**kwargs):
 				pass
 
 	# register some filters
-	from lib.filters import format_datetime, format_filesize, format_diff
+	from lib.filters import format_datetime, format_diff
 	app.jinja_env.filters['dateformat'] = format_datetime
-	app.jinja_env.filters['sizeformat'] = format_filesize
 	app.jinja_env.filters['diffformat'] = format_diff
 
 	return app

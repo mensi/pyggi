@@ -24,7 +24,7 @@
 			<span class="icon"><img alt="file" src="{{ url_for('static', filename='images/txt.png') }}" width="16" height="16" /></span>
 			<span class="mode">{{ blob.mode }} |</span>
 			<span>{{ blob.mime_type }} |</span>
-			<span>{{ blob.size|sizeformat }}</span>
+			<span>{{ blob.size|filesizeformat }}</span>
 		</div>
 		<ul class="actions">
 			<li><a href="{{ url_for('raw', repository=repo, tree=treeid, path=path) }}">raw</a>&nbsp;&nbsp;| </li>
