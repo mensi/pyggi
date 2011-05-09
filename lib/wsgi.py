@@ -5,7 +5,20 @@
 	:license: BSD, see LICENSE for more details
 """
 
-from flask import Flask
+from flask import Flask, current_app
+
+def error_handler(error):
+	if current_app.debug:
+		raise
+	else:
+		from lib.repository import RepositoryError
+		from flask import redirect, url_for
+
+		if not isinstance(error, RepositoryError):
+			# TODO: log the error
+			pass
+
+		return redirect(url_for('not_found'))
 
 def create_app(**kwargs):
 	"""
@@ -40,9 +53,13 @@ def create_app(**kwargs):
 			except Exception as e:
 				pass
 
+	# register exception handler
+	app.handle_exception = error_handler
+
 	# register some filters
 	from lib.filters import format_datetime, format_diff
 	app.jinja_env.filters['dateformat'] = format_datetime
 	app.jinja_env.filters['diffformat'] = format_diff
 
 	return app
+

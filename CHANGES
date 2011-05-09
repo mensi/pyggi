@@ -10,6 +10,10 @@ dev
 - truncate repo description to 50 chars (on repo overview)
 - only display README file on root path
 - display submodules in directory browser
+- added caching (using memcached)
+- marking optional features in the setuptool script as extras
+- BUGFIX: removed 'response_mimetype' decorator (unused)
+- BUGFIX: moving exception handling to a global function
 - BUGFIX: catching repository errors and redirect to 404
 - BUGFIX: tags are now marked correctly as such
 - BUGFIX: border around meta-icon removed

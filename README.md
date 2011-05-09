@@ -19,6 +19,7 @@ We are currently depending on a specific version of GitPython. All the newer ver
 
 - Markdown		>= 2.0.3
 - docutils		>= 0.7
+- python-memcached	>= 1.47
 
 You only need these packages if you want README files in repositories be formatted using these libraries.
 

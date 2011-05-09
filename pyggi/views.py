@@ -8,7 +8,6 @@
 import os
 
 from lib.decorators import templated, cached
-from lib.repository import RepositoryError
 from lib.repository.gitr import GitRepository
 from flask import Module, current_app, redirect, url_for
 
@@ -59,12 +58,7 @@ def index():
 
 @get("/<repository>/", endpoint='repository')
 def repository(repository):
-	try:
-		repo = GitRepository(repository=GitRepository.path(repository))
-	except RepositoryError:
-		return redirect(url_for('not_found'))
-	except:
-		raise
+	repo = GitRepository(repository=GitRepository.path(repository))
 	return redirect(url_for('browse', repository=repository, tree=repo.active_branch))
 
 @get("/404", endpoint='not_found')
@@ -145,13 +139,8 @@ def blame(repository, tree, path):
 @get("/<repository>/raw/<tree>/<path:path>", endpoint='raw')
 @cached(cache_keyfn('raw', ['path']))
 def raw(repository, tree, path):
-	try:
-		repo = GitRepository(repository=GitRepository.path(repository))
-		blob = repo.blob('/'.join([tree,path]))
-	except RepositoryError:
-		return redirect(url_for('not_found'))
-	except:
-		raise
+	repo = GitRepository(repository=GitRepository.path(repository))
+	blob = repo.blob('/'.join([tree,path]))
 
 	# create a response with the correct mime type
 	from flask import make_response
@@ -162,13 +151,8 @@ def raw(repository, tree, path):
 @get("/<repository>/download/<tree>", endpoint='download')
 @cached(cache_keyfn('download'))
 def download(repository, tree):
-	try:
-		repo = GitRepository(repository=GitRepository.path(repository))
-		data = repo.archive(tree)
-	except RepositoryError:
-		return redirect(url_for('not_found'))
-	except:
-		raise
+	repo = GitRepository(repository=GitRepository.path(repository))
+	data = repo.archive(tree)
 
 	# create a response with the correct mime type
 	# and a better filename
