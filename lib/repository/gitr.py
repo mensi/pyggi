@@ -78,6 +78,21 @@ class GitRepository(Repository):
 
 		return self.repo.heads[0]
 
+	@staticmethod
+	def resolve_ref(repository, ref):
+		import re
+		sha_regex = re.compile('[0-9a-f]{40}')
+
+		if sha_regex.match(ref) is not None:
+			return ref
+
+		try:
+			from git import Git
+			g = Git(repository)
+			return g.show_ref('--heads','--tags','-s', ref).split("\n", 1)[0]
+		except:
+			return None
+
 	@property
 	def license(self):
 		try:
@@ -194,7 +209,7 @@ class GitRepository(Repository):
 		import os
 		folder = os.path.join(current_app.config['GIT_REPOSITORIES'], name)
 		if not os.path.exists(folder):
-			return None
+			raise RepositoryError("Repository '%s' does not exist" % name)
 
 		return folder
 

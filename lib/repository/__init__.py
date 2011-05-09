@@ -146,6 +146,15 @@ class Repository(object):
 		"""
 		pass
 
+	@staticmethod
+	def resolve_ref(repository, reference):
+		"""
+			resolve a reference name in a repository to the respective
+			unique id of a commit, or None if the reference could not
+			be resolved
+		"""
+		raise RepositoryError("Abstract Repository")
+
 	@property
 	def branches(self):
 		"""
@@ -298,6 +307,7 @@ class Repository(object):
 	def path(name):
 		"""
 			@param name the name of the repository
-			return the absolute path of the repository on the file system
+			return the absolute path of the repository on the file system or raise
+					RepositoryError if not found
 		"""
-		return None
+		raise RepositoryError('Abstract Repository')

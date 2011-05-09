@@ -5,7 +5,7 @@
 	:license: BSD, see LICENSE for more details
 """
 
-from flask import render_template, make_response, redirect, url_for
+from flask import render_template, make_response, redirect, url_for, current_app
 from functools import wraps
 from lib.repository import RepositoryError
 
@@ -41,6 +41,24 @@ def templated(template):
 				raise
 
 		return template_function
+	return decorator
+
+def cached(keyfn):
+	def decorator(f):
+		@wraps(f)
+		def cache_function(*args, **kwargs):
+			key = keyfn(*args, **kwargs)
+			if key is None:
+				result = f(*args, **kwargs)
+			else:
+				from lib.utils import cache
+				result = cache.get(key)
+				if result is None:
+					result = f(*args, **kwargs)
+					cache.set(key, result, timeout=current_app.config['CACHE_TIMEOUT'])
+			return result
+
+		return cache_function
 	return decorator
 
 def response_mimetype(mimetype):
