@@ -9,7 +9,8 @@ import os
 
 from lib.decorators import templated, cached
 from lib.repository.gitr import GitRepository
-from flask import Module, current_app, redirect, url_for
+from flask import Module, redirect, url_for
+from lib.config import config
 
 frontend = Module(__name__, 'pyggi', url_prefix=None)
 
@@ -46,7 +47,7 @@ def favicon():
 def index():
 	# compute the names of repositories
 	repnames = [name \
-		for name in os.walk(current_app.config['GIT_REPOSITORIES']).next()[1] \
+		for name in os.walk(config.get('general','GIT_REPOSITORIES')).next()[1] \
 		if GitRepository.isRepository(name)
 	]
 

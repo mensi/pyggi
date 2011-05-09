@@ -6,8 +6,9 @@
 """
 
 from flask import current_app
+from lib.config import config
 
-if not current_app.config['CACHE_USE']:
+if not config.getboolean('cache','enabled'):
 	class DummyCache(object):
 		def get(*args, **kwargs):
 			pass
@@ -21,6 +22,5 @@ else:
 		cache = SimpleCache()
 	else:
 		from werkzeug.contrib.cache import MemcachedCache
-		cache = MemcachedCache(current_app.config['CACHE_URIS'])
-
+		cache = MemcachedCache([x.strip() for x in config.get('cache','uris').split(",") if not len(x.strip()) == 0])
 

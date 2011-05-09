@@ -12,6 +12,7 @@ dev
 - display submodules in directory browser
 - added caching (using memcached)
 - marking optional features in the setuptool script as extras
+- using correct configuration format
 - BUGFIX: removed 'response_mimetype' decorator (unused)
 - BUGFIX: moving exception handling to a global function
 - BUGFIX: catching repository errors and redirect to 404

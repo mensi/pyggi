@@ -5,7 +5,7 @@
 	:license: BSD, see LICENSE for more details
 """
 
-from flask import render_template, current_app
+from flask import render_template
 from functools import wraps
 
 def templated(template):
@@ -41,10 +41,11 @@ def cached(keyfn):
 				result = f(*args, **kwargs)
 			else:
 				from lib.utils import cache
+				from lib.config import config
 				result = cache.get(key)
 				if result is None:
 					result = f(*args, **kwargs)
-					cache.set(key, result, timeout=current_app.config['CACHE_TIMEOUT'])
+					cache.set(key, result, timeout=config.getint('cache','timeout'))
 			return result
 
 		return cache_function

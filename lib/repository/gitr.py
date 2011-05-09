@@ -5,9 +5,9 @@
 	:license: BSD, see LICENSE for more details
 """
 
-from flask import current_app
 from git import Repo, GitCommandError
 from lib.repository import RepositoryError, Repository
+from lib.config import config
 
 class GitRepository(Repository):
 	class Submodule(object):
@@ -68,7 +68,7 @@ class GitRepository(Repository):
 
 	@property
 	def clone_urls(self):
-		urls = current_app.config['CLONE_URLS']
+		urls = dict(config.items('clone'))
 		return dict([(proto, urls[proto].replace("%repo%", self.name)) for proto in urls.keys()])
 
 	@property
@@ -200,14 +200,14 @@ class GitRepository(Repository):
 	def isRepository(name):
 		try:
 			repo = Repo(GitRepository.path(name))
-			return True if not current_app.config['PRESERVE_DAEMON_EXPORT'] else repo.daemon_export
+			return True if not config.getboolean('general','PRESERVE_DAEMON_EXPORT') else repo.daemon_export
 		except:
 			return False
 
 	@staticmethod
 	def path(name):
 		import os
-		folder = os.path.join(current_app.config['GIT_REPOSITORIES'], name)
+		folder = os.path.join(config.get('general','GIT_REPOSITORIES'), name)
 		if not os.path.exists(folder):
 			raise RepositoryError("Repository '%s' does not exist" % name)
 

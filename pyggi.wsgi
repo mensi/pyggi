@@ -4,7 +4,7 @@ import os
 
 try:
 	from lib.wsgi import create_app
-	application = create_app(config=os.path.join(os.getcwd(), 'config.cfg'))
+	application = create_app()
 except Exception as e:
 	raise
 
