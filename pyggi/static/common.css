@@ -562,6 +562,7 @@ a:hover {
 }
 
 #repo .clone ul li a {
+	background: #F4F4F4;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F4F4F4), to(#ECECEC));
 	border: 1px solid #D4D4D4;
 	border-left: none;
@@ -579,6 +580,7 @@ a:hover {
 
 #repo .clone ul li.selected a,
 #repo .clone ul li.selected a:hover {
+	background: #d7d7d7;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#D7D7D7), to(#ABABAB));
 	border-bottom-color: #9A9A9A;
 	border-color: #C9C9C9 #C9C9C9 #9A9A9A;
@@ -587,6 +589,7 @@ a:hover {
 }
 
 #repo .clone ul li a:hover {
+	background: #599bdc;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#599BDC), to(#3072B3));
 	border-bottom-color: #2A65A0;
 	border-color: #518CC6 #518CC6 #2A65A0;
