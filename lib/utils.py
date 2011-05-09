@@ -21,6 +21,6 @@ else:
 		cache = SimpleCache()
 	else:
 		from werkzeug.contrib.cache import MemcachedCache
-		cache = MemcachedCache(current_app['CACHE_URIS'])
+		cache = MemcachedCache(current_app.config['CACHE_URIS'])
 
 
