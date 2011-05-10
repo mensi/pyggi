@@ -21,6 +21,10 @@ else:
 		from werkzeug.contrib.cache import SimpleCache
 		cache = SimpleCache()
 	else:
-		from werkzeug.contrib.cache import MemcachedCache
-		cache = MemcachedCache([x.strip() for x in config.get('cache','uris').split(",") if not len(x.strip()) == 0])
+		try:
+			from werkzeug.contrib.cache import MemcachedCache
+			cache = MemcachedCache([x.strip() for x in config.get('cache','uris').split(",") if not len(x.strip()) == 0])
+		except:
+			cache = DummyCache()
+			# TODO: create log message
 
