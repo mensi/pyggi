@@ -7,6 +7,7 @@
 
 from flask import current_app
 from lib.config import config
+import logging
 
 if not config.getboolean('cache','enabled'):
     class DummyCache(object):
@@ -26,5 +27,5 @@ else:
             cache = MemcachedCache([x.strip() for x in config.get('cache','uris').split(",") if not len(x.strip()) == 0])
         except:
             cache = DummyCache()
-            # TODO: create log message
+            logging.critical("could not connect to memcache daemon - disabling caching")
 

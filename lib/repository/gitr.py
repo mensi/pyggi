@@ -99,7 +99,7 @@ class GitRepository(Repository):
             path = self.active_branch+"/LICENSE"
             if not self.blob(path) is None:
                 return path
-        except RepositoryError as error:
+        except RepositoryError:
             pass
 
         return None
@@ -122,7 +122,7 @@ class GitRepository(Repository):
                 result.append(GitRepository.Submodule(data[previous:len(data)]))
 
             return sorted([x for x in result if x.path_base == base], key=lambda x: x.path_name)
-        except RepositoryError as error:
+        except RepositoryError:
             pass
 
         return []
@@ -133,7 +133,7 @@ class GitRepository(Repository):
         for crumb in breadcrumbs[1:]:
             try:
                 tree = tree[crumb]
-            except KeyError as error:
+            except KeyError:
                 raise RepositoryError("Repository '%s' has no tree '%s'" % (self.name, path))
 
         from git import Blob, Tree
@@ -170,7 +170,7 @@ class GitRepository(Repository):
                 data = markdown.markdown(blob.data, safe_mode="replace"),
                 type = "markdown"
             )
-        except Exception as errr:
+        except:
             pass
 
         return None
@@ -178,14 +178,14 @@ class GitRepository(Repository):
     def archive(self, treeish):
         try:
             return self.repo.archive_tar_gz(treeish, self.name+"/")
-        except GitCommandError as error:
+        except GitCommandError:
             return RepositoryError("Repository '%s' has no tree '%s'" % (self.name, treeish))
 
     def history(self, path):
         try:
             breadcrumbs = path.split("/")
             return self.repo.commits(breadcrumbs[0], '/'.join(breadcrumbs[1:]))
-        except GitCommandError as error:
+        except GitCommandError:
             return RepositoryError("Repository '%s' has no path '%s'" % (self.name, path))
 
     def blame(self, path):
@@ -193,7 +193,7 @@ class GitRepository(Repository):
             from git import Blob
             breadcrumbs = path.split("/")
             return Blob.blame(self.repo, breadcrumbs[0], '/'.join(breadcrumbs[1:]))
-        except GitCommandError as error:
+        except GitCommandError:
             return RepositoryError("Repository '%s' has no blame '%s'" % (self.name, path))
 
     @staticmethod
@@ -220,5 +220,5 @@ class GitRepository(Repository):
             commit.is_tag = treeish in [x.name for x in self.repo.tags]
 
             return commit
-        except GitCommandError as error:
+        except GitCommandError:
             return RepositoryError("Repository '%s' has no tree '%s'" % (self.name, treeish))

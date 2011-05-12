@@ -17,8 +17,9 @@ def error_handler(error):
         from flask import redirect, url_for
 
         if not isinstance(error, RepositoryError):
-            # TODO: log the error
-            pass
+            logging.error("error in handling request: %s", error)
+        else:
+            logging.warning("repository error: %s", error)
 
         return redirect(url_for('not_found'))
 
@@ -32,9 +33,9 @@ def create_app(**kwargs):
     # activate logging
     logging.basicConfig(
         filename = config.get('log', 'file'),
-        level = config.get('log', 'level'),
+        level = logging.WARNING,
         format = "[%(asctime)s] %(levelname)s: %(message)s",
-        datefmt = "%Y-%M-%d %H:%M:%S"
+        datefmt = "%Y-%m-%d %H:%M:%S"
     )
 
     # register modules to application. the modules come
@@ -51,7 +52,7 @@ def create_app(**kwargs):
             _import = __import__(module_name, globals(), locals(), [module_import], -1)
             app.register_module(getattr(_import, module_import))
         except Exception as e:
-            pass
+            logging.critical("could not load module '%s': %s", module_desc[0], e)
 
     # register exception handler
     app.handle_exception = error_handler
