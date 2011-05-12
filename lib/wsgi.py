@@ -7,6 +7,7 @@
 
 from flask import Flask, current_app
 from lib.config import config
+import logging
 
 def error_handler(error):
     if current_app.debug:
@@ -27,6 +28,14 @@ def create_app(**kwargs):
         modules.
     """
     app = Flask(__name__)
+
+    # activate logging
+    logging.basicConfig(
+        filename = config.get('log', 'file'),
+        level = config.get('log', 'level'),
+        format = "[%(asctime)s] %(levelname)s: %(message)s",
+        datefmt = "%Y-%M-%d %H:%M:%S"
+    )
 
     # register modules to application. the modules come
     # from the configuration file. there is a list of
