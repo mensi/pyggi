@@ -84,7 +84,7 @@
 			{{ item.last_commit.committed_date|dateformat }}
 		</td>
 		<td class="message">
-			{{ item.last_commit.message }}
+			{{ item.last_commit.message|truncate(70) }}
 		</td>
 	</tr>
 {% endfor %}
