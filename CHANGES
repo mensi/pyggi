@@ -3,9 +3,11 @@ pyggi Changelog
 
 Here you can see the full list of changes between each pyggi release.
 
-dev
----
 
+Version 0.2
+-----------
+
+- showing last modification and commit message in tree browser
 - adding logging
 - adding clone urls to repository overview
 - truncate repo description to 50 chars (on repo overview)
@@ -14,6 +16,7 @@ dev
 - added caching (using memcached)
 - marking optional features in the setuptool script as extras
 - using correct configuration format
+- BUGFIX: removed 'view file' link from deleted files
 - BUGFIX: removed 'response_mimetype' decorator (unused)
 - BUGFIX: moving exception handling to a global function
 - BUGFIX: catching repository errors and redirect to 404
