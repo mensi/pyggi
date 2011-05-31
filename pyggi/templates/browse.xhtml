@@ -27,8 +27,8 @@
 		<tr>
 			<th class="icon">&nbsp;</th>
 			<th>name</th>
-			<!--<th>age</th>
-			<th>message</th>-->
+			<th>last modified</th>
+			<th>message</th>
 		</tr>
 
 {% if breadcrumbs %}
@@ -42,8 +42,8 @@
 			<a href="{{ url_for('browse', repository=repo, tree=treeid) }}">..</a>
 			{% endif %}
 		</td>
-		<!--<td class="age">&nbsp;</td>
-		<td class="message">&nbsp;</td>-->
+		<td class="age">&nbsp;</td>
+		<td class="message">&nbsp;</td>
 	</tr>
 {% else %}
 {% set breadcrumbs=[] %}
@@ -57,6 +57,8 @@
 		<td class="content">
 			{{ item.path_name }} &rarr; {{ item.url }}
 		</td>
+		<td class="age">&nsbp;</td>
+		<td class="message">&nbsp;</td>
 	</tr>
 {% endfor %}
 
@@ -78,8 +80,12 @@
 				{{ item.name }}{% if item.is_tree %}/{% endif %}
 			</a>
 		</td>
-		<!--<td class="age">&nbsp;</td>
-		<td class="message">&nbsp;</td>-->
+		<td class="age">
+			{{ item.last_commit.committed_date|dateformat }}
+		</td>
+		<td class="message">
+			{{ item.last_commit.message }}
+		</td>
 	</tr>
 {% endfor %}
 

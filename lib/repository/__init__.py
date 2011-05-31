@@ -87,6 +87,8 @@ class Repository(object):
             values              a list of Blob and Tree objects, sorted by name
                                 and Tree objects are grouped together before the Blob objects
             name                the name of this tree
+            last_commit         a Repository.Commit like object that points to the last
+                                commit to this object (see Repository.last_commit)
             is_tree = True
         """
         pass
@@ -102,6 +104,8 @@ class Repository(object):
             mode                the mode of the file
             mime_type           the mime_type of that file or 'text/plain' if
                                 unknown
+            last_commit         a Repository.Commit like object that points to the last
+                                commit to this object (see Repository.last_commit)
             is_tree = False
         """
         pass
@@ -189,6 +193,18 @@ class Repository(object):
 
             the returned object should comply to Repository.Head
             specificications
+        """
+        raise RepositoryError("Abstract Repository")
+
+    def last_commit(self, tree, path):
+        """
+            return a Repository.Commit like object, that provides
+            the last commit to this path in reference to a given
+            tree (meaning: return the newest commit that is not newer
+            than the given treeish)
+
+            @param tree the reference tree
+            @param path the path in the repository
         """
         raise RepositoryError("Abstract Repository")
 

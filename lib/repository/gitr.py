@@ -144,6 +144,8 @@ class GitRepository(Repository):
                 t.is_tree = True
             blobs = sorted([x for x in items if isinstance(x, Blob)], key=lambda x: x.name)
             tree.values = trees+blobs
+            for t in tree.values:
+                t.last_commit = self.last_commit(breadcrumbs[0], "/".join(breadcrumbs[1:]+[t.name]))
 
         tree.is_tree = True
         return tree
@@ -152,6 +154,14 @@ class GitRepository(Repository):
         blob = self.tree(path)
         blob.is_tree = False
         return blob
+
+    def last_commit(self, tree, path):
+        from git import Git
+        g = Git(self.options['repository'])
+        g.init()
+
+        result = g.log("-1", "--pretty=format:%H", tree, "--", path)
+        return self.commit(result)
 
     @property
     def active_branch(self):
