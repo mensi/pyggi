@@ -156,12 +156,8 @@ class GitRepository(Repository):
         return blob
 
     def last_commit(self, tree, path):
-        from git import Git
-        g = Git(self.options['repository'])
-        g.init()
-
-        result = g.log("-1", "--pretty=format:%H", tree, "--", path)
-        return self.commit(result)
+        result = self.repo.log(tree, path, max_count=1)
+        return result[0]
 
     @property
     def active_branch(self):
