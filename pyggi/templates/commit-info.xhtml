@@ -61,9 +61,12 @@ Showing {{ commit.stats.total['files'] }} changed files with {{ commit.stats.tot
 			<span>{{ diff.b_path }}</span>
 		{% endif %}
 	</div>
+	{% if diff.deleted_file %}
+	{% else %}
 	<ul class="actions">
 		<li><a href="{{ url_for('blob', repository=repo, tree=treeid, path=diff.b_path) }}"><b>View file @</b> {{ treeid|truncate(8, true, '') }}</a></li>
 	</ul>
+	{% endif %}
 </div>
 
 <div class="diff-code">
