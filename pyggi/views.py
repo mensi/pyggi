@@ -39,6 +39,9 @@ def style():
     from flask import make_response
 
     data = render_template("pyggi/style/common.css")
+    data = data.replace("\n", "")
+    data = data.replace("\t", "")
+
     response = make_response(data)
     response.mimetype = 'text/css'
 
