@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+    # -*- coding: utf-8 -*-
 
 """
     :copyright: (c) 2011 by Tobias Heinzen
@@ -181,6 +181,9 @@ class GitRepository(Repository):
 
         return None
 
+    def last_activities(self, treeish):
+        return self.repo.commits(treeish)[:4]
+
     def archive(self, treeish):
         try:
             return self.repo.archive_tar_gz(treeish, self.name+"/")
@@ -201,6 +204,14 @@ class GitRepository(Repository):
             return Blob.blame(self.repo, breadcrumbs[0], '/'.join(breadcrumbs[1:]))
         except GitCommandError:
             return RepositoryError("Repository '%s' has no blame '%s'" % (self.name, path))
+
+    @property
+    def branches(self):
+        return self.repo.heads
+
+    @property
+    def tags(self):
+        return self.repo.tags
 
     @staticmethod
     def isRepository(name):

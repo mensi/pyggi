@@ -1,0 +1,29 @@
+div.commit
+{
+	margin-bottom: 25px;
+	padding: 10px;
+	background: url({{ url_for('static', filename="images/commit-bg.png") }}) repeat-x scroll 0 100% #eaf2f5;
+	border: 1px solid #bedce7;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+
+div.commit p.date
+{
+	color: #4C4C4C;
+	font-weight: bold;
+	margin: 0;
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.596);
+}
+
+div.commit p.author
+{
+	margin-top: 0;
+}
+
+div.commit p.message
+{
+	font-family: Monaco,'Courier New','DejaVu Sans Mono','Bitstream Vera Sans Mono',monospace;
+	font-size: 80%;
+}

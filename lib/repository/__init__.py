@@ -232,6 +232,15 @@ class Repository(object):
         """
         raise RepositoryError("Abstract Repository")
 
+    def last_activities(self, treeish):
+        """
+            @param treeish from which tree shall the actitivies be listed
+
+            return a list of up to 4 Repository.Commit like objects that
+                    that are chronologically the last commits to this tree
+        """
+        raise RepositoryError("Abstract Repository")
+
     @property
     def clone_urls(self):
         """

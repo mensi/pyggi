@@ -1,0 +1,13 @@
+div.content h1
+{
+	padding-bottom: 0px;
+	padding-top: 15px;
+	font-weight: normal;
+	margin: 0px;
+	font-size: 19px;
+}
+
+div.content h1:first-child
+{
+	padding-top: 0px;
+}

@@ -74,7 +74,12 @@ def repository(repository):
 @cached(cache_keyfn('overview'))
 @templated("pyggi/overview.xhtml")
 def overview(repository, tree):
-    return ""
+    repo = GitRepository(repository=GitRepository.path(repository))
+
+    return dict( \
+        repository = repo,
+        treeid = tree
+    )
 
 @get("/<repository>/tree/<tree>/", endpoint='browse')
 @cached(cache_keyfn('browse'))

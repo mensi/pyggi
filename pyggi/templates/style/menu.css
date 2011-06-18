@@ -1,0 +1,27 @@
+div.menu
+{
+	float: left;
+	width: 150px;
+}
+
+div.menu h1
+{
+	padding: 0px;
+	margin: 0px;
+	font-size: 13.34px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+div.menu ul
+{
+	padding: 0px;
+	padding-left: 7px;
+	margin-top: 4px;
+}
+
+div.menu li
+{
+	list-style-type: none;
+}

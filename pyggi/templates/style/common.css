@@ -19,3 +19,17 @@ div.site
 
 /* breadcrumbs */
 {% include "pyggi/style/breadcrumbs.css" %}
+
+/* menu */
+{% include "pyggi/style/menu.css" %}
+
+/* content */
+{% include "pyggi/style/content.css" %}
+
+/* commit */
+{% include "pyggi/style/commit.css" %}
+
+/* readme */
+{% include "pyggi/style/readme.css" %}
+{% include "pyggi/style/wikistyle.css" %}
+
