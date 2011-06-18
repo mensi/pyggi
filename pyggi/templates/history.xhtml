@@ -2,8 +2,6 @@
 
 {% block content %}
 
-{% include "pyggi/repo.xhtml" %}
-
 {% set repo = repository.name %}
 {% set history = repository.history('/'.join([treeid]+breadcrumbs)) %}
 
