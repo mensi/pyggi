@@ -2,9 +2,6 @@
 
 {% block content %}
 
-
-{% include "pyggi/repo.xhtml" %}
-{% include "pyggi/commit.xhtml" %}
 {% include "pyggi/breadcrumbs.xhtml" %}
 
 {% if breadcrumbs %}
@@ -12,7 +9,6 @@
 {% else %}
 	{% set tree = repository.tree(treeid).values %}
 {% endif %}
-
 {% set repo = repository.name %}
 {% set readme = repository.readme %}
 

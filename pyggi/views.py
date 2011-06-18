@@ -44,6 +44,11 @@ def style():
 
     return response
 
+@get("/404", endpoint='not_found')
+@templated("pyggi/404.xhtml")
+def not_found():
+    pass
+
 @get("/", endpoint='index')
 @templated("pyggi/repositories.xhtml")
 def index():
@@ -62,12 +67,14 @@ def index():
 @get("/<repository>/", endpoint='repository')
 def repository(repository):
     repo = GitRepository(repository=GitRepository.path(repository))
-    return redirect(url_for('browse', repository=repository, tree=repo.active_branch))
+    return redirect(url_for('overview', repository=repository, tree=repo.active_branch))
 
-@get("/404", endpoint='not_found')
-@templated("pyggi/404.xhtml")
-def not_found():
-    pass
+
+@get("/<repository>/overview/<tree>/", endpoint='overview')
+@cached(cache_keyfn('overview'))
+@templated("pyggi/overview.xhtml")
+def overview(repository, tree):
+    return ""
 
 @get("/<repository>/tree/<tree>/", endpoint='browse')
 @cached(cache_keyfn('browse'))
@@ -77,18 +84,8 @@ def browse(repository, tree):
 
     return dict( \
         repository = repo,
-        treeid = tree
-    )
-
-@get("/<repository>/commit/<tree>/", endpoint='commit')
-@cached(cache_keyfn('commit'))
-@templated("pyggi/commit-info.xhtml")
-def commit(repository, tree):
-    repo = GitRepository(repository=GitRepository.path(repository))
-
-    return dict( \
-        repository = repo,
         treeid = tree,
+        browse = True
     )
 
 @get("/<repository>/tree/<tree>/<path:path>/", endpoint='browse_sub')
@@ -100,7 +97,19 @@ def browse_sub(repository, tree, path):
     return dict( \
         repository = repo,
         treeid = tree,
-        breadcrumbs = path.split("/")
+        breadcrumbs = path.split("/"),
+        browse = True
+    )
+
+@get("/<repository>/commit/<tree>/", endpoint='commit')
+@cached(cache_keyfn('commit'))
+@templated("pyggi/commit-info.xhtml")
+def commit(repository, tree):
+    repo = GitRepository(repository=GitRepository.path(repository))
+
+    return dict( \
+        repository = repo,
+        treeid = tree,
     )
 
 @get("/<repository>/history/<tree>/<path:path>", endpoint='history')

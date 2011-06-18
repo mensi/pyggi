@@ -1,0 +1,72 @@
+ul.breadcrumbs
+{
+	padding: 0;
+	margin: 0;
+	padding-left: 4px;
+	margin-bottom: 25px;
+	height: 25px;
+	line-height: 25px;
+	background: #e5e6e6;
+
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+ul.breadcrumbs li.crumb
+{
+	list-style-type: none;
+	float: left;
+	padding-left: 20px;
+	padding-right: 10px;
+	background: url({{ url_for('static', filename="images/breadcrumbs-separator.png") }}) no-repeat;
+}
+
+ul.breadcrumbs li.crumb:first-child
+{
+	padding-left: 5px;
+	background: none;
+}
+
+ul.breadcrumbs li.crumb:last-child
+{
+	font-weight: bold;
+}
+
+ul.breadcrumbs li.crumb a
+{
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.596);
+	padding-left: 20px;
+	text-decoration: none;
+	color: #000;
+}
+
+ul.breadcrumbs li.crumb a.folder
+{
+	background: url({{ url_for('static', filename="images/icons/dir.png") }}) no-repeat 0px 1px;
+}
+
+ul.breadcrumbs li.crumb a.file
+{
+	background: url({{ url_for('static', filename="images/icons/txt.png") }}) no-repeat 0px 1px;
+}
+
+ul.breadcrumbs li.crumb a.repository
+{
+	background: url({{ url_for('static', filename="images/icons/brick.png") }}) no-repeat 0px 1px;
+}
+
+ul.breadcrumbs li.crumb a.branch
+{
+	background: url({{ url_for('static', filename="images/icons/branch.png") }}) no-repeat 0px 1px;
+}
+
+ul.breadcrumbs li.crumb a.tag
+{
+	background: url({{ url_for('static', filename="images/icons/tag.png") }}) no-repeat 0px 1px;
+}
+
+ul.breadcrumbs li.crumb a.commit
+{
+	background: url({{ url_for('static', filename="images/icons/commit.png") }}) no-repeat 0px 1px;
+}
