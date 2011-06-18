@@ -8,6 +8,14 @@
 from flask import render_template
 from functools import wraps
 
+def method_shortcut(application, method='GET'):
+    def ruler(route, endpoint=None, **options):
+        def decorator(f):
+            application.add_url_rule(route, endpoint, f, **options)
+            return f
+        return decorator
+    return ruler
+
 def templated(template):
     def decorator(f):
         @wraps(f)

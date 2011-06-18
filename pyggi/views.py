@@ -7,23 +7,14 @@
 
 import os
 
-from lib.decorators import templated, cached
+from lib.decorators import templated, cached, method_shortcut
 from lib.repository.gitr import GitRepository
 from flask import Module, redirect, url_for
 from lib.config import config
 
 frontend = Module(__name__, 'pyggi', url_prefix=None)
-
-def method_shortcut(method='GET'):
-    def ruler(route, endpoint=None, **options):
-        def decorator(f):
-            frontend.add_url_rule(route, endpoint, f, **options)
-            return f
-        return decorator
-    return ruler
-
-get = method_shortcut('GET')
-post = method_shortcut('POST')
+get = method_shortcut(frontend, 'GET')
+post = method_shortcut(frontend, 'POST')
 
 def cache_keyfn(prefix, additional_fields=[]):
     def test(*args, **kwargs):
@@ -41,6 +32,17 @@ def cache_keyfn(prefix, additional_fields=[]):
 @get("/favicon.ico/")
 def favicon():
     return redirect(url_for('static', filename="favicon.ico"))
+
+@get("/style/", endpoint='style')
+def style():
+    from flask import render_template
+    from flask import make_response
+
+    data = render_template("pyggi/style/common.css")
+    response = make_response(data)
+    response.mimetype = 'text/css'
+
+    return response
 
 @get("/", endpoint='index')
 @templated("pyggi/repositories.xhtml")
