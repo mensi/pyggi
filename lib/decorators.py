@@ -34,7 +34,8 @@ def templated(template):
                 return context
 
             # add the page name into the context
-            context['page_name'] = config.getstring('general', 'name')
+            from lib.config import config
+            context['page_name'] = config.get('general', 'name')
 
             # render the context using given template
             response = render_template(template, **context)
