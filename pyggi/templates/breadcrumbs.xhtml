@@ -1,10 +1,12 @@
-{% set repo = repository.name %}
-{% set commit = repository.commit(treeid) %}
-
 <!-- BREADCRUMBS -->
 <ul class="breadcrumbs">
+	<li class="crumb"><a href="{{ url_for('index') }}" class="db">repos</a></li>
+{% if repository %}
+	{% set repo = repository.name %}
+	{% set commit = repository.commit(treeid) %}
 	<li class="crumb"><a href="{{ url_for('repository', repository=repo) }}" class="repository">{{ repo }}</a></li>
 	<li class="crumb"><a href="{{ url_for('overview', repository=repo, tree=treeid) }}" class="{% if commit.is_branch %}branch{% elif commit.is_tag %}tag{% else %}commit{% endif %}">{% if commit.is_branch or commit.is_tag %}{{ treeid }}{% else %}{{ treeid|truncate(8, True,'') }}{% endif %}</a></li>
+{% endif %}
 {% if browse or breadcrumbs %}
 	<li class="crumb"><a href="{{ url_for('browse', repository=repo, tree=treeid) }}" class="folder">/</a></li>
 {% endif %}

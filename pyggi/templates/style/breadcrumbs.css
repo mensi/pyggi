@@ -8,9 +8,12 @@ ul.breadcrumbs
 	line-height: 25px;
 	background: #e5e6e6;
 
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+	-moz-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	-moz-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 ul.breadcrumbs li.crumb
@@ -69,4 +72,9 @@ ul.breadcrumbs li.crumb a.tag
 ul.breadcrumbs li.crumb a.commit
 {
 	background: url({{ url_for('static', filename="images/icons/commit.png") }}) no-repeat 0px 1px;
+}
+
+ul.breadcrumbs li.crumb a.db
+{
+	background: url({{ url_for('static', filename="images/icons/db.png") }}) no-repeat 0px 1px;
 }

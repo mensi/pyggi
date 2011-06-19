@@ -17,6 +17,35 @@ div.site
 	text-align: left;
 }
 
+div.site h1.title
+{
+	background: #484848;
+	color: #e1e1e1;
+	margin-bottom: 0;
+	padding: 7px;
+
+	-moz-border-top-left-radius: 5px;
+	-webkit-border-top-left-radius: 5px;
+	border-top-left-radius: 5px;
+	-moz-border-top-right-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+div.site div.footer
+{
+	text-align: center;
+	background: #484848;
+	color: #e1e1e1;
+	font-size: 10px;
+	padding: 5px;
+	margin-top: 20px;
+
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
 /* breadcrumbs */
 {% include "pyggi/style/breadcrumbs.css" %}
 
