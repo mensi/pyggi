@@ -33,6 +33,9 @@ def templated(template):
             elif not isinstance(context, dict):
                 return context
 
+            # add the page name into the context
+            context['page_name'] = config.getstring('general', 'name')
+
             # render the context using given template
             response = render_template(template, **context)
             return response
