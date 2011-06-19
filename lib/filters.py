@@ -38,11 +38,11 @@ def format_diff(value):
     value = "".join(html_escape_table.get(c,c) for c in value)
 
     if value.startswith("+") and not value.startswith("+++"):
-        return '<div class="diff-add">%s&nbsp;</div>' % value
+        return '<li class="diff-add">%s&nbsp;</li>' % value
     elif value.startswith("-") and not value.startswith("---"):
-        return '<div class="diff-remove">%s&nbsp;</div>' % value
+        return '<li class="diff-remove">%s&nbsp;</li>' % value
     elif value.startswith("@@"):
-        return '<div class="diff-change">%s&nbsp;</div>' % value
+        return '<li class="diff-change">%s&nbsp;</li>' % value
 
-    return '<div>%s</div>' % value
+    return '<li>%s</li>' % value
 

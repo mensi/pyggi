@@ -1,7 +1,8 @@
 div.commit
 {
+	padding: 9px;
+	padding-top: 0px;
 	margin-bottom: 25px;
-	padding: 10px;
 	background: url({{ url_for('static', filename="images/commit-bg.png") }}) repeat-x scroll 0 100% #eaf2f5;
 	border: 1px solid #bedce7;
 	-moz-border-radius: 2px;
@@ -11,6 +12,7 @@ div.commit
 
 div.commit p.date
 {
+	padding-top: 9px;
 	color: #4C4C4C;
 	font-weight: bold;
 	margin: 0;
@@ -26,4 +28,19 @@ div.commit p.message
 {
 	font-family: Monaco,'Courier New','DejaVu Sans Mono','Bitstream Vera Sans Mono',monospace;
 	font-size: 80%;
+}
+
+div.commit div.machine
+{
+	padding: 9px 0 9px 13px;
+	float: right;
+	border-left: 1px solid #bedce7;
+}
+
+div.commit div.machine p
+{
+	margin: 0;
+	color: gray;
+	font-family: Monaco,'Courier New','DejaVu Sans Mono','Bitstream Vera Sans Mono',monospace;
+	font-size: 90%;
 }

@@ -111,7 +111,7 @@ def browse_sub(repository, tree, path):
 
 @get("/<repository>/commit/<tree>/", endpoint='commit')
 @cached(cache_keyfn('commit'))
-@templated("pyggi/commit-info.xhtml")
+@templated("pyggi/commit.xhtml")
 def commit(repository, tree):
     repo = GitRepository(repository=GitRepository.path(repository))
 

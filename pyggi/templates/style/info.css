@@ -1,0 +1,126 @@
+font.additions
+{
+	color: #00cc00;
+}
+
+font.deletions
+{
+	color: #cc0000;
+}
+
+ul.stats
+{
+	margin: 0;
+	margin-bottom: 10px;
+	padding: 0;
+}
+
+ul.stats li
+{
+	list-style-type: none;
+	padding: 7px;
+	border-bottom: 1px solid #DDDDDD;
+}
+
+ul.stats li:first-child
+{
+	border-top: 1px solid #DDDDDD;
+}
+
+ul.stats li a.stat-icon
+{
+	background: url({{ url_for('static', filename="images/icons/file_modes.png") }}) no-repeat;
+	height: 20px;
+	line-height: 20px;
+	padding-left: 25px;
+}
+
+ul.stats li a.added
+{
+	background-position: 0 0;
+}
+
+ul.stats li a.modified
+{
+	background-position: 0 -51px;
+}
+
+ul.stats li a.renamed
+{
+	background-position: 0 -150px;
+}
+
+ul.stats li a.removed
+{
+	background-position: 0 -100px;
+}
+
+div.meta
+{
+	margin-top: 25px;
+	border: 1px solid #CCCCCC;
+	border-bottom: 0;
+	color: #333333;
+	height: 33px;
+	line-height: 33px;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.498);
+	background: url({{ url_for('static', filename="images/bg_file.png") }}) repeat-x scroll 0 0 #eee;
+}
+
+div.meta p
+{
+	padding: 0;
+	margin: 0;
+}
+
+div.meta p.commit
+{
+	padding-right: 9px;
+	float: right;
+}
+
+div.meta p.file
+{
+	padding-left: 9px;
+}
+
+ul.diff-code
+{
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	width: 918px;
+	border: 1px solid #ccc;
+	margin-bottom: 25px;
+}
+
+ul.diff-code li
+{
+	list-style-type: none;
+	font-family: 'Bitstream Vera Sans Mono',Courier,monospace;
+	font-size: 95%;
+	white-space: pre;
+	background: #f8f8ff;
+}
+
+ul.diff-code li:last-child
+{
+	text-align: right;
+	padding-top: 9px;
+}
+
+ul.diff-code li.diff-change
+{
+	background-color: #eaf2f5;
+	color: #999999;
+}
+
+ul.diff-code li.diff-remove {
+    background-color: #ffdddd;
+    color: black;
+}
+
+ul.diff-code li.diff-add {
+    background-color: #ddffdd;
+    color: black;
+}

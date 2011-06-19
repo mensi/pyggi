@@ -57,6 +57,7 @@ div.site div.footer
 
 /* commit */
 {% include "pyggi/style/commit.css" %}
+{% include "pyggi/style/info.css" %}
 
 /* readme */
 {% include "pyggi/style/readme.css" %}
