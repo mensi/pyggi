@@ -1,0 +1,57 @@
+ul.browser
+{
+	padding: 0;
+	border: 1px solid #e1e1e1;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+ul.browser li
+{
+	list-style-type: none;
+	font-family: Monaco,'Courier New','DejaVu Sans Mono','Bitstream Vera Sans Mono',monospace;
+	font-size: 90%;
+	color: #484848;
+	padding: 6px 4px;
+	background: #f8f8f8;
+	border-bottom: 1px solid #e1e1e1;
+}
+
+ul.browser li:last-child
+{
+	border-bottom: 0;
+}
+
+ul.browser li a, ul.browser li p
+{
+	padding: 6px 4px;
+	padding-left: 20px;
+}
+
+ul.browser li p
+{
+	margin: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+ul.browser li a.folder
+{
+	background: url({{ url_for('static', filename="images/icons/dir.png") }}) no-repeat 0 3px;
+}
+
+ul.browser li a.file
+{
+	background: url({{ url_for('static', filename="images/icons/txt.png") }}) no-repeat 0 3px;
+}
+
+ul.browser li a.back
+{
+	background: url({{ url_for('static', filename="images/icons/back.png") }}) no-repeat 0 5px;
+}
+
+ul.browser li p.submodule
+{
+	background: url({{ url_for('static', filename="images/icons/link.png") }}) no-repeat;
+}

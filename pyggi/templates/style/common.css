@@ -33,3 +33,5 @@ div.site
 {% include "pyggi/style/readme.css" %}
 {% include "pyggi/style/wikistyle.css" %}
 
+/* tree browser */
+{% include "pyggi/style/browser.css" %}
