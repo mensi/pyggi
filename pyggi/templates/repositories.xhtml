@@ -2,22 +2,14 @@
 
 {% block content %}
 
-<div style="margin: 0px auto 0px auto; width: 450px;">
 {% for repo in repositories %}
-<div class="repo">
-	<div class="repo-top">
-		<a href="{{ url_for('repository', repository=repo.name) }}">{{ repo.name }}</a>
-	</div>
-	<div class="repo-bottom">
-		{% if repo.is_empty %}
-		<p style="padding: 0; margin: 0; margin-bottom: 5px;"><code>empty repository</code></p>
-		{% else %}
-		<p style="padding: 0; margin: 0; margin-bottom: 5px;"><code>{{ repo.description|truncate(50) }}</code></p>
-		<div class="date">Last updated {{ repo.head.commit.committed_date|dateformat('%B %d, %Y') }}</div>
-		{% endif %}
-	</div>
+{% set commit = repo.commit(repo.active_branch) %}
+<div class="commit">
+	<p class="date"><a href="{{ url_for('repository', repository=repo.name) }}">{{ repo.name }}</a></p>
+	<p class="author">Last updated {{ commit.committed_date|dateformat('%B %d, %Y') }} by {{ commit.author }}</a></p>
+	<p class="message">{{ repo.description|truncate(150) }}</p>
 </div>
 {% endfor %}
-</div>
+
 
 {% endblock %}

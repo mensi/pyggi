@@ -4,8 +4,6 @@
 
 {% block content %}
 
-{% include "pyggi/breadcrumbs.xhtml" %}
-
 {% if breadcrumbs %}
 	{% set tree = repository.tree('/'.join([treeid]+breadcrumbs)).values %}
 {% else %}

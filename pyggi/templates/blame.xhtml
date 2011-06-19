@@ -2,8 +2,6 @@
 
 {% block content %}
 
-{% include "pyggi/breadcrumbs.xhtml" %}
-
 {% set path = '/'.join(breadcrumbs) %}
 {% set repo = repository.name %}
 {% set file = '/'.join([treeid,path]) %}

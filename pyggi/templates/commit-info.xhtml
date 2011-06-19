@@ -6,8 +6,6 @@
 {% set commit = repository.commit(treeid) %}
 {% set diffs = commit.diffs %}
 
-{% include "pyggi/breadcrumbs.xhtml" %}
-
 <div class="breadcrumbs">
 	Commit <code>{{ treeid|truncate(20, true, '') }}</code>
 </div>

@@ -10,6 +10,7 @@
 
 <div class="site">
 	<h1 class="title">{{ page_name }}</h1>
+	{% include "pyggi/breadcrumbs.xhtml" %}
 {% block content %}{% endblock %}
 
 	<div class="footer">
