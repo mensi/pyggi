@@ -57,7 +57,7 @@ def not_found():
 def index():
     # compute the names of repositories
     repnames = [name \
-        for name in os.walk(config.get('general','GIT_REPOSITORIES')).next()[1] \
+        for name in os.walk(config.get('general','git_repositories')).next()[1] \
         if GitRepository.isRepository(name)
     ]
 

@@ -47,7 +47,7 @@ Pyggi is fully WSGI compliant and can thus be easily integrated in your server i
 		</Directory>
 	</VirtualHost>
 
-In addition you might have to change the git repository directory in "config.cfg" by setting the correct value for GIT_REPOSITORIES.
+In addition you might have to change the git repository directory in "config.cfg" by setting the correct value for 'git__repositories'.
 
 That's it. There's nothing more to do.
 

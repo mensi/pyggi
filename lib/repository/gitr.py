@@ -217,14 +217,14 @@ class GitRepository(Repository):
     def isRepository(name):
         try:
             repo = Repo(GitRepository.path(name))
-            return True if not config.getboolean('general','PRESERVE_DAEMON_EXPORT') else repo.daemon_export
+            return True if not config.getboolean('general','preserve_daemon_export') else repo.daemon_export
         except:
             return False
 
     @staticmethod
     def path(name):
         import os
-        folder = os.path.join(config.get('general','GIT_REPOSITORIES'), name)
+        folder = os.path.join(config.get('general','git_repositories'), name)
         if not os.path.exists(folder):
             raise RepositoryError("Repository '%s' does not exist" % name)
 
