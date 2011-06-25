@@ -9,7 +9,7 @@
 <div class="menu">
 	<h1>actions</h1>
 	<ul>
-		<li><a href="{{ url_for('browse', repository=repo, tree=treeid) }}">browse source</a></li>
+		<li><a href="{{ url_for('browse', repository=repo, tree=treeid) }}">browse tree</a></li>
 	</ul>
 {% if repository.branches %}
     <h1>branches ({{ repository.branches|length }})</h1>
