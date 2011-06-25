@@ -179,6 +179,39 @@ class GitRepository(Repository):
         except:
             pass
 
+        try:
+            # RST
+            file = self.active_branch+"/README.rst"
+            blob = self.blob(file)
+
+            import docutils.core
+            parts = docutils.core.publish_parts(blob.data, writer_name="html")
+            return Repository.Readme( \
+                name = "README.rst",
+                data = parts['body'],
+                type = "RST"
+            )
+        except:
+            pass
+
+        try:
+            # plain
+            file = self.active_branch+"/README"
+            blob = self.blob(file)
+
+            from lib.filters import html_escape_table
+
+            data = unicode(blob.data, 'utf-8')
+            data = "".join(html_escape_table.get(c,c) if c != "\n" else "<br/>" for c in data)
+
+            return Repository.Readme( \
+                name = "README",
+                data = data,
+                type = "plain"
+            )
+        except:
+            raise
+
         return None
 
     def last_activities(self, treeish):
