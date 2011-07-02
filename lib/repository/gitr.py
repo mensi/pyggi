@@ -202,7 +202,7 @@ class GitRepository(Repository):
             from lib.filters import html_escape_table
 
             data = unicode(blob.data, 'utf-8')
-            data = "".join(html_escape_table.get(c,c) if c != "\n" else "<br/>" for c in data)
+            data = "".join(html_escape_table.eet(c,c) if c != "\n" else "<br/>" for c in data)
 
             return Repository.Readme( \
                 name = "README",
@@ -210,7 +210,7 @@ class GitRepository(Repository):
                 type = "plain"
             )
         except:
-            raise
+            pass
 
         return None
 
