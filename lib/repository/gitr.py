@@ -1,4 +1,4 @@
-    # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """
     :copyright: (c) 2011 by Tobias Heinzen
@@ -250,7 +250,9 @@ class GitRepository(Repository):
     def isRepository(name):
         try:
             repo = Repo(GitRepository.path(name))
-            return True if not config.getboolean('general','preserve_daemon_export') else repo.daemon_export
+            if not config.getboolean('general', 'preserve_daemon_export'):
+                return len(repo.heads) > 0
+            return repo.daemon_export and len(repo.heads) > 0
         except:
             return False
 
