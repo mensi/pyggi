@@ -8,30 +8,24 @@
 {% set blob = repository.blob(file) %}
 {% set blame = repository.blame(file) %}
 
-<style type="text/css" media="screen">
-	#blame .meta {
-		background: #EEE url("{{ url_for('static', filename='images/bg_file.gif') }}") repeat-x 0px 0px;
-	}
-</style>
+<!-- MENU -->
+<div class="menu">
+    <h1>info</h1>
+    <ul>
+        <li>{{ blob.mime_type }}</li>
+        <li>{{ blob.size|filesizeformat }}</li>
+    </ul>
+    <h1>actions</h1>
+    <ul>
+        <li><a href="{{ url_for('blob', repository=repo, tree=treeid, path=path) }}">overview</a></li>
+        <li><a href="{{ url_for('blame', repository=repo, tree=treeid, path=path ) }}">blame</a></li>
+        <li><a href="{{ url_for('raw', repository=repo, tree=treeid, path=path) }}">raw</a></li>
+    </ul>
+</div>
 
-<div id="blame">
-	<div class="meta">
-		<div class="info">
-			<span class="icon"><img alt="file" src="{{ url_for('static', filename='images/txt.png') }}" width="16" height="16" /></span>
-			<span class="mode">{{ blob.mode }} |</span>
-			<span>{{ blob.mime_type }} |</span>
-			<span>{{ blob.size|filesizeformat }}</span>
-		</div>
-		<ul class="actions">
-			<li><a href="{{ url_for('raw', repository=repo, tree=treeid, path=path) }}">raw</a>&nbsp;&nbsp;| </li>
-			<li><a href="{{ url_for('blob', repository=repo, tree=treeid, path=path) }}">normal</a>&nbsp;&nbsp;| </li>
-			<li><a href="{{ url_for('history', repository=repo, tree=treeid, path=path) }}">history</a></li>
-		</ul>
-	</div>
-
-
-<div class="data">
-{% if blob.mime_type.startswith("text/") %}
+<div class="content" style="margin-left: 150px;">
+	<h1>blame for {{ path }}</h1>
+{% if blob.mime_type is text %}
 <table cellspacing="0" cellpadding="0">
 {% set lcounter = 0 %}
 {% for blameinfo in blame %}
@@ -43,9 +37,6 @@
 				<a href="{{ url_for('blame', repository=repo, tree=blameinfo[0].id, path=path) }}">&#187;</a>
 				{{ blameinfo[0].author.name }}
 			</code>
-			<br />
-			<span class="date">{{ blameinfo[0].committed_date|dateformat("%Y-%m-%d") }}</span>
-			<span class="message">{{ blameinfo[0].message|truncate(35, true) }}</span>
 		</td>
 		<td nowrap class="linenumber first">{{ lcounter + 1 }}</td>
 		<td nowrap class="code first" width="100%">{{ blameinfo[1][0] }}
@@ -61,10 +52,9 @@
 	{% endif %}
 {% endfor %}
 </table>
-{% else %}
-<div class="note">no blame data for binary data</div>
 {% endif %}
 </div>
 
-</div>
+<div style="clear: both;">&nbsp;</div>
+
 {% endblock %}
