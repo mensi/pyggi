@@ -46,3 +46,18 @@ def format_diff(value):
 
     return '<li>%s</li>' % value
 
+def is_text(mimetype):
+    """
+        determine if a mimetype holds printable text (ascii)
+    """
+
+    # all text documents
+    if mimetype.startswith("text/"):
+        return True
+
+    # xml/html/xhtml documents
+    if mimetype.startswith("application/") and \
+        (mimetype.find("html") != -1 or mimetype.find("xml") != -1):
+        return True
+
+    return False

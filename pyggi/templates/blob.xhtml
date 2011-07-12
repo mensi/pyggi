@@ -5,42 +5,52 @@
 {% set repo = repository.name %}
 {% set path = '/'.join(breadcrumbs) %}
 {% set blob = repository.blob('/'.join([treeid]+breadcrumbs)) %}
+{% set history = repository.history('/'.join([treeid]+breadcrumbs)) %}
 
-<style type="text/css" media="screen">
-	#file .meta {
-		background: #EEE url("{{ url_for('static', filename='images/bg_file.gif') }}") repeat-x 0px 0px;
-	}
-</style>
-
-<div id="file">
-	<div class="meta">
-		<div class="info">
-			<span class="icon"><img alt="file" src="{{ url_for('static', filename='images/txt.png') }}" width="16" height="16" /></span>
-			<span class="mode">{{ blob.mode }} |</span>
-			<span>{{ blob.mime_type }} |</span>
-			<span>{{ blob.size|filesizeformat }}</span>
-		</div>
-		<ul class="actions">
-			<li><a href="{{ url_for('raw', repository=repo, tree=treeid, path=path) }}">raw</a>&nbsp;&nbsp;| </li>
-			<li><a href="{{ url_for('blame', repository=repo, tree=treeid, path=path) }}">blame</a>&nbsp;&nbsp;| </li>
-			<li><a href="{{ url_for('history', repository=repo, tree=treeid, path=path) }}">history</a></li>
-		</ul>
-	</div>
-
-	<div class="data">
-		{% if blob.mime_type.startswith("text/") %}
-		<table cellpadding="0" cellspacing="0">
-			{% for line in blob.data.split("\n") %}
-			<tr>
-				<td class="linenumber">{{ loop.index }}</td>
-				<td class="code">{{ line }}</td>
-			</tr>
-			{% endfor %}
-		</table>
-		{% else %}
-		<div class="note">binary data</div>
-		{% endif %}
-	</div>
-
+<!-- MENU -->
+<div class="menu">
+    <h1>info</h1>
+    <ul>
+        <li>{{ blob.mime_type }}</li>
+        <li>{{ blob.size|filesizeformat }}</li>
+    </ul>
+    <h1>actions</h1>
+    <ul>
+        <li><a href="{{ url_for('blob', repository=repo, tree=treeid, path=path) }}">overview</a></li>
+        <li><a href="{{ url_for('blame', repository=repo, tree=treeid, path=path ) }}">blame</a></li>
+        <li><a href="{{ url_for('raw', repository=repo, tree=treeid, path=path) }}">raw</a></li>
+    </ul>
 </div>
+
+<div class="content" style="margin-left: 150px;">
+    <!-- CONTENT -->
+    <h1>{{ path }}</h1>
+    <div class="data">
+{% if blob.mime_type is text %}
+        <ol>
+    {% for line in blob.data.split("\n") %}
+            <li><p class="code">&nbsp;{{ line }}</p></li>
+    {% endfor %}
+        </ol>
+{% else %}
+        <p class="binary">binary data</p>
+{% endif %}
+    </div>
+
+	<!-- HISTORY -->
+	<h1>history</h1>
+	<table cellspacing="0" cellpadding="0" width="100%" class="history">
+	{% for item in history %}
+		<tr>
+			<td class="commit {{ loop.cycle('odd','even') }}"><code><a href="{{ url_for('commit', repository=repo, tree=item.id) }}">{{ item.id|truncate(8, true, '') }}</a></code></td>
+			<td class="author {{ loop.cycle('odd','even') }}" nowrap>{{ item.author.name }}</td>
+			<td class="message {{ loop.cycle('odd','even') }}">{{ item.message|truncate(50) }}</td>
+			<td class="date {{ loop.cycle('odd','even') }}" nowrap>{{ item.committed_date|dateformat }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+</div>
+
+<div style="clear: both;">&nbsp;</div>
+
 {% endblock %}

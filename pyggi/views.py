@@ -120,18 +120,6 @@ def commit(repository, tree):
         treeid = tree,
     )
 
-@get("/<repository>/history/<tree>/<path:path>", endpoint='history')
-@cached(cache_keyfn('history', ['path']))
-@templated("pyggi/history.xhtml")
-def history(repository, tree, path):
-    repo = GitRepository(repository=GitRepository.path(repository))
-
-    return dict( \
-        repository = repo,
-        treeid = tree,
-        breadcrumbs = path.split("/")
-    )
-
 @get("/<repository>/blob/<tree>/<path:path>", endpoint='blob')
 @cached(cache_keyfn('blob', ['path']))
 @templated("pyggi/blob.xhtml")

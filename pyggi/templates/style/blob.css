@@ -1,0 +1,78 @@
+/*
+ * HISTORY
+ */
+table.history
+{
+	border: 1px solid #ddd;
+	border-width: 1px 1px 0;
+}
+
+table.history td
+{
+	border-bottom: 1px solid #ddd;
+	padding: 2px 3px 2px 3px;
+	vertical-align: top;
+}
+
+table.history td.odd
+{
+}
+
+table.history td.even
+{
+	background-color: #eee;
+}
+
+table.history td.date
+{
+	color: #777;
+	text-align: right;
+	width: 120px;
+}
+
+table.history td.message
+{
+	font-family: Monaco,'Courier New','DejaVu Sans Mono','Bitstream Vera Sans Mono',monospace;
+	font-size: 80%;
+}
+
+/*
+ * DATA
+ */
+div.data
+{
+	border: 1px solid #ddd;
+	overflow: auto;
+	max-height: 500px;
+}
+
+div.data p.binary
+{
+	text-align: center;
+	color: #aaa;
+	background: #ececec;
+	margin: 0;
+}
+
+div.data ol
+{
+	background: #ececec;
+	color: #aaa;
+	margin: 0;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+div.data ol li
+{
+}
+
+div.data ol li p.code
+{
+	color: #000;
+	padding: 0;
+	margin: 0;
+	font-family: Monaco,'Courier New','DejaVu Sans Mono','Bitstream Vera Sans Mono',monospace;
+	font-size: 90%;
+	white-space: pre-wrap;
+}

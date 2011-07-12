@@ -65,3 +65,6 @@ div.site div.footer
 
 /* tree browser */
 {% include "pyggi/style/browser.css" %}
+
+/* blob */
+{% include "pyggi/style/blob.css" %}
