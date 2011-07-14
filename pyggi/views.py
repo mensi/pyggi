@@ -7,10 +7,10 @@
 
 import os
 
-from lib.decorators import templated, cached, method_shortcut
-from lib.repository.gitr import GitRepository
+from pyggi.lib.decorators import templated, cached, method_shortcut
+from pyggi.lib.repository.gitr import GitRepository
 from flask import Module, redirect, url_for
-from lib.config import config
+from pyggi.lib.config import config
 
 frontend = Module(__name__, 'pyggi', url_prefix=None)
 get = method_shortcut(frontend, 'GET')

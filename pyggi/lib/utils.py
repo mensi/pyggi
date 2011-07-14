@@ -6,7 +6,7 @@
 """
 
 from flask import current_app
-from lib.config import config
+from pyggi.lib.config import config
 import logging
 
 if not config.getboolean('cache','enabled'):

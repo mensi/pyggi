@@ -6,14 +6,14 @@
 """
 
 from flask import Flask, current_app
-from lib.config import config
+from pyggi.lib.config import config
 import logging
 
 def error_handler(error):
     if current_app.debug:
         raise
     else:
-        from lib.repository import RepositoryError
+        from pyggi.lib.repository import RepositoryError
         from flask import redirect, url_for
 
         if not isinstance(error, RepositoryError):
@@ -58,7 +58,7 @@ def create_app(**kwargs):
     app.handle_exception = error_handler
 
     # register some filters
-    from lib.filters import format_datetime, format_diff, is_text
+    from pyggi.lib.filters import format_datetime, format_diff, is_text
     app.jinja_env.filters['dateformat'] = format_datetime
     app.jinja_env.filters['diffformat'] = format_diff
     app.jinja_env.tests['text'] = is_text

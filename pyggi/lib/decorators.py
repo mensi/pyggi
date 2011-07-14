@@ -34,7 +34,7 @@ def templated(template):
                 return context
 
             # add the page name into the context
-            from lib.config import config
+            from pyggi.lib.config import config
             context['page_name'] = config.get('general', 'name')
 
             # render the context using given template
@@ -52,8 +52,8 @@ def cached(keyfn):
             if key is None:
                 result = f(*args, **kwargs)
             else:
-                from lib.utils import cache
-                from lib.config import config
+                from pyggi.lib.utils import cache
+                from pyggi.lib.config import config
                 result = cache.get(key)
                 if result is None:
                     result = f(*args, **kwargs)
