@@ -10,7 +10,7 @@ Pyggi is a lightweight git frontend
 
 ## Dependencies
 
-- Flask			>= 0.6
+- Flask			>= 0.7
 - GitPython		== 0.1.7
 
 We are currently depending on a specific version of GitPython. All the newer versions of GitPython are completely unusable. The newest version for example provides a wrong blame information. In addition, not all features that we are using are available in the new versions, yet.
