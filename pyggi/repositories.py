@@ -6,15 +6,16 @@
 """
 
 import os
+import functools
 
-from pyggi.lib.decorators import templated, cached, method_shortcut
+from pyggi.lib.decorators import templated, cached
 from pyggi.lib.repository.gitr import GitRepository
-from flask import Module, redirect, url_for
+from flask import Blueprint, redirect, url_for
 from pyggi.lib.config import config
 
-frontend = Module(__name__, 'pyggi', url_prefix=None)
-get = method_shortcut(frontend, 'GET')
-post = method_shortcut(frontend, 'POST')
+frontend = Blueprint('repos', __name__)
+get = functools.partial(frontend.route, methods=['GET'])
+post = functools.partial(frontend.route, methods=['POST'])
 
 def cache_keyfn(prefix, additional_fields=[]):
     def test(*args, **kwargs):
@@ -29,31 +30,8 @@ def cache_keyfn(prefix, additional_fields=[]):
         return None
     return test
 
-@get("/favicon.ico/")
-def favicon():
-    return redirect(url_for('static', filename="favicon.ico"))
-
-@get("/style/", endpoint='style')
-def style():
-    from flask import render_template
-    from flask import make_response
-
-    data = render_template("pyggi/style/common.css")
-    data = data.replace("\n", "")
-    data = data.replace("\t", "")
-
-    response = make_response(data)
-    response.mimetype = 'text/css'
-
-    return response
-
-@get("/404", endpoint='not_found')
-@templated("pyggi/404.xhtml")
-def not_found():
-    pass
-
-@get("/", endpoint='index')
-@templated("pyggi/repositories.xhtml")
+@get("/")
+@templated("repositories.xhtml")
 def index():
     # compute the names of repositories
     repnames = [name \
@@ -67,15 +45,15 @@ def index():
         ]
     )
 
-@get("/<repository>/", endpoint='repository')
+@get("/<repository>/")
 def repository(repository):
     repo = GitRepository(repository=GitRepository.path(repository))
-    return redirect(url_for('overview', repository=repository, tree=repo.active_branch))
+    return redirect(url_for('.overview', repository=repository, tree=repo.active_branch))
 
 
-@get("/<repository>/overview/<tree>/", endpoint='overview')
+@get("/<repository>/overview/<tree>/")
 @cached(cache_keyfn('overview'))
-@templated("pyggi/overview.xhtml")
+@templated("overview.xhtml")
 def overview(repository, tree):
     repo = GitRepository(repository=GitRepository.path(repository))
 
@@ -84,9 +62,9 @@ def overview(repository, tree):
         treeid = tree
     )
 
-@get("/<repository>/tree/<tree>/", endpoint='browse')
+@get("/<repository>/tree/<tree>/")
 @cached(cache_keyfn('browse'))
-@templated("pyggi/browse.xhtml")
+@templated("browse.xhtml")
 def browse(repository, tree):
     repo = GitRepository(repository=GitRepository.path(repository))
 
@@ -96,9 +74,9 @@ def browse(repository, tree):
         browse = True
     )
 
-@get("/<repository>/tree/<tree>/<path:path>/", endpoint='browse_sub')
+@get("/<repository>/tree/<tree>/<path:path>/")
 @cached(cache_keyfn('tree', ['path']))
-@templated("pyggi/browse.xhtml")
+@templated("browse.xhtml")
 def browse_sub(repository, tree, path):
     repo = GitRepository(repository=GitRepository.path(repository))
 
@@ -109,9 +87,9 @@ def browse_sub(repository, tree, path):
         browse = True
     )
 
-@get("/<repository>/commit/<tree>/", endpoint='commit')
+@get("/<repository>/commit/<tree>/")
 @cached(cache_keyfn('commit'))
-@templated("pyggi/commit.xhtml")
+@templated("commit.xhtml")
 def commit(repository, tree):
     repo = GitRepository(repository=GitRepository.path(repository))
 
@@ -120,9 +98,9 @@ def commit(repository, tree):
         treeid = tree,
     )
 
-@get("/<repository>/blob/<tree>/<path:path>", endpoint='blob')
+@get("/<repository>/blob/<tree>/<path:path>")
 @cached(cache_keyfn('blob', ['path']))
-@templated("pyggi/blob.xhtml")
+@templated("blob.xhtml")
 def blob(repository, tree, path):
     repo = GitRepository(repository=GitRepository.path(repository))
 
@@ -132,9 +110,9 @@ def blob(repository, tree, path):
         breadcrumbs = path.split("/")
     )
 
-@get("/<repository>/blame/<tree>/<path:path>", endpoint='blame')
+@get("/<repository>/blame/<tree>/<path:path>")
 @cached(cache_keyfn('blame', ['path']))
-@templated("pyggi/blame.xhtml")
+@templated("blame.xhtml")
 def blame(repository, tree, path):
     repo = GitRepository(repository=GitRepository.path(repository))
 
@@ -144,7 +122,7 @@ def blame(repository, tree, path):
         breadcrumbs = path.split("/")
     )
 
-@get("/<repository>/raw/<tree>/<path:path>", endpoint='raw')
+@get("/<repository>/raw/<tree>/<path:path>")
 @cached(cache_keyfn('raw', ['path']))
 def raw(repository, tree, path):
     repo = GitRepository(repository=GitRepository.path(repository))
@@ -156,7 +134,7 @@ def raw(repository, tree, path):
     response.mimetype = blob.mime_type
     return response
 
-@get("/<repository>/download/<tree>", endpoint='download')
+@get("/<repository>/download/<tree>")
 @cached(cache_keyfn('download'))
 def download(repository, tree):
     repo = GitRepository(repository=GitRepository.path(repository))
@@ -170,5 +148,4 @@ def download(repository, tree):
     response.headers['Content-Disposition'] = "attachment; filename=%s-%s.tar.gz" % (repository, tree[:8])
 
     return response
-
 

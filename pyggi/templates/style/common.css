@@ -47,24 +47,24 @@ div.site div.footer
 }
 
 /* breadcrumbs */
-{% include "pyggi/style/breadcrumbs.css" %}
+{% include "style/breadcrumbs.css" %}
 
 /* menu */
-{% include "pyggi/style/menu.css" %}
+{% include "style/menu.css" %}
 
 /* content */
-{% include "pyggi/style/content.css" %}
+{% include "style/content.css" %}
 
 /* commit */
-{% include "pyggi/style/commit.css" %}
-{% include "pyggi/style/info.css" %}
+{% include "style/commit.css" %}
+{% include "style/info.css" %}
 
 /* readme */
-{% include "pyggi/style/readme.css" %}
-{% include "pyggi/style/wikistyle.css" %}
+{% include "style/readme.css" %}
+{% include "style/wikistyle.css" %}
 
 /* tree browser */
-{% include "pyggi/style/browser.css" %}
+{% include "style/browser.css" %}
 
 /* blob */
-{% include "pyggi/style/blob.css" %}
+{% include "style/blob.css" %}

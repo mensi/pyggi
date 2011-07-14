@@ -7,7 +7,7 @@ if path not in sys.path:
     sys.path.append(path)
 
 try:
-    from pyggi.lib.wsgi import create_app
+    from pyggi import create_app
     application = create_app()
 except Exception as e:
     raise
