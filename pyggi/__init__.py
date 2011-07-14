@@ -26,15 +26,13 @@ def create_app(**kwargs):
     # object that should be imported
     for module_desc in config.items('modules'):
         module, prefix = module_desc
-        if not prefix.endswith('/'):
-            prefix += '/'
         module, attribute = module.rsplit('.', 1)
 
         # now we try to import the module and register it
         # in our application. otherwise ignore and continue
         try:
             _import = __import__(module, globals(), locals(), [attribute], -1)
-            app.register_blueprint(getattr(_import, attribute))
+            app.register_blueprint(getattr(_import, attribute), url_prefix=prefix.strip('/'))
         except Exception as e:
             logging.critical("could not load module '%s': %s", module_desc[0], e)
 
