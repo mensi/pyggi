@@ -9,13 +9,13 @@ from flask import current_app
 from pyggi.lib.config import config
 import logging
 
-if not config.getboolean('cache','enabled'):
-    class DummyCache(object):
-        def get(*args, **kwargs):
-            pass
-        def set(*args, **kwargs):
-            pass
+class DummyCache(object):
+    def get(*args, **kwargs):
+        pass
+    def set(*args, **kwargs):
+        pass
 
+if not config.getboolean('cache','enabled'):
     cache = DummyCache()
 else:
     if current_app.debug:
