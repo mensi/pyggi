@@ -15,6 +15,21 @@ html_escape_table = {
     "<": "&lt;",
 }
 
+def force_unicode(txt):
+    try:
+        return unicode(txt)
+    except UnicodeDecodeError:
+        pass
+    orig = txt
+    if type(txt) != str:
+        txt = str(txt)
+    for args in [('utf-8',), ('latin1',), ('ascii', 'replace')]:
+        try:
+            return txt.decode(*args)
+        except UnicodeDecodeError:
+            pass
+    raise ValueError("Unable to force %s object %r to unicode" % (type(orig).__name__, orig))
+
 def format_datetime(value, format='iso8601'):
     # convert format to iso8601 compliant
     if format == 'iso8601':

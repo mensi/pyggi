@@ -32,7 +32,7 @@
 <div class="content" style="margin-left: 150px">
     <!-- DESCRIPTION -->
     <h1>{{ repository.name }}</h1>
-    <p class="description">{{ repository.description }}</p>
+    <p class="description">{{ repository.description|force_unicode }}</p>
 {% if repository.readme %}
     <p class="more"><a href="#readme">show readme</a></p>
 {% endif %}
@@ -42,8 +42,8 @@
 {% for commit in repository.last_activities(treeid) %}
     <div class="commit">
         <p class="date">{{ commit.committed_date|dateformat('%A %B %d %Y - %H:%M:%S') }}</p>
-        <p class="author">{{ commit.author.name }} <b>committed</b> <a href="{{ url_for('commit', repository=repo, tree=commit.id) }}">{{ commit.id|truncate(8, True, '') }}</a></p>
-        <p class="message">{{ commit.message }}</p>
+        <p class="author">{{ commit.author.name|force_unicode }} <b>committed</b> <a href="{{ url_for('commit', repository=repo, tree=commit.id) }}">{{ commit.id|truncate(8, True, '') }}</a></p>
+        <p class="message">{{ commit.message|force_unicode }}</p>
     </div>
 {% endfor %}
 

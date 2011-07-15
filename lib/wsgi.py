@@ -58,7 +58,8 @@ def create_app(**kwargs):
     app.handle_exception = error_handler
 
     # register some filters
-    from lib.filters import format_datetime, format_diff, is_text
+    from lib.filters import force_unicode, format_datetime, format_diff, is_text
+    app.jinja_env.filters['force_unicode'] = force_unicode
     app.jinja_env.filters['dateformat'] = format_datetime
     app.jinja_env.filters['diffformat'] = format_diff
     app.jinja_env.tests['text'] = is_text

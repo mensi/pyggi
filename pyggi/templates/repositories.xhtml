@@ -6,8 +6,8 @@
 {% set commit = repo.commit(repo.active_branch) %}
 <div class="commit">
 	<p class="date"><a href="{{ url_for('repository', repository=repo.name) }}">{{ repo.name }}</a></p>
-	<p class="author">Last updated {{ commit.committed_date|dateformat('%B %d, %Y') }} by {{ commit.author }}</a></p>
-	<p class="message">{{ repo.description|truncate(150) }}</p>
+	<p class="author">Last updated {{ commit.committed_date|dateformat('%B %d, %Y') }} by {{ commit.author|force_unicode }}</a></p>
+	<p class="message">{{ repo.description|force_unicode|truncate(150) }}</p>
 </div>
 {% endfor %}
 
