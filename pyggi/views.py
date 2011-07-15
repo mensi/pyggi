@@ -84,6 +84,17 @@ def overview(repository, tree):
         treeid = tree
     )
 
+@get("/<repository>/shortlog/<tree>/", endpoint='shortlog')
+@cached(cache_keyfn('shortlog'))
+@templated("pyggi/shortlog.xhtml")
+def shortlog(repository, tree):
+    repo = GitRepository(repository=GitRepository.path(repository))
+
+    return dict( \
+        repository = repo,
+        treeid = tree
+    )
+
 @get("/<repository>/tree/<tree>/", endpoint='browse')
 @cached(cache_keyfn('browse'))
 @templated("pyggi/browse.xhtml")

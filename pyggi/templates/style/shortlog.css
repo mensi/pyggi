@@ -1,0 +1,41 @@
+
+.shortlog
+{
+	margin: 0;
+	padding: 0;
+	border: 1px solid #e1e1e1;
+	background: #f8f8f8;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border-collapse: separate;
+	border-spacing: 0px 0px;
+}
+
+.shortlog tr
+{
+	border-bottom: 1px solid #e1e1e1;
+}
+
+.shortlog:last-child
+{
+	border-bottom: 0;
+}
+
+.shortlog td
+{
+	vertical-align: top;
+	font-family: Monaco,'Courier New','DejaVu Sans Mono','Bitstream Vera Sans Mono',monospace;
+	font-size: 90%;
+	color: #484848;
+	padding: 6px 4px;
+	background: #f8f8f8;
+	border-bottom: 1px solid #e1e1e1;
+}
+
+.shortlog .timedelta,
+.shortlog .author
+{
+	white-space: nowrap;
+	padding-right: 10px;
+}

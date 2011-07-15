@@ -61,6 +61,25 @@ def format_diff(value):
 
     return '<li>%s</li>' % value
 
+def humanize_timesince(when):
+    import datetime
+    now = datetime.datetime.now()
+    difference = now - datetime.datetime(*when[:6])
+    if difference < datetime.timedelta(minutes=2):
+        return "%s seconds ago" % difference.seconds
+    elif difference < datetime.timedelta(hours=2):
+        return "%s minutes ago" % difference.seconds / 60
+    elif difference < datetime.timedelta(days=2):
+        return "%s hours ago" % (difference.days * 24 + difference.seconds / 3600)
+    elif difference < datetime.timedelta(days=2*7):
+        return "%s days ago" % difference.days
+    elif difference < datetime.timedelta(days=2*30):
+        return "%s weeks ago" % (difference.days / 7)
+    elif difference < datetime.timedelta(days=2*365):
+        return "%s months ago" % (difference.days / 30)
+    else:
+        return "%s years ago" % (difference.days / 365)
+
 def is_text(mimetype):
     """
         determine if a mimetype holds printable text (ascii)

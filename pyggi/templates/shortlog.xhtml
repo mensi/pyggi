@@ -1,0 +1,53 @@
+{% extends "pyggi/base.xhtml" %}
+{% set repo = repository.name %}
+
+{% block title %}{{ treeid }} in {{ repo }}{% endblock %}
+
+{% block content %}
+
+<!-- MENU -->
+<div class="menu">
+	<h1>actions</h1>
+	<ul>
+		<li><a href="{{ url_for('browse', repository=repo, tree=treeid) }}">browse tree</a></li>
+	</ul>
+{% if repository.branches %}
+    <h1>branches ({{ repository.branches|length }})</h1>
+    <ul>
+    {% for branch in repository.branches %}
+        <li><a href="{{ url_for('overview', repository=repo, tree=branch.name) }}">{{ branch.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% if repository.tags %}
+    <h1>tags ({{ repository.tags|length }})</h1>
+    <ul>
+    {% for tag in repository.tags %}
+        <li><a href="{{ url_for('overview', repository=repo, tree=tag.name) }}">{{ tag.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}
+</div>
+
+<div class="content" style="margin-left: 150px">
+    <!-- DESCRIPTION -->
+    <h1>{{ repository.name }}</h1>
+    <p class="description">{{ repository.description }}</p>
+{% if repository.readme %}
+    <p class="more"><a href="#readme">show readme</a></p>
+{% endif %}
+
+    <!-- SHORTLOG -->
+    <h1>shortlog</h1>
+    <table class="shortlog">
+{% for commit in repository.last_activities(treeid, 20) %}
+    <tr>
+        <td class="timedelta">{{ commit.committed_date|timesince }}</td>
+        <td class="author">{{ commit.author.name|force_unicode }}</td>
+        <td class="message">{{ commit.message|force_unicode }}</td>
+    </tr>
+{% endfor %}
+    </table>
+</div>
+
+{% endblock %}

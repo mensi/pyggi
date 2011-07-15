@@ -68,3 +68,6 @@ div.site div.footer
 
 /* blob */
 {% include "pyggi/style/blob.css" %}
+
+/* shortlog */
+{% include "pyggi/style/shortlog.css" %}
