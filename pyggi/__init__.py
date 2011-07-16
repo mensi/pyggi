@@ -42,6 +42,7 @@ def create_app(**kwargs):
     app.jinja_env.filters['diffformat'] = lib.filters.format_diff
     app.jinja_env.filters['timesince'] = lib.filters.humanize_timesince
     app.jinja_env.filters['force_unicode'] = lib.filters.force_unicode
+    app.jinja_env.filters['first_line'] = lib.filters.first_line
     app.jinja_env.tests['text'] = lib.filters.is_text
     app.context_processor(lambda: dict(static_url_for=lib.filters.static_url_for))
 

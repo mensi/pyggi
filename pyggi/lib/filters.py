@@ -96,6 +96,13 @@ def is_text(mimetype):
 
     return False
 
+def first_line(string):
+    string = string.replace('\r', '\n', 1)
+    try:
+        return string[:string.index('\n')]
+    except ValueError:
+        return string
+
 def static_url_for(filename):
     from flask import url_for, request
     from config import config

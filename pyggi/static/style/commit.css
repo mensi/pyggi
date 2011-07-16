@@ -28,6 +28,7 @@ div.commit p.message
 {
 	font-family: Monaco,'Courier New','DejaVu Sans Mono','Bitstream Vera Sans Mono',monospace;
 	font-size: 80%;
+	white-space: pre-wrap;
 }
 
 div.commit div.machine
