@@ -77,7 +77,7 @@ def overview(repository, tree):
 @cached(cache_keyfn('shortlog'))
 @templated("shortlog.xhtml")
 def shortlog(repository, tree):
-    repo = GitRepository(repository=GitRepository.path(repository))
+    repo = GitRepository(repository=get_repository_path(repository))
 
     return dict( \
         repository = repo,
