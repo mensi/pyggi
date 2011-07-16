@@ -29,7 +29,7 @@
 {% if blob.mime_type is text %}
         <ol>
     {% for line in blob.data.split("\n") %}
-            <li><p class="code">&nbsp;{{ line }}</p></li>
+            <li><p class="code">&nbsp;{{ line|force_unicode }}</p></li>
     {% endfor %}
         </ol>
 {% else %}

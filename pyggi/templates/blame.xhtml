@@ -25,33 +25,35 @@
 
 <div class="content" style="margin-left: 150px;">
 	<h1>blame for {{ path }}</h1>
+
 {% if blob.mime_type is text %}
-<table cellspacing="0" cellpadding="0">
-{% set lcounter = 0 %}
+
+<table class="blame" cellspacing="0" cellpadding="0">
+{% set lcounter = 1 %}
 {% for blameinfo in blame %}
 	{% if blameinfo[0] %}
 	<tr>
-		<td nowrap class="commitinfo first">
-			<code>
-				<a href="{{ url_for('.commit', repository=repo, tree=blameinfo[0].id) }}">{{ blameinfo[0].id|truncate(8, true, '') }}</a>
-				<a href="{{ url_for('.blame', repository=repo, tree=blameinfo[0].id, path=path) }}">&#187;</a>
-				{{ blameinfo[0].author.name }}
-			</code>
+		<td class="author">
+			<a href="{{ url_for('.commit', repository=repo, tree=blameinfo[0].id) }}">{{ blameinfo[0].id|truncate(8, true, '') }}</a><br />
+			{{ blameinfo[0].author.name }}
 		</td>
-		<td nowrap class="linenumber first">{{ lcounter + 1 }}</td>
-		<td nowrap class="code first" width="100%">{{ blameinfo[1][0] }}
+		<td class="blame">
+			<ol start="{{ lcounter }}">
+		{% for blameline in blameinfo[1] %}
+				<li><p class="code">&nbsp;{{ blameline|force_unicode }}</p></li>
+		{% endfor %}
+		{% set lcounter = lcounter + blameinfo[1]|length %}
+			</ol>
+		</td>
 	</tr>
-	{% for blameline in blameinfo[1][1:] %}
-	<tr>
-		<td nowrap class="commitinfo">&nbsp;</td>
-		<td nowrap class="linenumber">{{ lcounter + loop.index + 1 }}</td>
-		<td nowrap class="code">{{ blameline }}</td>
-	</tr>
-	{% endfor %}
-	{% set lcounter = lcounter + blameinfo[1]|length %}
 	{% endif %}
 {% endfor %}
 </table>
+
+{% else %}
+<div class="data">
+	<p class="binary">binary data</p>
+</div>
 {% endif %}
 </div>
 

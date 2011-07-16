@@ -94,6 +94,10 @@ def is_text(mimetype):
         (mimetype.find("html") != -1 or mimetype.find("xml") != -1):
         return True
 
+    # javascript documents
+    if mimetype == "application/javascript":
+        return True
+
     return False
 
 def first_line(string):
