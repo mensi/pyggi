@@ -6,8 +6,8 @@
 """
 
 from git import Repo, GitCommandError
-from lib.repository import RepositoryError, Repository
-from lib.config import config
+from pyggi.lib.repository import RepositoryError, Repository
+from pyggi.lib.config import config
 
 class GitRepository(Repository):
     class Submodule(object):
@@ -199,7 +199,7 @@ class GitRepository(Repository):
             file = self.active_branch+"/README"
             blob = self.blob(file)
 
-            from lib.filters import html_escape_table
+            from pyggi.lib.filters import html_escape_table
 
             data = unicode(blob.data, 'utf-8')
             data = "".join(html_escape_table.eet(c,c) if c != "\n" else "<br/>" for c in data)

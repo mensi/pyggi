@@ -1,4 +1,4 @@
-{% extends "pyggi/base.xhtml" %}
+{% extends "base.xhtml" %}
 {% set repo = repository.name %}
 
 {% block title %}{{ treeid }} in {{ repo }}{% endblock %}
@@ -9,13 +9,13 @@
 <div class="menu">
 	<h1>actions</h1>
 	<ul>
-		<li><a href="{{ url_for('browse', repository=repo, tree=treeid) }}">browse tree</a></li>
+		<li><a href="{{ url_for('.browse', repository=repo, tree=treeid) }}">browse tree</a></li>
 	</ul>
 {% if repository.branches %}
     <h1>branches ({{ repository.branches|length }})</h1>
     <ul>
     {% for branch in repository.branches %}
-        <li><a href="{{ url_for('overview', repository=repo, tree=branch.name) }}">{{ branch.name }}</a></li>
+        <li><a href="{{ url_for('.overview', repository=repo, tree=branch.name) }}">{{ branch.name }}</a></li>
     {% endfor %}
     </ul>
 {% endif %}
@@ -23,7 +23,7 @@
     <h1>tags ({{ repository.tags|length }})</h1>
     <ul>
     {% for tag in repository.tags %}
-        <li><a href="{{ url_for('overview', repository=repo, tree=tag.name) }}">{{ tag.name }}</a></li>
+        <li><a href="{{ url_for('.overview', repository=repo, tree=tag.name) }}">{{ tag.name }}</a></li>
     {% endfor %}
     </ul>
 {% endif %}
@@ -42,7 +42,7 @@
 {% for commit in repository.last_activities(treeid) %}
     <div class="commit">
         <p class="date">{{ commit.committed_date|dateformat('%A %B %d %Y - %H:%M:%S') }}</p>
-        <p class="author">{{ commit.author.name|force_unicode }} <b>committed</b> <a href="{{ url_for('commit', repository=repo, tree=commit.id) }}">{{ commit.id|truncate(8, True, '') }}</a></p>
+        <p class="author">{{ commit.author.name|force_unicode }} <b>committed</b> <a href="{{ url_for('.commit', repository=repo, tree=commit.id) }}">{{ commit.id|truncate(8, True, '') }}</a></p>
         <p class="message">{{ commit.message|force_unicode }}</p>
     </div>
 {% endfor %}

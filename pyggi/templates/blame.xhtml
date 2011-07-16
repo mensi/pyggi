@@ -1,4 +1,4 @@
-{% extends "pyggi/base.xhtml" %}
+{% extends "base.xhtml" %}
 
 {% block content %}
 
@@ -17,9 +17,9 @@
     </ul>
     <h1>actions</h1>
     <ul>
-        <li><a href="{{ url_for('blob', repository=repo, tree=treeid, path=path) }}">overview</a></li>
-        <li><a href="{{ url_for('blame', repository=repo, tree=treeid, path=path ) }}">blame</a></li>
-        <li><a href="{{ url_for('raw', repository=repo, tree=treeid, path=path) }}">raw</a></li>
+        <li><a href="{{ url_for('.blob', repository=repo, tree=treeid, path=path) }}">overview</a></li>
+        <li><a href="{{ url_for('.blame', repository=repo, tree=treeid, path=path ) }}">blame</a></li>
+        <li><a href="{{ url_for('.raw', repository=repo, tree=treeid, path=path) }}">raw</a></li>
     </ul>
 </div>
 
@@ -33,8 +33,8 @@
 	<tr>
 		<td nowrap class="commitinfo first">
 			<code>
-				<a href="{{ url_for('commit', repository=repo, tree=blameinfo[0].id) }}">{{ blameinfo[0].id|truncate(8, true, '') }}</a>
-				<a href="{{ url_for('blame', repository=repo, tree=blameinfo[0].id, path=path) }}">&#187;</a>
+				<a href="{{ url_for('.commit', repository=repo, tree=blameinfo[0].id) }}">{{ blameinfo[0].id|truncate(8, true, '') }}</a>
+				<a href="{{ url_for('.blame', repository=repo, tree=blameinfo[0].id, path=path) }}">&#187;</a>
 				{{ blameinfo[0].author.name }}
 			</code>
 		</td>

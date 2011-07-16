@@ -1,4 +1,4 @@
-{% extends "pyggi/base.xhtml" %}
+{% extends "base.xhtml" %}
 
 {% block content %}
 
@@ -10,9 +10,9 @@
 <div class="commit">
 	<div class="enveloppe" style="overflow: hidden;">
 		<div class="machine">
-			<p>tree:&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ url_for('browse', repository=repo, tree=commit.id) }}">{{ commit.tree.id|truncate(20, true, '') }}</a></p>
+			<p>tree:&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ url_for('.browse', repository=repo, tree=commit.id) }}">{{ commit.tree.id|truncate(20, true, '') }}</a></p>
 {% for parent in commit.parents %}
-			<p>parent:&nbsp;&nbsp;<a href="{{ url_for('commit', repository=repo, tree=parent.id) }}">{{ parent.id|truncate(20, true, '') }}</a></p>
+			<p>parent:&nbsp;&nbsp;<a href="{{ url_for('.commit', repository=repo, tree=parent.id) }}">{{ parent.id|truncate(20, true, '') }}</a></p>
 {% endfor %}
 		</div>
 		<p class="date">commit {{ treeid }}</p>
@@ -36,7 +36,7 @@ Showing {{ commit.stats.total['files'] }} changed files with <font class="additi
 <div class="meta">
 {% if diff.deleted_file %}
 {% else %}
-	<p class="commit"><a href="{{ url_for('blob', repository=repo, tree=treeid, path=diff.b_path) }}"><b>View file @</b> {{ treeid|truncate(8, true, '') }}</a></p>
+	<p class="commit"><a href="{{ url_for('.blob', repository=repo, tree=treeid, path=diff.b_path) }}"><b>View file @</b> {{ treeid|truncate(8, true, '') }}</a></p>
 {% endif %}
 	<p class="file">{% if diff.rename_from %}{{ diff.rename_from }} &rarr; {{ diff.rename_to }}{% else %}{{ diff.b_path }}{% endif %}</p>
 </div>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
 <head>
 	<script type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}"></script>
-	<link href="{{ url_for('style') }}" media="screen" rel="stylesheet" type="text/css" />
+	<link href="{{ url_for('base.style') }}" media="screen" rel="stylesheet" type="text/css" />
 	<title>{{ page_name }} - {% block title %}the python powered git frontend{% endblock %}</title>
 </head>
 
@@ -10,7 +10,7 @@
 
 <div class="site">
 	<h1 class="title">{{ page_name }}</h1>
-	{% include "pyggi/breadcrumbs.xhtml" %}
+	{% include "breadcrumbs.xhtml" %}
 {% block content %}{% endblock %}
 
 	<div class="footer">

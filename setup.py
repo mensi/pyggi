@@ -8,7 +8,7 @@ setup(
     packages=[],
     include_package_data=False,
     install_requires=[
-        'Flask>=0.6',
+        'Flask>=0.7',
         'GitPython==0.1.7',
     ],
     extras_require = {
