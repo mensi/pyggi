@@ -45,29 +45,3 @@ div.site div.footer
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 }
-
-/* breadcrumbs */
-{% include "style/breadcrumbs.css" %}
-
-/* menu */
-{% include "style/menu.css" %}
-
-/* content */
-{% include "style/content.css" %}
-
-/* commit */
-{% include "style/commit.css" %}
-{% include "style/info.css" %}
-
-/* readme */
-{% include "style/readme.css" %}
-{% include "style/wikistyle.css" %}
-
-/* tree browser */
-{% include "style/browser.css" %}
-
-/* blob */
-{% include "style/blob.css" %}
-
-/* shortlog */
-{% include "style/shortlog.css" %}

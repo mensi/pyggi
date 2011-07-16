@@ -1,0 +1,28 @@
+/* common */
+@import url(style/common.css);
+
+/* breadcrumbs */
+@import url(style/breadcrumbs.css);
+
+/* menu */
+@import url(style/menu.css);
+
+/* content */
+@import url(style/content.css);
+
+/* commit */
+@import url(style/commit.css);
+@import url(style/info.css);
+
+/* readme */
+@import url(style/readme.css);
+@import url(style/wikistyle.css);
+
+/* tree browser */
+@import url(style/browser.css);
+
+/* blob */
+@import url(style/blob.css);
+
+/* shortlog */
+@import url(style/shortlog.css);

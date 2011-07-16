@@ -22,7 +22,7 @@ ul.breadcrumbs li.crumb
 	float: left;
 	padding-left: 20px;
 	padding-right: 10px;
-	background: url({{ static_url_for("images/breadcrumbs-separator.png") }}) no-repeat;
+	background: url(../images/breadcrumbs-separator.png) no-repeat;
 }
 
 ul.breadcrumbs li.crumb:first-child
@@ -46,35 +46,35 @@ ul.breadcrumbs li.crumb a
 
 ul.breadcrumbs li.crumb a.folder
 {
-	background: url({{ static_url_for("images/icons/dir.png") }}) no-repeat 0px 1px;
+	background: url(../images/icons/dir.png) no-repeat 0px 1px;
 }
 
 ul.breadcrumbs li.crumb a.file
 {
-	background: url({{ static_url_for("images/icons/txt.png") }}) no-repeat 0px 1px;
+	background: url(../images/icons/txt.png) no-repeat 0px 1px;
 }
 
 ul.breadcrumbs li.crumb a.repository
 {
-	background: url({{ static_url_for("images/icons/brick.png") }}) no-repeat 0px 1px;
+	background: url(../images/icons/brick.png) no-repeat 0px 1px;
 }
 
 ul.breadcrumbs li.crumb a.branch
 {
-	background: url({{ static_url_for("images/icons/branch.png") }}) no-repeat 0px 1px;
+	background: url(../images/icons/branch.png) no-repeat 0px 1px;
 }
 
 ul.breadcrumbs li.crumb a.tag
 {
-	background: url({{ static_url_for("images/icons/tag.png") }}) no-repeat 0px 1px;
+	background: url(../images/icons/tag.png) no-repeat 0px 1px;
 }
 
 ul.breadcrumbs li.crumb a.commit
 {
-	background: url({{ static_url_for("images/icons/commit.png") }}) no-repeat 0px 1px;
+	background: url(../images/icons/commit.png) no-repeat 0px 1px;
 }
 
 ul.breadcrumbs li.crumb a.db
 {
-	background: url({{ static_url_for("images/icons/db.png") }}) no-repeat 0px 1px;
+	background: url(../images/icons/db.png) no-repeat 0px 1px;
 }

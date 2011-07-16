@@ -38,20 +38,20 @@ ul.browser li p
 
 ul.browser li a.folder
 {
-	background: url({{ static_url_for("images/icons/dir.png") }}) no-repeat 0 3px;
+	background: url(../images/icons/dir.png) no-repeat 0 3px;
 }
 
 ul.browser li a.file
 {
-	background: url({{ static_url_for("images/icons/txt.png") }}) no-repeat 0 3px;
+	background: url(../images/icons/txt.png) no-repeat 0 3px;
 }
 
 ul.browser li a.back
 {
-	background: url({{ static_url_for("images/icons/back.png") }}) no-repeat 0 5px;
+	background: url(../images/icons/back.png) no-repeat 0 5px;
 }
 
 ul.browser li p.submodule
 {
-	background: url({{ static_url_for("images/icons/link.png") }}) no-repeat;
+	background: url(../images/icons/link.png) no-repeat;
 }
