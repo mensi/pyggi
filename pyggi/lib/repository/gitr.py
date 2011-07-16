@@ -5,6 +5,7 @@
     :license: BSD, see LICENSE for more details
 """
 
+import os, os.path
 from git import Repo, GitCommandError
 from pyggi.lib.repository import RepositoryError, Repository
 from pyggi.lib.config import config
@@ -56,30 +57,36 @@ class GitRepository(Repository):
         self.options = options
 
         # check if it's really a repository
-        if not GitRepository.isRepository(self.options['repository'].split("/")[-1]):
+        if not GitRepository.isRepository(self.options['repository']):
             raise RepositoryError("Repository '%s' is not a Git Repository" % self.options['repository'])
 
-        self.repo = Repo(self.options['repository'])
+        self.path = self.options['repository']
+        if not os.path.exists(self.path):
+            raise RepositoryError("Repository '%s' does not exist" % self.path)
+        self.repo = Repo(self.path)
 
         # next up prepare some fields
         self.description = self.repo.description
-        self.name = self.options['repository'].split("/")[-1]
+        self.name = self.options['repository'].rsplit("/", 1)[-1]
         self.is_empty = len(self.repo.heads) == 0
 
     @property
     def clone_urls(self):
         urls = dict(config.items('clone'))
-        return dict([(proto, urls[proto].replace("%repo%", self.name)) for proto in urls.keys()])
+        return dict([(proto, urls[proto] % self.__dict__) for proto in urls.keys()])
 
     @property
     def head(self):
         if self.is_empty:
-            raise RepositoryError("Repository '%s' is empty" % self.name)
+            raise RepositoryError("Repository '%s' is empty" % self.path)
 
         return self.repo.heads[0]
 
     @staticmethod
     def resolve_ref(repository, ref):
+        if not os.path.exists(repository):
+            raise RepositoryError("Repository '%s' does not exist" % repository)
+
         import re
         sha_regex = re.compile('[0-9a-f]{40}')
 
@@ -134,7 +141,7 @@ class GitRepository(Repository):
             try:
                 tree = tree[crumb]
             except KeyError:
-                raise RepositoryError("Repository '%s' has no tree '%s'" % (self.name, path))
+                raise RepositoryError("Repository '%s' has no tree '%s'" % (self.path, path))
 
         from git import Blob, Tree
         if isinstance(tree, Tree):
@@ -221,14 +228,14 @@ class GitRepository(Repository):
         try:
             return self.repo.archive_tar_gz(treeish, self.name+"/")
         except GitCommandError:
-            return RepositoryError("Repository '%s' has no tree '%s'" % (self.name, treeish))
+            return RepositoryError("Repository '%s' has no tree '%s'" % (self.path, treeish))
 
     def history(self, path):
         try:
             breadcrumbs = path.split("/")
             return self.repo.commits(breadcrumbs[0], '/'.join(breadcrumbs[1:]))
         except GitCommandError:
-            return RepositoryError("Repository '%s' has no path '%s'" % (self.name, path))
+            return RepositoryError("Repository '%s' has no path '%s'" % (self.path, path))
 
     def blame(self, path):
         try:
@@ -236,7 +243,7 @@ class GitRepository(Repository):
             breadcrumbs = path.split("/")
             return Blob.blame(self.repo, breadcrumbs[0], '/'.join(breadcrumbs[1:]))
         except GitCommandError:
-            return RepositoryError("Repository '%s' has no blame '%s'" % (self.name, path))
+            return RepositoryError("Repository '%s' has no blame '%s'" % (self.path, path))
 
     @property
     def branches(self):
@@ -247,23 +254,14 @@ class GitRepository(Repository):
         return self.repo.tags
 
     @staticmethod
-    def isRepository(name):
+    def isRepository(path):
         try:
-            repo = Repo(GitRepository.path(name))
+            repo = Repo(path)
             if not config.getboolean('general', 'preserve_daemon_export'):
                 return len(repo.heads) > 0
             return repo.daemon_export and len(repo.heads) > 0
         except:
             return False
-
-    @staticmethod
-    def path(name):
-        import os
-        folder = os.path.join(config.get('general','git_repositories'), name)
-        if not os.path.exists(folder):
-            raise RepositoryError("Repository '%s' does not exist" % name)
-
-        return folder
 
     def commit(self, treeish):
         try:
@@ -273,4 +271,4 @@ class GitRepository(Repository):
 
             return commit
         except GitCommandError:
-            return RepositoryError("Repository '%s' has no tree '%s'" % (self.name, treeish))
+            return RepositoryError("Repository '%s' has no tree '%s'" % (self.path, treeish))

@@ -2,7 +2,8 @@
 import functools
 
 from pyggi.lib.decorators import templated
-from flask import Blueprint, redirect, url_for
+import pyggi.lib.filters
+from flask import Blueprint, redirect
 
 base = Blueprint('base', __name__)
 get = functools.partial(base.route, methods=['GET'])
@@ -10,7 +11,7 @@ post = functools.partial(base.route, methods=['POST'])
 
 @get("/favicon.ico")
 def favicon():
-    return redirect(url_for('static', filename="favicon.ico"))
+    return redirect(pyggi.lib.filters.static_url_for("favicon.ico"))
 
 @get("/style")
 def style():
