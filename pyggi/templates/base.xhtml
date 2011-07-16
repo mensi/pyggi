@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
 <head>
-	<script type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}"></script>
+	<script type="text/javascript" src="{{ static_url_for('jquery.js') }}"></script>
 	<link href="{{ url_for('base.style') }}" media="screen" rel="stylesheet" type="text/css" />
 	<title>{{ page_name }} - {% block title %}the python powered git frontend{% endblock %}</title>
 </head>

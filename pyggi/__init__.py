@@ -37,10 +37,11 @@ def create_app(**kwargs):
             logging.critical("could not load module '%s': %s", module_desc[0], e)
 
     # register some filters
-    from pyggi.lib.filters import format_datetime, format_diff, is_text
+    from pyggi.lib.filters import format_datetime, format_diff, is_text, static_url_for
     app.jinja_env.filters['dateformat'] = format_datetime
     app.jinja_env.filters['diffformat'] = format_diff
     app.jinja_env.tests['text'] = is_text
+    app.context_processor(lambda: dict(static_url_for=static_url_for))
 
     return app
 

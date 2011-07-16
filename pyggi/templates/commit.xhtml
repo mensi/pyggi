@@ -51,7 +51,7 @@ Showing {{ commit.stats.total['files'] }} changed files with <font class="additi
 	{{ line|diffformat|safe }}
 	{% endfor %}
 {% endif %}
-	<li><a href="#top"><img src="{{ url_for('static', filename="images/icons/up.png") }}" border="0" width="16" height="16" alt="up" /></a></li>
+	<li><a href="#top"><img src="{{ static_url_for('images/icons/up.png') }}" border="0" width="16" height="16" alt="up" /></a></li>
 </ul>
 {% endfor %}
 

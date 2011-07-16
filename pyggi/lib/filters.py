@@ -61,3 +61,16 @@ def is_text(mimetype):
         return True
 
     return False
+
+def static_url_for(filename):
+    from flask import url_for, request
+    from config import config
+    import urllib
+
+    url_base = request.environ.get('wsgiorg.routing_args', ([], {}))[1].get('static_url_base')
+    if not url_base and config.has_option('general', 'static_url_base'):
+        url_base = config.get('general', 'static_url_base')
+    if url_base:
+        return url_base.rstrip('/') + '/' + urllib.quote(filename)
+    else:
+        return url_for('static', filename=filename)
