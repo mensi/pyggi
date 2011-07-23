@@ -21,6 +21,6 @@ setup(
     author="Tobias Heinzen",
     author_email="tobias.heinzen@0xdeadbeef.ch",
     description="Pyggi - a lightweight git frontend",
-    license=""
+    license="BSD"
 )
 

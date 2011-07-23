@@ -36,7 +36,7 @@ Pyggi is fully WSGI compliant and can thus be easily integrated in your server i
 	<VirtualHost *>
 		ServerName example.com
 
-		WSGIDaemonProcess pyggi user=git group=git threads=5 python-path=/var/www/pyggi/ home=/var/www/pyggi/
+		WSGIDaemonProcess pyggi user=git group=git threads=5
 		WSGIScriptAlias / /var/www/pyggi/pyggi.wsgi
 
 		<Directory /var/www/pyggi>

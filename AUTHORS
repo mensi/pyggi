@@ -7,7 +7,12 @@ Development Lead
 - Tobias Heinzen <tobias.heinzen@0xdeadbeef.ch>
 
 
-
 Patches and Suggestions
 ```````````````````````
+
+- Mark Nevill
+  * added shortlog
+  * fixed package layout
+  * porting to flask blueprints
+  * various bugfixes
 

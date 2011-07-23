@@ -3,6 +3,15 @@ pyggi Changelog
 
 Here you can see the full list of changes between each pyggi release.
 
+dev
+---
+
+- created a new design
+- adjusted package layout
+- ported to flask blueprints
+- added shortlog
+- BUGFIX: unicode text in files is now displayed correctly
+- BUGFIX: added missing readme types (plain/RST) again
 
 Version 0.2
 -----------
