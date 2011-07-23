@@ -9,7 +9,10 @@
 <div class="menu">
 	<h1>actions</h1>
 	<ul>
+	    <li><a href="{{ url_for('.overview', repository=repo, tree=treeid) }}">overview</a></li>
 		<li><a href="{{ url_for('.browse', repository=repo, tree=treeid) }}">browse tree</a></li>
+		<li><a href="{{ url_for('.shortlog', repository=repo, tree=treeid) }}">shortlog</a></li>
+		<li><a href="{{ url_for('.download', repository=repo, tree=treeid) }}">tarball</a></li>
 	</ul>
 {% if repository.branches %}
     <h1>branches ({{ repository.branches|length }})</h1>
@@ -35,6 +38,16 @@
     <p class="description">{{ repository.description|force_unicode }}</p>
 {% if repository.readme %}
     <p class="more"><a href="#readme">show readme</a></p>
+{% endif %}
+
+    <!-- CLONE URIS -->
+{% if repository.clone_urls %}
+    <div class="clone">
+        <p>clone urls</p>
+    {% for key in repository.clone_urls %}
+        <div class="url"><input readonly="readonly" type="text" value="{{ repository.clone_urls[key] }}" /></div>
+    {% endfor %}
+    </div>
 {% endif %}
 
     <!-- LAST ACTIVITIES -->

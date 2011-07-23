@@ -73,7 +73,7 @@ class GitRepository(Repository):
     @property
     def clone_urls(self):
         urls = dict(config.items('clone'))
-        return dict([(proto, urls[proto] % self.__dict__) for proto in urls.keys()])
+        return dict([(proto, urls[proto] % self.name) for proto in urls.keys()])
 
     @property
     def head(self):
