@@ -3,7 +3,10 @@
 import ConfigParser
 import os
 
-config_file = os.path.join(os.getcwd(), 'config.cfg')
-config = ConfigParser.ConfigParser()
-config.read(config_file)
+config = ConfigParser.SafeConfigParser()
+
+def load_config():
+    path = os.path.abspath(os.path.dirname(__file__))
+    config_file = os.path.abspath(os.path.join(path, '../../config.cfg'))
+    config.read(config_file)
 
