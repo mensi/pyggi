@@ -15,7 +15,10 @@ def create_app(**kwargs):
     from pyggi.lib.config import config
     import logging
 
-    app = Flask(__name__)
+    static_base = '/static'
+    if config.has_option('general', 'static_url_base'):
+        static_base = config.get('general', 'static_url_base')
+    app = Flask(__name__, static_url_path=static_base)
 
     # activate logging
     logging.basicConfig(
