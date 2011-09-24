@@ -41,7 +41,8 @@ def create_app(**kwargs):
         # in our application. otherwise ignore and continue
         try:
             _import = __import__(module, globals(), locals(), [attribute], -1)
-            app.register_blueprint(getattr(_import, attribute), url_prefix="/"+prefix.strip('/'))
+            prefix = "" if prefix.strip('/') == "" else "/"+prefix.strip('/')
+            app.register_blueprint(getattr(_import, attribute), url_prefix=prefix)
         except Exception as e:
             logging.critical("could not load module '%s': %s", module_desc[0], e)
 

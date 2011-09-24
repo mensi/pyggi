@@ -1,6 +1,6 @@
 <!-- BREADCRUMBS -->
 <ul class="breadcrumbs">
-	<li class="crumb"><a href="{{ url_for('.index') }}" class="db">repos</a></li>
+	<li class="crumb"><a href="{{ url_for('repos.index') }}" class="db">repos</a></li>
 {% if repository %}
 	{% set repo = repository.name %}
 	{% set commit = repository.commit(treeid) %}
