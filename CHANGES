@@ -3,13 +3,14 @@ pyggi Changelog
 
 Here you can see the full list of changes between each pyggi release.
 
-dev
----
+Version 0.3
+-----------
 
 - created a new design
 - adjusted package layout
 - ported to flask blueprints
 - added shortlog
+- added routing_args
 - BUGFIX: unicode text in files is now displayed correctly
 - BUGFIX: added missing readme types (plain/RST) again
 
