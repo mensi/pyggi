@@ -20,13 +20,18 @@ def create_app(**kwargs):
         static_base = config.get('general', 'static_url_base')
     app = Flask(__name__, static_url_path=static_base)
 
-    # activate logging
-    logging.basicConfig(
-        filename = config.get('log', 'file'),
-        level = logging.WARNING,
-        format = "[%(asctime)s] %(levelname)s: %(message)s",
-        datefmt = "%Y-%m-%d %H:%M:%S"
+    # get logging settings
+    config_settings = dict(
+        level=logging.WARNING,
+        format="[%(asctime)s] %(levelname)s: %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S"
     )
+
+    if config.has_option('log', 'file'):
+        config_settings['filename'] = config.get('log', 'file')
+
+    # activate logging
+    logging.basicConfig(**config_settings)
 
     # register modules to application. the modules come
     # from the configuration file. there is a list of
