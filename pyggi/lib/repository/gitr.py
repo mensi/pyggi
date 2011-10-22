@@ -51,7 +51,7 @@ class GitRepository(Repository):
             else:
                 self.path_base = path[0]
                 self.path_name = path[1]
-            self.url  = url[0]
+            self.url = url[0]
 
     def __init__(self, **options):
         self.options = options
@@ -96,14 +96,14 @@ class GitRepository(Repository):
         try:
             from git import Git
             g = Git(repository)
-            return g.show_ref('--heads','--tags','-s', ref).split("\n", 1)[0]
+            return g.show_ref('--heads', '--tags', '-s', ref).split("\n", 1)[0]
         except:
             return None
 
     @property
     def license(self):
         try:
-            path = self.active_branch+"/LICENSE"
+            path = self.active_branch + "/LICENSE"
             if not self.blob(path) is None:
                 return path
         except RepositoryError:
@@ -114,11 +114,11 @@ class GitRepository(Repository):
     def submodules(self, base, tree):
         try:
             result = []
-            path = tree+"/.gitmodules"
+            path = tree + "/.gitmodules"
             data = self.blob(path).data.split("\n")
 
             previous = -1
-            for n in xrange(0,len(data)):
+            for n in xrange(0, len(data)):
                 line = data[n]
                 if line.startswith("[submodule"):
                     if not previous == -1:
@@ -150,9 +150,9 @@ class GitRepository(Repository):
             for t in trees:
                 t.is_tree = True
             blobs = sorted([x for x in items if isinstance(x, Blob)], key=lambda x: x.name)
-            tree.values = trees+blobs
+            tree.values = trees + blobs
             for t in tree.values:
-                t.last_commit = self.last_commit(breadcrumbs[0], "/".join(breadcrumbs[1:]+[t.name]))
+                t.last_commit = self.last_commit(breadcrumbs[0], "/".join(breadcrumbs[1:] + [t.name]))
 
         tree.is_tree = True
         return tree
@@ -174,47 +174,47 @@ class GitRepository(Repository):
     def readme(self):
         try:
             # markdown
-            file = self.active_branch+"/README.md"
+            file = self.active_branch + "/README.md"
             blob = self.blob(file)
 
             import markdown
-            return Repository.Readme( \
-                name = "README.md",
-                data = markdown.markdown(blob.data, safe_mode="replace"),
-                type = "markdown"
+            return Repository.Readme(\
+                name="README.md",
+                data=markdown.markdown(blob.data, safe_mode="replace"),
+                type="markdown"
             )
         except:
             pass
 
         try:
             # RST
-            file = self.active_branch+"/README.rst"
+            file = self.active_branch + "/README.rst"
             blob = self.blob(file)
 
             import docutils.core
             parts = docutils.core.publish_parts(blob.data, writer_name="html")
-            return Repository.Readme( \
-                name = "README.rst",
-                data = parts['body'],
-                type = "RST"
+            return Repository.Readme(\
+                name="README.rst",
+                data=parts['body'],
+                type="RST"
             )
         except:
             pass
 
         try:
             # plain
-            file = self.active_branch+"/README"
+            file = self.active_branch + "/README"
             blob = self.blob(file)
 
             from pyggi.lib.filters import html_escape_table
 
             data = unicode(blob.data, 'utf-8')
-            data = "".join(html_escape_table.eet(c,c) if c != "\n" else "<br/>" for c in data)
+            data = "".join(html_escape_table.eet(c, c) if c != "\n" else "<br/>" for c in data)
 
-            return Repository.Readme( \
-                name = "README",
-                data = data,
-                type = "plain"
+            return Repository.Readme(\
+                name="README",
+                data=data,
+                type="plain"
             )
         except:
             pass
@@ -226,7 +226,7 @@ class GitRepository(Repository):
 
     def archive(self, treeish):
         try:
-            return self.repo.archive_tar_gz(treeish, self.name+"/")
+            return self.repo.archive_tar_gz(treeish, self.name + "/")
         except GitCommandError:
             return RepositoryError("Repository '%s' has no tree '%s'" % (self.path, treeish))
 
@@ -272,7 +272,7 @@ class GitRepository(Repository):
 
     def commit(self, treeish):
         try:
-            commit =  self.repo.commits(treeish)[0]
+            commit = self.repo.commits(treeish)[0]
             commit.is_branch = commit.id in [x.commit.id for x in self.repo.branches]
             commit.is_tag = treeish in [x.name for x in self.repo.tags]
 

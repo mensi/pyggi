@@ -19,7 +19,7 @@ get = functools.partial(frontend.route, methods=['GET'])
 post = functools.partial(frontend.route, methods=['POST'])
 
 def get_repository_base():
-    return request.environ.get('wsgiorg.routing_args', (None, {}))[1].get('repository_base') or config.get('general','git_repositories')
+    return request.environ.get('wsgiorg.routing_args', (None, {}))[1].get('repository_base') or config.get('general', 'git_repositories')
 
 def get_repository_path(name):
     return os.path.join(get_repository_base(), name)
@@ -33,7 +33,7 @@ def cache_keyfn(prefix, additional_fields=[]):
             path = path + "-" + kwargs[field]
 
         if id is not None:
-            return prefix+"-"+kwargs['repository']+"-"+id+path
+            return prefix + "-" + kwargs['repository'] + "-" + id + path
         return None
     return test
 
@@ -52,7 +52,7 @@ def index():
     paths = (path for path in paths if GitRepository.isRepository(path))
 
     return dict(
-        repositories = [
+        repositories=[
             GitRepository(repository=path) for path in paths
         ]
     )
@@ -73,9 +73,9 @@ def repository(repository):
 def overview(repository, tree):
     repo = GitRepository(repository=get_repository_path(repository))
 
-    return dict( \
-        repository = repo,
-        treeid = tree
+    return dict(
+        repository=repo,
+        treeid=tree
     )
 
 @get("/<repository>/shortlog/<tree>/")
@@ -84,9 +84,9 @@ def overview(repository, tree):
 def shortlog(repository, tree):
     repo = GitRepository(repository=get_repository_path(repository))
 
-    return dict( \
-        repository = repo,
-        treeid = tree
+    return dict(
+        repository=repo,
+        treeid=tree
     )
 
 @get("/<repository>/tree/<tree>/")
@@ -95,10 +95,10 @@ def shortlog(repository, tree):
 def browse(repository, tree):
     repo = GitRepository(repository=get_repository_path(repository))
 
-    return dict( \
-        repository = repo,
-        treeid = tree,
-        browse = True
+    return dict(
+        repository=repo,
+        treeid=tree,
+        browse=True
     )
 
 @get("/<repository>/tree/<tree>/<path:path>/")
@@ -107,11 +107,11 @@ def browse(repository, tree):
 def browse_sub(repository, tree, path):
     repo = GitRepository(repository=get_repository_path(repository))
 
-    return dict( \
-        repository = repo,
-        treeid = tree,
-        breadcrumbs = path.split("/"),
-        browse = True
+    return dict(
+        repository=repo,
+        treeid=tree,
+        breadcrumbs=path.split("/"),
+        browse=True
     )
 
 @get("/<repository>/commit/<tree>/")
@@ -120,9 +120,9 @@ def browse_sub(repository, tree, path):
 def commit(repository, tree):
     repo = GitRepository(repository=get_repository_path(repository))
 
-    return dict( \
-        repository = repo,
-        treeid = tree,
+    return dict(
+        repository=repo,
+        treeid=tree,
     )
 
 @get("/<repository>/blob/<tree>/<path:path>")
@@ -131,10 +131,10 @@ def commit(repository, tree):
 def blob(repository, tree, path):
     repo = GitRepository(repository=get_repository_path(repository))
 
-    return dict( \
-        repository = repo,
-        treeid = tree,
-        breadcrumbs = path.split("/")
+    return dict(
+        repository=repo,
+        treeid=tree,
+        breadcrumbs=path.split("/")
     )
 
 @get("/<repository>/blame/<tree>/<path:path>")
@@ -143,17 +143,17 @@ def blob(repository, tree, path):
 def blame(repository, tree, path):
     repo = GitRepository(repository=get_repository_path(repository))
 
-    return dict( \
-        repository = repo,
-        treeid = tree,
-        breadcrumbs = path.split("/")
+    return dict(
+        repository=repo,
+        treeid=tree,
+        breadcrumbs=path.split("/")
     )
 
 @get("/<repository>/raw/<tree>/<path:path>")
 @cached(cache_keyfn('raw', ['path']))
 def raw(repository, tree, path):
     repo = GitRepository(repository=get_repository_path(repository))
-    blob = repo.blob('/'.join([tree,path]))
+    blob = repo.blob('/'.join([tree, path]))
 
     # create a response with the correct mime type
     from flask import make_response
