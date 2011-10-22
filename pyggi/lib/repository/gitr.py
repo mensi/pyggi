@@ -257,11 +257,18 @@ class GitRepository(Repository):
     def isRepository(path):
         try:
             repo = Repo(path)
-            if not config.getboolean('general', 'preserve_daemon_export'):
-                return len(repo.heads) > 0
-            return repo.daemon_export and len(repo.heads) > 0
         except:
             return False
+
+        try:
+            preserve_daemon_export = config.getboolean('general', 'preserve_daemon_export')
+        except:
+            preserve_daemon_export = True
+
+        if preserve_daemon_export:
+            return repo.daemon_export
+
+        return True
 
     def commit(self, treeish):
         try:
