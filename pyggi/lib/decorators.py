@@ -5,7 +5,7 @@
     :license: BSD, see LICENSE for more details
 """
 
-from flask import render_template
+from flask import render_template, request
 from functools import wraps
 
 def method_shortcut(application, method='GET'):
@@ -35,7 +35,11 @@ def templated(template):
 
             # add the page name into the context
             from pyggi.lib.config import config
-            context['page_name'] = config.get('general', 'name')
+            context['page_name'] = (
+                request.environ.get('pyggi.site_name') or
+                request.environ.get('wsgiorg.routing_args', (None, {}))[1].get('site_name') or
+                config.get('general', 'name')
+            )
 
             # render the context using given template
             response = render_template(template, **context)
@@ -57,7 +61,10 @@ def cached(keyfn):
                 result = cache.get(key)
                 if result is None:
                     result = f(*args, **kwargs)
-                    cache.set(key, result, timeout=config.getint('cache','timeout'))
+                    timeout = None
+                    if config.has_option('cache', 'timeout'):
+                        timeout = config.getint('cache','timeout')
+                    cache.set(key, result, timeout=timeout)
             return result
 
         return cache_function

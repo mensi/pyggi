@@ -15,7 +15,7 @@ class DummyCache(object):
     def set(*args, **kwargs):
         pass
 
-if not config.getboolean('cache','enabled'):
+if not (config.has_option('cache', 'enabled') and config.getboolean('cache','enabled')):
     cache = DummyCache()
 else:
     if current_app.debug:
