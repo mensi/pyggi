@@ -278,4 +278,4 @@ class GitRepository(Repository):
 
             return commit
         except GitCommandError:
-            return RepositoryError("Repository '%s' has no tree '%s'" % (self.path, treeish))
+            return None

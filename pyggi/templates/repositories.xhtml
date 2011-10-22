@@ -6,8 +6,13 @@
 {% set commit = repo.commit(repo.active_branch) %}
 <div class="commit">
 	<p class="date"><a href="{{ url_for('.repository', repository=repo.name) }}">{{ repo.name }}</a></p>
+	{% if commit %}
 	<p class="author">Last updated {{ commit.committed_date|dateformat('%B %d, %Y') }} by {{ commit.author|force_unicode }}</a></p>
 	<p class="message">{{ repo.description|force_unicode|truncate(150) }}</p>
+	{% else %}
+	<p class="author">Empty repository</a></p>
+	<p class="message">{{ repo.description|force_unicode|truncate(150) }}</p>
+	{% endif %}
 </div>
 {% endfor %}
 

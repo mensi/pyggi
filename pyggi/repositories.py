@@ -58,9 +58,14 @@ def index():
     )
 
 @get("/<repository>/")
+@templated("repository.xhtml")
 def repository(repository):
     repo = GitRepository(repository=get_repository_path(repository))
-    return redirect(url_for('.overview', repository=repository, tree=repo.active_branch))
+
+    if len(repo.branches) == 0:
+        return dict(repository=repo)
+    else:
+        return redirect(url_for('.overview', repository=repository, tree=repo.active_branch))
 
 @get("/<repository>/overview/<tree>/")
 @cached(cache_keyfn('overview'))
