@@ -68,7 +68,7 @@ def humanize_timesince(when):
     if difference < datetime.timedelta(minutes=2):
         return "%s seconds ago" % difference.seconds
     elif difference < datetime.timedelta(hours=2):
-        return "%s minutes ago" % difference.seconds / 60
+        return "%s minutes ago" % (difference.seconds / 60)
     elif difference < datetime.timedelta(days=2):
         return "%s hours ago" % (difference.days * 24 + difference.seconds / 3600)
     elif difference < datetime.timedelta(days=2*7):
