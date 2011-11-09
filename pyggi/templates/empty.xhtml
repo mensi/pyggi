@@ -1,0 +1,15 @@
+{% extends "base.xhtml" %}
+{% set repo = repository.name %}
+
+{% block title %}empty repository '{{ repo }}'{% endblock %}
+
+{% block content %}
+
+<div class="content" style="margin-left: 150px">
+    <!-- DESCRIPTION -->
+    <h1>{{ repository.name }}</h1>
+    <p class="description">{{ repository.description|force_unicode }}</p>
+    <p class="description"><i>this repository is empty</i></p>
+</div>
+
+{% endblock %}

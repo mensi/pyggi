@@ -10,6 +10,7 @@ import functools
 import logging
 
 from pyggi.lib.decorators import templated, cached
+from pyggi.lib.repository import EmptyRepositoryError
 from pyggi.lib.repository.gitr import GitRepository
 from flask import Blueprint, redirect, url_for, request
 from pyggi.lib.config import config
@@ -37,6 +38,10 @@ def cache_keyfn(prefix, additional_fields=[]):
         return None
     return test
 
+@frontend.errorhandler(EmptyRepositoryError)
+def error_empty(error):
+    return redirect(url_for('.empty', repository=error.repository))
+
 @get("/")
 @templated("repositories.xhtml")
 def index():
@@ -58,14 +63,22 @@ def index():
     )
 
 @get("/<repository>/")
-@templated("repository.xhtml")
 def repository(repository):
     repo = GitRepository(repository=get_repository_path(repository))
+    return redirect(url_for('.overview', repository=repository, tree=repo.active_branch))
 
-    if len(repo.branches) == 0:
-        return dict(repository=repo)
-    else:
+@get("/<repository>/empty/")
+@templated("empty.xhtml")
+def empty(repository):
+    repo = GitRepository(repository=get_repository_path(repository), force=True)
+
+    # if not really empty, then redirect to overview
+    if not repo.is_empty:
         return redirect(url_for('.overview', repository=repository, tree=repo.active_branch))
+
+    return dict(
+        repository=repo
+    )
 
 @get("/<repository>/overview/<tree>/")
 @cached(cache_keyfn('overview'))

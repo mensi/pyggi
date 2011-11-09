@@ -7,7 +7,7 @@
 
 import os, os.path
 from git import Repo, GitCommandError
-from pyggi.lib.repository import RepositoryError, Repository
+from pyggi.lib.repository import RepositoryError, Repository, EmptyRepositoryError
 from pyggi.lib.config import config
 
 class GitRepository(Repository):
@@ -68,7 +68,16 @@ class GitRepository(Repository):
         # next up prepare some fields
         self.description = self.repo.description
         self.name = self.options['repository'].rsplit("/", 1)[-1]
-        self.is_empty = len(self.repo.heads) == 0
+
+        # if we have an empty repository we shall raise an error
+        # so that we get redirected to a special page (except if
+        # we force the loading of the repository)
+        if len(self.repo.heads) == 0 and (not 'force' in self.options.keys() or not self.options['force']):
+            raise EmptyRepositoryError(self.name)
+
+    @property
+    def is_empty(self):
+        return len(self.repo.heads) == 0
 
     @property
     def clone_urls(self):
@@ -278,4 +287,4 @@ class GitRepository(Repository):
 
             return commit
         except GitCommandError:
-            return None
+            return RepositoryError("Repository '%s' has no tree '%s'" % (self.path, treeish))

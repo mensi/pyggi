@@ -17,6 +17,13 @@ class RepositoryError(Exception):
             raise self
         return super(RepositoryError, self).__getattr__(name)
 
+class EmptyRepositoryError(Exception):
+    def __init__(self, repository):
+        self.repository = repository
+
+    def __str__(self):
+        return "Repository '%s' is empty" % repr(self.repository.name)
+
 class Repository(object):
     def __init__(self, **options):
         self.name = "Dummy repository"
@@ -165,6 +172,13 @@ class Repository(object):
             return a list of branches of the repository or raise
                     a RepositoryError. An entry in the list
                     is a Repository.Branch like object
+        """
+        raise RepositoryError("Abstract Repository")
+
+    @property
+    def is_empty(self):
+        """
+            return True if the repository is empty, False otherwise
         """
         raise RepositoryError("Abstract Repository")
 
