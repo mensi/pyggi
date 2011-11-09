@@ -1,0 +1,23 @@
+{% extends "base.xhtml" %}
+
+{% block title %}{{ repository.name }}{% endblock %}
+
+{% block content %}
+
+<div class="commit">
+	<p class="date"><a href="{{ url_for('.repository', repository=repository.name) }}">{{ repository.name }}</a></p>
+	<p class="message">{{ repository.description|force_unicode }}</p>
+
+{% if repository.branches %}
+    {% for branch in repository.branches %}
+   	{% set commit = branch.commit %}
+    <a class="branch" href="{{ url_for('.overview', repository=repository.name, tree=branch.name) }}">{{ branch.name }}</a>
+    <p>
+	<p class="author">Last updated {{ commit.committed_date|dateformat('%B %d, %Y') }} by {{ commit.author|force_unicode }}</a></p>
+   	</p>
+    {% endfor %}
+{% endif %}
+
+</div>
+
+{% endblock %}

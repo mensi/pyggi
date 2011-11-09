@@ -62,9 +62,12 @@ def index():
     )
 
 @get("/<repository>/")
+@templated("detail.xhtml")
 def repository(repository):
     repo = GitRepository(repository=get_repository_path(repository))
-    return redirect(url_for('.overview', repository=repository, tree=repo.active_branch))
+    return dict(
+        repository=repo
+    )
 
 @get("/<repository>/empty/")
 @templated("empty.xhtml")
