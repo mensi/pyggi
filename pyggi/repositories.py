@@ -53,12 +53,11 @@ def index():
         return dict(repositories=[])
 
     paths = (get_repository_path(name) for name in dirnames)
-
     paths = (path for path in paths if GitRepository.isRepository(path))
 
     return dict(
         repositories=[
-            GitRepository(repository=path) for path in paths
+            GitRepository(repository=path, force=True) for path in paths
         ]
     )
 
