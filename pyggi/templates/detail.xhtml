@@ -5,17 +5,34 @@
 {% block content %}
 
 <div class="commit">
-	<p class="date"><a href="{{ url_for('.repository', repository=repository.name) }}">{{ repository.name }}</a></p>
+	<p class="date" style="font-weight: bold;">{{ repository.name }}</p>
 	<p class="message">{{ repository.description|force_unicode }}</p>
 
 {% if repository.branches %}
     {% for branch in repository.branches %}
    	{% set commit = branch.commit %}
     <a class="branch" href="{{ url_for('.overview', repository=repository.name, tree=branch.name) }}">{{ branch.name }}</a>
-    <p>
-	<p class="author">Last updated {{ commit.committed_date|dateformat('%B %d, %Y') }} by {{ commit.author|force_unicode }}</a></p>
-   	</p>
+    {% if repository.active_branch == branch.name %}
+    <span class="note">active branch</span>
+    {% endif %}
+	<p class="author" style="margin-top: 5px;">Last updated {{ commit.committed_date|dateformat('%B %d, %Y') }} by {{ commit.author|force_unicode }}</a></p>
+    <table class="shortlog" style="width: 100%; margin-bottom: 25px;">
+{% for commit in repository.last_activities(branch.name, 4) %}
+    <tr>
+        <td class="timedelta">{{ commit.committed_date|timesince }}</td>
+        <td class="author">{{ commit.author.name|force_unicode }}</td>
+        <td class="message">{{ commit.message|force_unicode }}</td>
+    </tr>
+{% endfor %}
+    </table>
     {% endfor %}
+{% endif %}
+
+{% if repository.tags %}
+   <b>tags</b>:
+   {% for tag in repository.tags %}
+       <a class="tag" href="{{ url_for('.overview', repository=repository.name, tree=tag.name) }}">{{ tag.name }}</a>
+   {% endfor %}
 {% endif %}
 
 </div>

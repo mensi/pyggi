@@ -45,3 +45,17 @@ div.site div.footer
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 }
+
+span.note
+{
+	background: #333;
+	padding: 1px;
+	padding-left: 3px;
+	padding-right: 3px;
+	color: #aaa;
+	font-size: 10px;
+	
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}

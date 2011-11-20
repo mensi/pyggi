@@ -52,6 +52,12 @@ div.commit a.branch
 	text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.596);
 	padding-left: 20px;
 	text-decoration: none;
-	color: #000;
 	font-weight: bold;
+}
+
+div.commit a.tag
+{
+	background: url(../images/icons/tag.png) no-repeat 0px 1px;
+	padding-left: 20px;
+	text-decoration: none;
 }
