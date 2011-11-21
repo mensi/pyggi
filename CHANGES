@@ -3,6 +3,14 @@ pyggi Changelog
 
 Here you can see the full list of changes between each pyggi release.
 
+dev
+---
+
+- made various configuration options optional
+- repository overview showing branches and last activities
+- BUGFIX: empty repositories are now handled correctly
+- BUGFIX: / has lower precedence than string formatting (shortlog)
+
 Version 0.3
 -----------
 
@@ -36,4 +44,4 @@ Version 0.2
 Version 0.1
 -----------
 
-First public previes release.
+First public preview release.
