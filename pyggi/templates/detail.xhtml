@@ -12,7 +12,7 @@
     {% for branch in repository.branches %}
    	{% set commit = branch.commit %}
     <a class="branch" href="{{ url_for('.overview', repository=repository.name, tree=branch.name) }}">{{ branch.name }}</a>
-    {% if repository.active_branch == branch.name %}
+    {% if repository.active_branch == branch.name and repository.is_bare == False %}
     <span class="note">active branch</span>
     {% endif %}
 	<p class="author" style="margin-top: 5px;">Last updated {{ commit.committed_date|dateformat('%B %d, %Y') }} by {{ commit.author|force_unicode }}</a></p>

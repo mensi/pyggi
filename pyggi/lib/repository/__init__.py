@@ -176,6 +176,13 @@ class Repository(object):
         raise RepositoryError("Abstract Repository")
 
     @property
+    def is_bare(self):
+        """
+            return True if the repository is bare, False otherwise
+        """
+        raise RepositoryError("Abstract Repository")
+
+    @property
     def is_empty(self):
         """
             return True if the repository is empty, False otherwise

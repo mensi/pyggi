@@ -76,6 +76,10 @@ class GitRepository(Repository):
             raise EmptyRepositoryError(self.name)
 
     @property
+    def is_bare(self):
+        return self.repo.bare
+
+    @property
     def is_empty(self):
         return len(self.repo.heads) == 0
 
