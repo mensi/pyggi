@@ -42,15 +42,27 @@
 
     <!-- SHORTLOG -->
     <h1>shortlog</h1>
-    <table class="shortlog">
-{% for commit in repository.last_activities(treeid, 20) %}
-    <tr>
-        <td class="timedelta">{{ commit.committed_date|timesince }}</td>
-        <td class="author">{{ commit.author.name|force_unicode }}</td>
-        <td class="message">{{ commit.message|force_unicode }}</td>
-    </tr>
+	<table cellspacing="0" cellpadding="0" width="100%" class="history">
+{% for item in repository.last_activities(treeid, 20) %}
+		<tr>
+			<td class="commit {{ loop.cycle('odd','even') }}"><code><a href="{{ url_for('.commit', repository=repo, tree=item.id) }}">{{ item.id|truncate(8, true, '') }}</a></code></td>
+			<td class="author {{ loop.cycle('odd','even') }}" nowrap><b>{{ item.author.name|force_unicode }}</b><br/>{{ item.committed_date|timesince }}</td>
+			<td class="message {{ loop.cycle('odd','even') }}">
+	{% for branch in repository.branches %}
+		{% if branch.commit.id == item.id %}
+				<span class="note">{{ branch.name }}</span>
+		{% endif %}
+	{% endfor %}
+	{% for tag in repository.tags %}
+		{% if tag.commit.id == item.id %}
+				<span class="note">{{ tag.name }}</span>
+		{% endif %}
+	{% endfor %}
+				{{ item.message|force_unicode }}
+			</td>
+		</tr>
 {% endfor %}
-    </table>
+	</table>
 </div>
 
 {% endblock %}
