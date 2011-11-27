@@ -235,7 +235,7 @@ class GitRepository(Repository):
         return None
 
     def last_activities(self, treeish, count=4, skip=0):
-        return self.repo.commits(treeish, max_count=count, skip=0)
+        return self.repo.commits(treeish, max_count=count, skip=skip)
 
     def archive(self, treeish):
         try:
