@@ -229,6 +229,15 @@ class Repository(object):
         """
         raise RepositoryError("Abstract Repository")
 
+    def commit_count(self, start):
+        """
+            @param start the start treeish from where to begin counting
+
+            return an int containing the number of commits reachable from
+                    <start>
+        """
+        raise RepositoryError("Abstract Repository")
+
     def archive(self, treeish):
         """
             @param  treeish the id of a specific commit

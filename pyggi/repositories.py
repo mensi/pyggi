@@ -98,10 +98,26 @@ def overview(repository, tree):
 @templated("shortlog.xhtml")
 def shortlog(repository, tree):
     repo = GitRepository(repository=get_repository_path(repository))
+    count = repo.commit_count(tree)
+
+    try:
+        page = int(request.values['p'])
+
+        # lower limit
+        if page < 0:
+            page = 0
+
+        # upper limit
+        if page*10 > count:
+            page = count / 10
+    except:
+        page = 0
 
     return dict(
         repository=repo,
-        treeid=tree
+        treeid=tree,
+        page = page,
+        max_pages = count / 10
     )
 
 @get("/<repository>/tree/<tree>/")

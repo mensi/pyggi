@@ -234,6 +234,9 @@ class GitRepository(Repository):
 
         return None
 
+    def commit_count(self, start):
+        return self.repo.commit_count(start)
+
     def last_activities(self, treeish, count=4, skip=0):
         return self.repo.commits(treeish, max_count=count, skip=skip)
 
