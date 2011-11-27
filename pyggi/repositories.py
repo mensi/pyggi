@@ -93,25 +93,27 @@ def overview(repository, tree):
         treeid=tree
     )
 
+def get_page():
+    try:
+        return int(request.values['p'])
+    except:
+        return 0
+
 @get("/<repository>/shortlog/<tree>/")
-@cached(cache_keyfn('shortlog'))
+@cached(cache_keyfn("shortlog-p%d" % get_page()))
 @templated("shortlog.xhtml")
 def shortlog(repository, tree):
     repo = GitRepository(repository=get_repository_path(repository))
     count = repo.commit_count(tree)
+    page = get_page()
 
-    try:
-        page = int(request.values['p'])
-
-        # lower limit
-        if page < 0:
-            page = 0
-
-        # upper limit
-        if page*10 > count:
-            page = count / 10
-    except:
+    # lower limit
+    if page < 0:
         page = 0
+
+    # upper limit
+    if page*10 > count:
+        page = count / 10
 
     return dict(
         repository=repo,
