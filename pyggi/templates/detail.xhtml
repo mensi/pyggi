@@ -21,7 +21,7 @@
     <tr>
         <td class="timedelta">{{ commit.committed_date|timesince }}</td>
         <td class="author">{{ commit.author.name|force_unicode }}</td>
-        <td class="message">{{ commit.message|force_unicode }}</td>
+        <td class="message">{{ commit.message|force_unicode|first_line }}</td>
     </tr>
 {% endfor %}
     </table>
