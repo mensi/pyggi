@@ -1,4 +1,5 @@
 {% extends "base.xhtml" %}
+{% set repo = repository.name %}
 
 {% block title %}{{ repository.name }}{% endblock %}
 
@@ -22,6 +23,7 @@
         <td class="timedelta">{{ commit.committed_date|timesince }}</td>
         <td class="author">{{ commit.author.name|force_unicode }}</td>
         <td class="message">{{ commit.message|force_unicode|first_line }}</td>
+        <td class="commit-id"><a href="{{ url_for(".commit", repository=repo, tree=commit.id) }}">{{ commit.id|truncate(8, True, '') }}</a></td>
     </tr>
 {% endfor %}
     </table>

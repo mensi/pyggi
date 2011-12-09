@@ -39,3 +39,8 @@
 	white-space: nowrap;
 	padding-right: 10px;
 }
+
+.shortlog .commit-id
+{
+    text-align: right;
+}
