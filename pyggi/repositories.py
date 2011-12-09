@@ -34,7 +34,6 @@ def cache_keyfn(prefix, additional_fields=[]):
             path = path + "-" + kwargs[field]
 
         if id is not None:
-            print prefix
             return prefix + "-" + kwargs['repository'] + "-" + id + path
         return None
     return test
