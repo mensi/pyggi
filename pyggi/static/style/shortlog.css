@@ -3,18 +3,16 @@
 {
 	margin: 0;
 	padding: 0;
-	border: 1px solid #e1e1e1;
-	background: #f8f8f8;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+	background-color: rgba(243, 243, 234, 0.84);
 	border-collapse: separate;
 	border-spacing: 0px 0px;
+	border-top: 1px solid #ccc;
+	border-right: 1px solid #ccc;
 }
 
 .shortlog tr
 {
-	border-bottom: 1px solid #e1e1e1;
+	border-bottom: 1px solid #ccc;
 }
 
 .shortlog:last-child
@@ -25,22 +23,33 @@
 .shortlog td
 {
 	vertical-align: top;
-	font-family: Monaco,'Courier New','DejaVu Sans Mono','Bitstream Vera Sans Mono',monospace;
+	color: #333;
 	font-size: 90%;
-	color: #484848;
-	padding: 6px 4px;
-	background: #f8f8f8;
-	border-bottom: 1px solid #e1e1e1;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	background-color: rgba(243, 243, 234, 0.847);
+	border-bottom: 1px solid #888;
 }
 
-.shortlog .timedelta,
+.shortlog td:first-child
+{
+	border-left: 4px #bedce7 solid;
+}
+
 .shortlog .author
 {
 	white-space: nowrap;
-	padding-right: 10px;
+	width: 130px;
 }
 
 .shortlog .commit-id
 {
-    text-align: right;
+	padding-left: 15px;
+	width: 70px;
+}
+
+.shortlog .message,
+.shortlog .commit-id
+{
+	font-family: Monaco,'Courier New','DejaVu Sans Mono','Bitstream Vera Sans Mono',monospace;
 }
