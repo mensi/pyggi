@@ -8,8 +8,11 @@ dev
 
 - made various configuration options optional
 - repository overview showing branches and last activities
+- updated shortlog design
 - BUGFIX: empty repositories are now handled correctly
 - BUGFIX: / has lower precedence than string formatting (shortlog)
+- BUGFIX: diffs for renamed files always showed "empty diff" message
+- BUGFIX: wrong offset in timestring for shortlog
 
 Version 0.3
 -----------
