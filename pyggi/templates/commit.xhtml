@@ -25,7 +25,7 @@ Showing {{ commit.stats.total['files'] }} changed files with <font class="additi
 <a name="top"></a>
 <ul class="stats">
 {% for diff in diffs %}
-	<li><a class="stat-icon {% if diff.new_file %}added{% elif diff.deleted_file %}removed{% elif diff.rename_from %}renamed{% else %}modified{% endif %}" href="#diff-{{ loop.index }}">{% if diff.rename_from %}{{ diff.rename_from }} &rarr; {{ diff.rename_to }}{% else %}{{ diff.b_path }}{% endif %}</a> (<font class="additions">{{ commit.stats.files[diff.b_path]['insertions'] }}</font> / <font class="deletions">{{ commit.stats.files[diff.b_path]['deletions'] }}</font>)</li>
+	<li><a class="stat-icon {% if diff.new_file %}added{% elif diff.deleted_file %}removed{% elif diff.rename_from %}renamed{% else %}modified{% endif %}" href="#diff-{{ loop.index }}">{% if diff.rename_from %}{{ diff.rename_from }} &rarr; {{ diff.rename_to }}{% else %}{{ diff.b_path }}{% endif %}</a>{% if not diff.rename_from %} (<font class="additions">{{ commit.stats.files[diff.b_path]['insertions'] }}</font> / <font class="deletions">{{ commit.stats.files[diff.b_path]['deletions'] }}</font>){% endif %}</li>
 {% endfor %}
 </ul>
 
@@ -42,7 +42,7 @@ Showing {{ commit.stats.total['files'] }} changed files with <font class="additi
 </div>
 
 <ul class="diff-code">
-{% if diff.rename_from %}
+{% if diff.rename_from and not diff.diff %}
 	<li>File renamed without changes</li>
 {% elif diff.diff.startswith("Binary") %}
 	<li>Binary file not shown</li>
