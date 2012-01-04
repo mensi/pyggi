@@ -100,7 +100,6 @@ def get_page():
         return 0
 
 @get("/<repository>/shortlog/<tree>/")
-#@cached(cache_keyfn("shortlog-p%d" % get_page()))
 @templated("shortlog.xhtml")
 def shortlog(repository, tree):
     repo = GitRepository(repository=get_repository_path(repository))
