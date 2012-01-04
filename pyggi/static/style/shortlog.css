@@ -3,7 +3,7 @@
 {
 	margin: 0;
 	padding: 0;
-	background-color: rgba(243, 243, 234, 0.84);
+	background-color: rgba(243, 243, 243, 0.84);
 	border-collapse: separate;
 	border-spacing: 0px 0px;
 	border-top: 1px solid #ccc;
@@ -27,7 +27,7 @@
 	font-size: 90%;
 	padding-top: 6px;
 	padding-bottom: 6px;
-	background-color: rgba(243, 243, 234, 0.847);
+	background-color: rgba(243, 243, 243, 0.847);
 	border-bottom: 1px solid #888;
 }
 
