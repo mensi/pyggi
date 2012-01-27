@@ -22,7 +22,7 @@
 
 .shortlog td
 {
-	vertical-align: top;
+	vertical-align: baseline;
 	color: #333;
 	font-size: 90%;
 	padding-top: 6px;
