@@ -263,7 +263,7 @@ class GitRepository(Repository):
 
     @property
     def branches(self):
-        return self.repo.heads
+        return sorted(self.repo.heads, key=lambda x: x.commit.committed_date, reverse=True)
 
     @property
     def tags(self):
