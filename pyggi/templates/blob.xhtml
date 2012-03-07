@@ -8,19 +8,7 @@
 {% set history = repository.history('/'.join([treeid]+breadcrumbs)) %}
 
 <!-- MENU -->
-<div class="menu">
-    <h1>info</h1>
-    <ul>
-        <li>{{ blob.mime_type }}</li>
-        <li>{{ blob.size|filesizeformat }}</li>
-    </ul>
-    <h1>actions</h1>
-    <ul>
-        <li><a href="{{ url_for('.blob', repository=repo, tree=treeid, path=path) }}">overview</a></li>
-        <li><a href="{{ url_for('.blame', repository=repo, tree=treeid, path=path ) }}">blame</a></li>
-        <li><a href="{{ url_for('.raw', repository=repo, tree=treeid, path=path) }}">raw</a></li>
-    </ul>
-</div>
+{% include "menu-blob.xhtml" %}
 
 <div class="content" style="margin-left: 150px;">
     <!-- CONTENT -->

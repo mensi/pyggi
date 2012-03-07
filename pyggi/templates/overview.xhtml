@@ -6,31 +6,7 @@
 {% block content %}
 
 <!-- MENU -->
-<div class="menu">
-	<h1>actions</h1>
-	<ul>
-	    <li><a href="{{ url_for('.overview', repository=repo, tree=treeid) }}">overview</a></li>
-		<li><a href="{{ url_for('.browse', repository=repo, tree=treeid) }}">browse tree</a></li>
-		<li><a href="{{ url_for('.shortlog', repository=repo, tree=treeid) }}">shortlog</a></li>
-		<li><a href="{{ url_for('.download', repository=repo, tree=treeid) }}">tarball</a></li>
-	</ul>
-{% if repository.branches %}
-    <h1>branches ({{ repository.branches|length }})</h1>
-    <ul>
-    {% for branch in repository.branches %}
-        <li><a href="{{ url_for('.overview', repository=repo, tree=branch.name) }}">{{ branch.name }}</a></li>
-    {% endfor %}
-    </ul>
-{% endif %}
-{% if repository.tags %}
-    <h1>tags ({{ repository.tags|length }})</h1>
-    <ul>
-    {% for tag in repository.tags %}
-        <li><a href="{{ url_for('.overview', repository=repo, tree=tag.name) }}">{{ tag.name }}</a></li>
-    {% endfor %}
-    </ul>
-{% endif %}
-</div>
+{% include "menu.xhtml" %}
 
 <div class="content" style="margin-left: 150px">
     <!-- DESCRIPTION -->
