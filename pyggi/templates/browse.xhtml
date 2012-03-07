@@ -20,7 +20,7 @@
 {% if breadcrumbs %}
 	{% set path='/'.join(breadcrumbs[:-1]) %}
 	{% if path %}
-		<li><a class="back" href="{{ url_for('.browse_sub', repository=repo, tree=treeid, path='/'.join(breadcrumbs[:-1])) }}">..</a></li>
+		<li><a class="back" href="{{ url_for('.browse_sub', repository=repo, tree=treeid, path=path) }}">..</a></li>
 	{% else %}
 		<li><a class="back" href="{{ url_for('.browse', repository=repo, tree=treeid) }}">..</a></li>
 	{% endif %}

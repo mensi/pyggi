@@ -8,6 +8,12 @@
     </ul>
     <h1>actions</h1>
     <ul>
+	{% set bpath='/'.join(breadcrumbs[:-1]) %}
+	{% if bpath %}
+		<li><a class="back" href="{{ url_for('.browse_sub', repository=repo, tree=treeid, path=bpath) }}">browse</a></li>
+	{% else %}
+		<li><a class="back" href="{{ url_for('.browse', repository=repo, tree=treeid) }}">browse</a></li>
+	{% endif %}
         <li><a href="{{ url_for('.blob', repository=repo, tree=treeid, path=path) }}">overview</a></li>
         <li><a href="{{ url_for('.blame', repository=repo, tree=treeid, path=path ) }}">blame</a></li>
         <li><a href="{{ url_for('.raw', repository=repo, tree=treeid, path=path) }}">raw</a></li>
