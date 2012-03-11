@@ -13,17 +13,11 @@ from pyggi.lib.decorators import templated, cached
 from pyggi.lib.repository import EmptyRepositoryError
 from pyggi.lib.repository.gitr import GitRepository
 from flask import Blueprint, redirect, url_for, request
-from pyggi.lib.config import config
+from pyggi.lib.utils import get_repository_base, get_repository_path
 
 frontend = Blueprint('repos', __name__)
 get = functools.partial(frontend.route, methods=['GET'])
 post = functools.partial(frontend.route, methods=['POST'])
-
-def get_repository_base():
-    return request.environ.get('wsgiorg.routing_args', (None, {}))[1].get('repository_base') or config.get('general', 'git_repositories')
-
-def get_repository_path(name):
-    return os.path.join(get_repository_base(), name)
 
 def cache_keyfn(prefix, additional_fields=[]):
     def test(*args, **kwargs):

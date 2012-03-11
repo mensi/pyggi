@@ -29,3 +29,12 @@ else:
             cache = DummyCache()
             logging.critical("could not connect to memcache daemon - disabling caching")
 
+def get_repository_base():
+    from flask import request
+    return request.environ.get('wsgiorg.routing_args', (None, {}))[1].get('repository_base') or config.get('general', 'git_repositories')
+
+def get_repository_path(name):
+    import os
+    return os.path.join(get_repository_base(), name)
+
+
