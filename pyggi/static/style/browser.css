@@ -1,10 +1,12 @@
 ul.browser
 {
+	margin: 0;
 	padding: 0;
-	border: 1px solid #e1e1e1;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+	background-color: rgba(243, 243, 243, 0.84);
+	border-collapse: separate;
+	border-spacing: 0px 0px;
+	border-top: 1px solid #ccc;
+	border-right: 1px solid #ccc;
 }
 
 ul.browser li
@@ -14,13 +16,12 @@ ul.browser li
 	font-size: 90%;
 	color: #484848;
 	padding: 6px 4px;
-	background: #f8f8f8;
-	border-bottom: 1px solid #e1e1e1;
+	border-bottom: 1px solid #888;
+	border-left: 4px #bedce7 solid;
 }
 
 ul.browser li:last-child
 {
-	border-bottom: 0;
 }
 
 ul.browser li a, ul.browser li p
