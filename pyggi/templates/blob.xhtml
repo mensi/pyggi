@@ -30,7 +30,7 @@
 	<table cellspacing="0" cellpadding="0" width="100%" class="history">
 	{% for item in history %}
 		<tr>
-			<td class="commit {{ loop.cycle('odd','even') }}"><code><a href="{{ url_for('.commit', repository=repo, tree=item.id) }}">{{ item.id|truncate(8, true, '') }}</a></code></td>
+			<td class="commit {{ loop.cycle('odd','even') }}"><code><a href="{{ url_for('repos.commit', repository=repo, tree=item.id) }}">{{ item.id|truncate(8, true, '') }}</a></code></td>
 			<td class="author {{ loop.cycle('odd','even') }}" nowrap>{{ item.author.name|force_unicode }}</td>
 			<td class="message {{ loop.cycle('odd','even') }}">{{ item.message|first_line|truncate(50) }}</td>
 			<td class="date {{ loop.cycle('odd','even') }}" nowrap>{{ item.committed_date|dateformat }}</td>

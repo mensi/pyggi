@@ -20,9 +20,9 @@
 {% if breadcrumbs %}
 	{% set path='/'.join(breadcrumbs[:-1]) %}
 	{% if path %}
-		<li><a class="back" href="{{ url_for('.browse_sub', repository=repo, tree=treeid, path=path) }}">..</a></li>
+		<li><a class="back" href="{{ url_for('repos.browse_sub', repository=repo, tree=treeid, path=path) }}">..</a></li>
 	{% else %}
-		<li><a class="back" href="{{ url_for('.browse', repository=repo, tree=treeid) }}">..</a></li>
+		<li><a class="back" href="{{ url_for('repos.browse', repository=repo, tree=treeid) }}">..</a></li>
 	{% endif %}
 {% endif %}
 {% for item in repository.submodules('/'.join(breadcrumbs), treeid) %}
@@ -31,9 +31,9 @@
 {% for item in tree %}
 		<li>
 	{% if item.is_tree %}
-			<a class="folder" href="{{ url_for('.browse_sub', repository=repo, tree=treeid, path='/'.join(breadcrumbs+[item.name])) }}">
+			<a class="folder" href="{{ url_for('repos.browse_sub', repository=repo, tree=treeid, path='/'.join(breadcrumbs+[item.name])) }}">
 	{% else %}
-			<a class="file" href="{{ url_for('.blob', repository=repo, tree=treeid, path='/'.join(breadcrumbs+[item.name])) }}">
+			<a class="file" href="{{ url_for('repos.blob', repository=repo, tree=treeid, path='/'.join(breadcrumbs+[item.name])) }}">
 	{% endif %}
 				{{ item.name }}{% if item.is_tree %}/{% endif %}
 			</a>

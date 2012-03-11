@@ -22,7 +22,7 @@
 	{% if blameinfo[0] %}
 	<tr>
 		<td class="author">
-			<a href="{{ url_for('.commit', repository=repo, tree=blameinfo[0].id) }}">{{ blameinfo[0].id|truncate(8, true, '') }}</a><br />
+			<a href="{{ url_for('repos.commit', repository=repo, tree=blameinfo[0].id) }}">{{ blameinfo[0].id|truncate(8, true, '') }}</a><br />
 			{{ blameinfo[0].author.name }}
 		</td>
 		<td class="blame">

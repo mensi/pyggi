@@ -4,7 +4,7 @@
 
 {% for repo in repositories %}
 <div class="commit">
-	<p class="date"><a href="{{ url_for('.repository', repository=repo.name) }}">{{ repo.name }}</a></p>
+	<p class="date"><a href="{{ url_for('repos.repository', repository=repo.name) }}">{{ repo.name }}</a></p>
 	{% if repo.is_empty %}
 	<p class="author">Empty repository</a></p>
 	<p class="message">{{ repo.description|force_unicode|truncate(150) }}</p>

@@ -31,7 +31,7 @@
 {% for commit in repository.last_activities(treeid) %}
     <div class="commit">
         <p class="date">{{ commit.committed_date|dateformat('%A %B %d %Y - %H:%M:%S') }}</p>
-        <p class="author">{{ commit.author.name|force_unicode }} <b>committed</b> <a href="{{ url_for('.commit', repository=repo, tree=commit.id) }}">{{ commit.id|truncate(8, True, '') }}</a></p>
+        <p class="author">{{ commit.author.name|force_unicode }} <b>committed</b> <a href="{{ url_for('repos.commit', repository=repo, tree=commit.id) }}">{{ commit.id|truncate(8, True, '') }}</a></p>
         <p class="message">{{ commit.message|force_unicode }}</p>
     </div>
 {% endfor %}

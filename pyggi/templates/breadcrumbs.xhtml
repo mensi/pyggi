@@ -3,18 +3,18 @@
 	<li class="crumb"><a href="{{ url_for('repos.index') }}" class="db">repos</a></li>
 {% if repository %}
 	{% set repo = repository.name %}
-	<li class="crumb"><a href="{{ url_for('.repository', repository=repo) }}" class="repository">{{ repo }}</a></li>
+	<li class="crumb"><a href="{{ url_for('repos.repository', repository=repo) }}" class="repository">{{ repo }}</a></li>
 {% endif %}
 {% if treeid %}
 	{% set commit = repository.commit(treeid) %}
-	<li class="crumb"><a href="{{ url_for('.overview', repository=repo, tree=treeid) }}" class="{% if commit.is_branch %}branch{% elif commit.is_tag %}tag{% else %}commit{% endif %}">{% if commit.is_branch or commit.is_tag %}{{ treeid }}{% else %}{{ treeid|truncate(8, True,'') }}{% endif %}</a></li>
+	<li class="crumb"><a href="{{ url_for('repos.overview', repository=repo, tree=treeid) }}" class="{% if commit.is_branch %}branch{% elif commit.is_tag %}tag{% else %}commit{% endif %}">{% if commit.is_branch or commit.is_tag %}{{ treeid }}{% else %}{{ treeid|truncate(8, True,'') }}{% endif %}</a></li>
 {% endif %}
 {% if browse or breadcrumbs %}
-	<li class="crumb"><a href="{{ url_for('.browse', repository=repo, tree=treeid) }}" class="folder">/</a></li>
+	<li class="crumb"><a href="{{ url_for('repos.browse', repository=repo, tree=treeid) }}" class="folder">/</a></li>
 {% endif %}
 {% if breadcrumbs %}
 	{% for crumb in breadcrumbs[:-1] %}
-	<li class="crumb"><a class="folder" href="{{ url_for('.browse_sub', repository=repo, tree=treeid, path='/'.join(breadcrumbs[:loop.index])) }}">{{ crumb }}</a></li>
+	<li class="crumb"><a class="folder" href="{{ url_for('repos.browse_sub', repository=repo, tree=treeid, path='/'.join(breadcrumbs[:loop.index])) }}">{{ crumb }}</a></li>
 	{% endfor %}
 
 	<li class="crumb"><a class="{% if browse %}folder{% else %}file{% endif %}" href="#">{{ breadcrumbs[-1] }}</a></li>

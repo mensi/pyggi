@@ -12,7 +12,7 @@
 {% if repository.branches %}
     {% for branch in repository.branches %}
    	{% set commit = branch.commit %}
-    <a class="branch" href="{{ url_for('.overview', repository=repository.name, tree=branch.name) }}">{{ branch.name }}</a>
+    <a class="branch" href="{{ url_for('repos.overview', repository=repository.name, tree=branch.name) }}">{{ branch.name }}</a>
     {% if repository.active_branch == branch.name and repository.is_bare == False %}
     <span class="note">active branch</span>
     {% endif %}
@@ -20,7 +20,7 @@
     <table class="shortlog" style="width: 100%; margin-bottom: 25px;">
 {% for commit in repository.last_activities(branch.name, 4) %}
     <tr>
-        <td class="commit-id"><a href="{{ url_for(".commit", repository=repo, tree=commit.id) }}">{{ commit.id|truncate(8, True, '') }}</a></td>
+        <td class="commit-id"><a href="{{ url_for("repos.commit", repository=repo, tree=commit.id) }}">{{ commit.id|truncate(8, True, '') }}</a></td>
         <td class="author"><b>{{ commit.author.name|force_unicode }}</b><br/><i>{{ commit.committed_date|timesince }}</i></td>
         <td class="message">{{ commit.summary|force_unicode }}</td>
     </tr>
@@ -32,7 +32,7 @@
 {% if repository.tags %}
    <b>tags</b>:
    {% for tag in repository.tags %}
-       <a class="tag" href="{{ url_for('.overview', repository=repository.name, tree=tag.name) }}">{{ tag.name }}</a>
+       <a class="tag" href="{{ url_for('repos.overview', repository=repository.name, tree=tag.name) }}">{{ tag.name }}</a>
    {% endfor %}
 {% endif %}
 

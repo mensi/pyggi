@@ -15,7 +15,7 @@
 {% set skip=page*10 %}
 {% for item in repository.last_activities(treeid, 10, skip) %}
 		<tr>
-			<td class="commit-id"><a href="{{ url_for('.commit', repository=repo, tree=item.id) }}">{{ item.id|truncate(8, true, '') }}</a></td>
+			<td class="commit-id"><a href="{{ url_for('repos.commit', repository=repo, tree=item.id) }}">{{ item.id|truncate(8, true, '') }}</a></td>
 			<td class="author" nowrap><b>{{ item.author.name|force_unicode }}</b><br/><i>{{ item.committed_date|timesince }}</i></td>
 			<td class="message">
 	{% for branch in repository.branches %}
@@ -38,12 +38,12 @@
 		<tr>
 			<td width="50%" style="text-align: left;">
 {% if page < max_pages %}
-				<a href="{{ url_for('.shortlog', repository=repo, tree=treeid) }}?p={{ page+1 }}">&laquo; older entries</a>&nbsp;
+				<a href="{{ url_for('repos.shortlog', repository=repo, tree=treeid) }}?p={{ page+1 }}">&laquo; older entries</a>&nbsp;
 {% endif %}
 			</td>
 			<td width="50%" style="text-align: right;">
 {% if page > 0 %}
-				<a href="{{ url_for('.shortlog', repository=repo, tree=treeid) }}?p={{ page-1 }}">newer entries &raquo;</a>&nbsp;
+				<a href="{{ url_for('repos.shortlog', repository=repo, tree=treeid) }}?p={{ page-1 }}">newer entries &raquo;</a>&nbsp;
 {% endif %}
 			</td>
 		</tr>
