@@ -42,8 +42,8 @@ def templated(template):
             )
 
             # add pygglet object into the context
-            from pyggi.lib.pygglet import pygglet
-            context['pygglet'] = pygglet
+            from pyggi.lib.pygglet import __pygglets__
+            context['pygglets'] = __pygglets__
 
             # render the context using given template
             response = render_template(template, **context)

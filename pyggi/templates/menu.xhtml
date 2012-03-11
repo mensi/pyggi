@@ -24,8 +24,10 @@
     {% endfor %}
     </ul>
 {% endif %}
-{% for menu in pygglet.menues %}
-	{% include menu %}
+{% for pygglet in pygglets.pygglets %}
+    {% if pygglet._main_menu %}
+	    {% include pygglet._main_menu %}
+	{% endif %}
 {% endfor %}
 </div>
 
