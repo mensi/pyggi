@@ -34,3 +34,7 @@ class Pygglet(object):
     def set_main_menu(self, template):
         self._main_menu = template
 
+    def get_repository(self, name):
+        from pyggi.lib.utils import get_repository_path
+        from pyggi.lib.repository.gitr import GitRepository
+        return GitRepository(repository=get_repository_path(name))
