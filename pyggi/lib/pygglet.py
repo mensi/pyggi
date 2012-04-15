@@ -19,13 +19,14 @@ __pygglets__ = PyggletStore()
 
 class Pygglet(object):
     def __init__(self, name, import_name):
-        from pyggi.lib.decorators import templated
+        from pyggi.lib.decorators import templated, cached
         import functools
 
         self.blueprint = Blueprint(name, import_name, template_folder='templates')
         self.get = functools.partial(self.blueprint.route, methods=['GET'])
         self.post = functools.partial(self.blueprint.route, methods=['POST'])
         self.templated = templated
+        self.cached = cached
 
         __pygglets__.register(self)
 
@@ -38,3 +39,8 @@ class Pygglet(object):
         from pyggi.lib.utils import get_repository_path
         from pyggi.lib.repository.gitr import GitRepository
         return GitRepository(repository=get_repository_path(name))
+
+    def get_ref(self, repository, tree):
+        from pyggi.lib.utils import get_repository_path
+        from pyggi.lib.repository.gitr import GitRepository
+        return GitRepository.resolve_ref(get_repository_path(repository), tree)
