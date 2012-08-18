@@ -10,7 +10,7 @@ import functools
 import logging
 
 from pyggi.lib.decorators import templated, cached
-from pyggi.lib.repository import EmptyRepositoryError
+from pyggi.lib.repository import EmptyRepositoryError, RepositoryError
 from pyggi.lib.repository.gitr import GitRepository
 from flask import Blueprint, redirect, url_for, request
 from pyggi.lib.utils import get_repository_base, get_repository_path
@@ -35,6 +35,10 @@ def cache_keyfn(prefix, additional_fields=[]):
 @frontend.errorhandler(EmptyRepositoryError)
 def error_empty(error):
     return redirect(url_for('.empty', repository=error.repository))
+
+@frontend.errorhandler(RepositoryError)
+def error_repository(error):
+    return redirect(url_for('base.not_found'))
 
 @get("/")
 @templated("repositories.xhtml")
