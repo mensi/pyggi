@@ -14,6 +14,8 @@ dev
 - BUGFIX: / has lower precedence than string formatting (shortlog)
 - BUGFIX: diffs for renamed files always showed "empty diff" message
 - BUGFIX: wrong offset in timestring for shortlog
+- BUGFIX: redirect to 404-page on RepositoryErrors
+- BUGFIX: url_for use absolute endpoints in templates
 
 Version 0.3
 -----------
