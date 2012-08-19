@@ -74,9 +74,6 @@ class GitRepository(Repository):
             self._values = None
             self.is_tree = True
             self.tree = tree
-            """
-            last_commit         a Repository.Commit like object that points to the last
-                                commit to this object (see Repository.last_commit)"""
 
         @property
         def values(self):
@@ -102,9 +99,6 @@ class GitRepository(Repository):
             self._data = None
             self.is_tree = False
             self.blob = blob
-            """
-            last_commit         a Repository.Commit like object that points to the last
-                                commit to this object (see Repository.last_commit)"""
 
         @property
         def data(self):
@@ -119,12 +113,13 @@ class GitRepository(Repository):
             # id has been renamed
             self.id = commit.hexsha
 
-            # identify commit as branch and tag
-            self.is_branch = commit.hexsha in (head.commit.hexsha for head in commit.repo.branches)
-            self.is_tag = commit.hexsha in (tag.commit.hexsha for tag in commit.repo.tags)
+            # lazy loaded stuff
+            self._is_branch = None
+            self._is_tag = None
+            self._stats = None
+            self._tree = None
 
             # some computed stuff
-            self.tree = GitRepository.GitTree(commit.tree)
             self.parents = (GitRepository.GitCommit(c) for c in commit.parents)
 
             # one-to-one copy of Commit object fields
@@ -133,10 +128,33 @@ class GitRepository(Repository):
             self.message = commit.message
             self.summary = commit.summary
             self.author = commit.author
-            self.stats = commit.stats
 
             # the commit object
             self.commit = commit
+
+        @property
+        def tree(self):
+            if self._tree is None:
+                self._tree = GitRepository.GitTree(self.commit.tree)
+            return self._tree
+
+        @property
+        def is_branch(self):
+            if self._is_branch is None:
+                self._is_branch = self.commit.hexsha in (head.commit.hexsha for head in self.commit.repo.branches)
+            return self._is_branch
+
+        @property
+        def is_tag(self):
+            if self._is_tag is None:
+                self._is_tag = self.commit.hexsha in (tag.commit.hexsha for tag in self.commit.repo.tags)
+            return self._is_tag
+
+        @property
+        def stats(self):
+            if self._stats is None:
+                self._stats = self.commit.stats
+            return self._stats
 
         @property
         def tree(self):
