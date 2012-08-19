@@ -7,7 +7,7 @@
 
 import os, os.path
 from git import Repo, GitCommandError
-from gitdb.exc import BadObject
+from git.exc import BadObject
 from pyggi.lib.repository import Repository, RepositoryError, EmptyRepositoryError
 from pyggi.lib.config import config
 
@@ -358,8 +358,11 @@ class GitRepository(Repository):
         )
 
     def commit_count(self, start):
-        commit = self.repo.commit(start)
-        return commit.count()
+        try:
+            commit = self.repo.commit(start)
+            return commit.count()
+        except BadObject:
+            raise RepositoryError("Repository '%s' has no branch '%s'" % (self.path, start))
 
     def archive(self, treeish):
        try:
@@ -372,5 +375,5 @@ class GitRepository(Repository):
 
             return data
        except GitCommandError:
-            return RepositoryError("Repository '%s' has no tree '%s'" % (self.path, treeish))
+            raise RepositoryError("Repository '%s' has no tree '%s'" % (self.path, treeish))
 
