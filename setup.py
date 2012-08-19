@@ -9,13 +9,16 @@ setup(
     include_package_data=False,
     install_requires=[
         'Flask>=0.7',
-        'GitPython>=0.3',
+        'GitPython==0.3git',
     ],
     extras_require = {
         'Markdown': ['Markdown>=2.0.3'],
         'reST': ['docutils>=0.7'],
         'cache': ['python-memcached>=1.47'],
     },
+    dependency_links = [
+        'https://github.com/gitpython-developers/GitPython/tarball/0.3#egg=GitPython-0.3git'
+    ],
 
     # package metadata
     author="Tobias Heinzen",
