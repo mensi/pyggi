@@ -201,8 +201,8 @@ def download(repository, tree):
     # and a better filename
     from flask import make_response
     response = make_response(data)
-    response.mimetype = 'application/x-gzip'
-    response.headers['Content-Disposition'] = "attachment; filename=%s-%s.tar.gz" % (repository, tree[:8])
+    response.mimetype = 'application/x-tar'
+    response.headers['Content-Disposition'] = "attachment; filename=%s-%s.tar" % (repository, tree[:8])
 
     return response
 

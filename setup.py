@@ -9,7 +9,7 @@ setup(
     include_package_data=False,
     install_requires=[
         'Flask>=0.7',
-        'GitPython==0.1.7',
+        'GitPython>=0.3',
     ],
     extras_require = {
         'Markdown': ['Markdown>=2.0.3'],
