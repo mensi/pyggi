@@ -3,6 +3,14 @@ pyggi Changelog
 
 Here you can see the full list of changes between each pyggi release.
 
+dev
+---
+
+- reimplemented repository backend with GitPython-0.3: this should
+  increase performance and bring the backend to a more upstream
+  version of GitPython
+- BUGFIX: optimizing shortlog to not evaluate lists
+
 Version 0.4
 -----------
 
@@ -16,11 +24,6 @@ Version 0.4
 - BUGFIX: wrong offset in timestring for shortlog
 - BUGFIX: redirect to 404-page on RepositoryErrors
 - BUGFIX: url_for use absolute endpoints in templates
-
-- reimplemented repository backend with GitPython-0.3: this should
-  increase performance and bring the backend to a more upstream
-  version of GitPython
-- BUGFIX: optimizing shortlog to not evaluate lists
 
 Version 0.3
 -----------
