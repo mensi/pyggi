@@ -3,8 +3,8 @@ pyggi Changelog
 
 Here you can see the full list of changes between each pyggi release.
 
-dev
----
+Version 0.4
+-----------
 
 - made various configuration options optional
 - repository overview showing branches and last activities
