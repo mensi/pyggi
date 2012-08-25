@@ -26,7 +26,7 @@
 	{% endif %}
 {% endif %}
 {% for item in repository.submodules('/'.join(breadcrumbs), treeid) %}
-		<li><p class="submodule">{{ item.path_name }} &rarr; {{ item.url }}</p></li>
+		<li><p class="submodule">{{ item.name }} &rarr; {{ item.url }}</p></li>
 {% endfor %}
 {% for item in tree %}
 		<li>

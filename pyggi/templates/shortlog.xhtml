@@ -13,17 +13,20 @@
     <h1>shortlog</h1>
 	<table cellspacing="0" cellpadding="0" width="100%" class="shortlog">
 {% set skip=page*10 %}
-{% for item in repository.last_activities(treeid, 10, skip) %}
+{% set activities=repository.last_activities(treeid, 10, skip) %}
+{% set branches=repository.branches %}
+{% set tags=repository.tags %}
+{% for item in activities %}
 		<tr>
 			<td class="commit-id"><a href="{{ url_for('repos.commit', repository=repo, tree=item.id) }}">{{ item.id|truncate(8, true, '') }}</a></td>
 			<td class="author" nowrap><b>{{ item.author.name|force_unicode }}</b><br/><i>{{ item.committed_date|timesince }}</i></td>
 			<td class="message">
-	{% for branch in repository.branches %}
+	{% for branch in branches %}
 		{% if branch.commit.id == item.id %}
 				<span class="note">{{ branch.name }}</span>
 		{% endif %}
 	{% endfor %}
-	{% for tag in repository.tags %}
+	{% for tag in tags %}
 		{% if tag.commit.id == item.id %}
 				<span class="note">{{ tag.name }}</span>
 		{% endif %}

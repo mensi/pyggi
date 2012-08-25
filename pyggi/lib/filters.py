@@ -63,8 +63,15 @@ def format_diff(value):
 
 def humanize_timesince(when):
     import datetime
+
+    # convert when to datetime
+    if type(when) == int:
+        when = datetime.datetime.utcfromtimestamp(when)
+    else:
+        when = datetime.datetime(*when[:6])
+
     now = datetime.datetime.utcnow()
-    difference = now - datetime.datetime(*when[:6])
+    difference = now - when
     if difference < datetime.timedelta(minutes=2):
         return "%s seconds ago" % difference.seconds
     elif difference < datetime.timedelta(hours=2):

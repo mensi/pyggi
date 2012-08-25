@@ -41,8 +41,6 @@ class Repository(object):
             A Submodule object should have at least the following fields
 
             name        the name of the submodule
-            path_base   the base path were this submodule is located in
-            path_name   the name of the path that links to the submodule
             url         the url from which this submodule is cloned
         """
         pass
@@ -135,10 +133,12 @@ class Repository(object):
                                 the commit
             repo                a Repository like object (backlink)
             message             the message for the commit
+            summary             as Commit.message (but without newline)
             author              an object that has at least the fields
                                     name
             id                  the unique id of that commit
             tree                a Repository.Tree like object
+            stats               a Repository.Stats like object
             parents             a list of Repository.Commit objects that
                                 are parents of this commit
             diffs               a list of Repository.Diff objects that describe

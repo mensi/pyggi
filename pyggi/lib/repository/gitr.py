@@ -7,11 +7,12 @@
 
 import os, os.path
 from git import Repo, GitCommandError
-from pyggi.lib.repository import RepositoryError, Repository, EmptyRepositoryError
+from git.exc import BadObject
+from pyggi.lib.repository import Repository, RepositoryError, EmptyRepositoryError
 from pyggi.lib.config import config
 
 class GitRepository(Repository):
-    class Submodule(object):
+    class GitSubmodule(object):
         def __init__(self, configuration):
             """
                 @param configuration a list of strings, that correspond
@@ -53,14 +54,130 @@ class GitRepository(Repository):
                 self.path_name = path[1]
             self.url = url[0]
 
+    class GitBranch:
+        """emulating Repository.Branch fields"""
+        def __init__(self, branch):
+            self.branch = branch
+            self.name = branch.name
+            self.commit = GitRepository.GitCommit(branch.commit)
+
+    class GitTree:
+        """emulating Repository.Tree fields"""
+        def __init__(self, tree):
+            # emulate id field (has been renamed)
+            self.id = tree.hexsha
+
+            # one-to-one copy of fields
+            self.name = tree.name
+
+            # additional fields
+            self._values = None
+            self.is_tree = True
+            self.tree = tree
+
+        @property
+        def values(self):
+            if self._values is None:
+                trees = [GitRepository.GitTree(tree) for tree in self.tree.trees]
+                blobs = [GitRepository.GitBlob(blob) for blob in self.tree.blobs]
+                self._values = trees + blobs
+            return self._values
+
+    class GitBlob:
+        """emulating Repository.Blob fields"""
+        def __init__(self, blob):
+            # emulate id field (has been renamed)
+            self.id = blob.hexsha
+
+            # one-to-one copy of fields
+            self.name = blob.name
+            self.size = blob.size
+            self.mode = blob.mode
+            self.mime_type = blob.mime_type
+
+            # additional fields
+            self._data = None
+            self.is_tree = False
+            self.blob = blob
+
+        @property
+        def data(self):
+            # only load data once
+            if self._data is None:
+                self._data = self.blob.data_stream.read()
+            return self._data
+
+    class GitCommit:
+        """emulating Repository.Commit fields"""
+        def __init__(self, commit):
+            # id has been renamed
+            self.id = commit.hexsha
+
+            # lazy loaded stuff
+            self._is_branch = None
+            self._is_tag = None
+            self._stats = None
+            self._tree = None
+
+            # some computed stuff
+            self.parents = (GitRepository.GitCommit(c) for c in commit.parents)
+
+            # one-to-one copy of Commit object fields
+            self.committed_date = commit.committed_date
+            self.repo = commit.repo
+            self.message = commit.message
+            self.summary = commit.summary
+            self.author = commit.author
+
+            # the commit object
+            self.commit = commit
+
+        @property
+        def tree(self):
+            if self._tree is None:
+                self._tree = GitRepository.GitTree(self.commit.tree)
+            return self._tree
+
+        @property
+        def is_branch(self):
+            if self._is_branch is None:
+                self._is_branch = self.commit.hexsha in (head.commit.hexsha for head in self.commit.repo.branches)
+            return self._is_branch
+
+        @property
+        def is_tag(self):
+            if self._is_tag is None:
+                self._is_tag = self.commit.hexsha in (tag.commit.hexsha for tag in self.commit.repo.tags)
+            return self._is_tag
+
+        @property
+        def stats(self):
+            if self._stats is None:
+                self._stats = self.commit.stats
+            return self._stats
+
+        @property
+        def tree(self):
+            return self.commit.tree
+
+        @property
+        def parents(self):
+            return self.commit.parents
+
+        @property
+        def diffs(self):
+            if len(self.commit.parents) > 0:
+                return self.commit.parents[0].diff(self.commit.hexsha, create_patch=True)
+            return []
+
     def __init__(self, **options):
         self.options = options
 
         # check if it's really a repository
         if not GitRepository.isRepository(self.options['repository']):
             raise RepositoryError("Repository '%s' is not a Git Repository" % self.options['repository'])
-
         self.path = self.options['repository']
+
         if not os.path.exists(self.path):
             raise RepositoryError("Repository '%s' does not exist" % self.path)
         self.repo = Repo(self.path)
@@ -84,104 +201,21 @@ class GitRepository(Repository):
         return len(self.repo.heads) == 0
 
     @property
+    def active_branch(self):
+        return self.repo.active_branch.name
+
+    @property
+    def branches(self):
+        return sorted((GitRepository.GitBranch(b) for b in self.repo.heads), key=lambda x: x.commit.committed_date, reverse=True)
+
+    @property
+    def tags(self):
+        return [GitRepository.GitBranch(b) for b in self.repo.tags]
+
+    @property
     def clone_urls(self):
         urls = dict(config.items('clone'))
         return dict([(proto, urls[proto] % self.name) for proto in urls.keys()])
-
-    @property
-    def head(self):
-        if self.is_empty:
-            raise RepositoryError("Repository '%s' is empty" % self.path)
-
-        return self.repo.heads[0]
-
-    @staticmethod
-    def resolve_ref(repository, ref):
-        if not os.path.exists(repository):
-            raise RepositoryError("Repository '%s' does not exist" % repository)
-
-        import re
-        sha_regex = re.compile('[0-9a-f]{40}')
-
-        if sha_regex.match(ref) is not None:
-            return ref
-
-        try:
-            from git import Git
-            g = Git(repository)
-            return g.show_ref('--heads', '--tags', '-s', ref).split("\n", 1)[0]
-        except:
-            return None
-
-    @property
-    def license(self):
-        try:
-            path = self.active_branch + "/LICENSE"
-            if not self.blob(path) is None:
-                return path
-        except RepositoryError:
-            pass
-
-        return None
-
-    def submodules(self, base, tree):
-        try:
-            result = []
-            path = tree + "/.gitmodules"
-            data = self.blob(path).data.split("\n")
-
-            previous = -1
-            for n in xrange(0, len(data)):
-                line = data[n]
-                if line.startswith("[submodule"):
-                    if not previous == -1:
-                        result.append(GitRepository.Submodule(data[previous:n]))
-                    previous = n
-
-            if not previous == -1:
-                result.append(GitRepository.Submodule(data[previous:len(data)]))
-
-            return sorted([x for x in result if x.path_base == base], key=lambda x: x.path_name)
-        except RepositoryError:
-            pass
-
-        return []
-
-    def tree(self, path):
-        breadcrumbs = path.split("/")
-        tree = self.commit(breadcrumbs[0]).tree
-        for crumb in breadcrumbs[1:]:
-            try:
-                tree = tree[crumb]
-            except KeyError:
-                raise RepositoryError("Repository '%s' has no tree '%s'" % (self.path, path))
-
-        from git import Blob, Tree
-        if isinstance(tree, Tree):
-            items = tree.values()
-            trees = sorted([x for x in items if isinstance(x, Tree)], key=lambda x: x.name)
-            for t in trees:
-                t.is_tree = True
-            blobs = sorted([x for x in items if isinstance(x, Blob)], key=lambda x: x.name)
-            tree.values = trees + blobs
-            for t in tree.values:
-                t.last_commit = self.last_commit(breadcrumbs[0], "/".join(breadcrumbs[1:] + [t.name]))
-
-        tree.is_tree = True
-        return tree
-
-    def blob(self, path):
-        blob = self.tree(path)
-        blob.is_tree = False
-        return blob
-
-    def last_commit(self, tree, path):
-        result = self.repo.log(tree, path, max_count=1)
-        return result[0]
-
-    @property
-    def active_branch(self):
-        return self.repo.active_branch
 
     @property
     def readme(self):
@@ -234,41 +268,6 @@ class GitRepository(Repository):
 
         return None
 
-    def commit_count(self, start):
-        return self.repo.commit_count(start)
-
-    def last_activities(self, treeish, count=4, skip=0):
-        return self.repo.commits(treeish, max_count=count, skip=skip)
-
-    def archive(self, treeish):
-        try:
-            return self.repo.archive_tar_gz(treeish, self.name + "/")
-        except GitCommandError:
-            return RepositoryError("Repository '%s' has no tree '%s'" % (self.path, treeish))
-
-    def history(self, path):
-        try:
-            breadcrumbs = path.split("/")
-            return self.repo.commits(breadcrumbs[0], '/'.join(breadcrumbs[1:]))
-        except GitCommandError:
-            return RepositoryError("Repository '%s' has no path '%s'" % (self.path, path))
-
-    def blame(self, path):
-        try:
-            from git import Blob
-            breadcrumbs = path.split("/")
-            return Blob.blame(self.repo, breadcrumbs[0], '/'.join(breadcrumbs[1:]))
-        except GitCommandError:
-            return RepositoryError("Repository '%s' has no blame '%s'" % (self.path, path))
-
-    @property
-    def branches(self):
-        return sorted(self.repo.heads, key=lambda x: x.commit.committed_date, reverse=True)
-
-    @property
-    def tags(self):
-        return self.repo.tags
-
     @staticmethod
     def isRepository(path):
         try:
@@ -286,12 +285,113 @@ class GitRepository(Repository):
 
         return True
 
-    def commit(self, treeish):
-        try:
-            commit = self.repo.commits(treeish)[0]
-            commit.is_branch = commit.id in [x.commit.id for x in self.repo.branches]
-            commit.is_tag = treeish in [x.name for x in self.repo.tags]
+    @staticmethod
+    def resolve_ref(repository, ref):
+        if not os.path.exists(repository):
+            raise RepositoryError("Repository '%s' does not exist" % repository)
 
-            return commit
-        except GitCommandError:
-            return RepositoryError("Repository '%s' has no tree '%s'" % (self.path, treeish))
+        import re
+        sha_regex = re.compile('[0-9a-f]{40}')
+
+        if sha_regex.match(ref) is not None:
+            return ref
+
+        try:
+            return GitRepository(repository).commit(ref).hexsha
+        except:
+            return None
+
+    def _traverse_tree(self, path):
+        rev, path = (path+"/").split("/", 1)
+        tree = self.repo.tree(rev)
+        if path == "":
+            return (x for x in [tree])
+        return tree.traverse(predicate=lambda i,d: i.path == path[:-1])
+
+    def blob(self, path):
+        try:
+            gen = self._traverse_tree(path)
+            return GitRepository.GitBlob(gen.next())
+        except BadObject:
+            raise RepositoryError("Repository '%s' has no tree '%s'" % (self.path, path))
+        except StopIteration:
+            raise RepositoryError("Repository '%s' has no tree '%s'" % (self.path, path))
+
+    def tree(self, path):
+        try:
+            gen = self._traverse_tree(path)
+            return GitRepository.GitTree(gen.next())
+        except BadObject:
+            raise RepositoryError("Repository '%s' has no tree '%s'" % (self.path, path))
+        except StopIteration:
+            raise RepositoryError("Repository '%s' has no tree '%s'" % (self.path, path))
+
+    def last_activities(self, treeish, count=4, skip=0):
+        return (GitRepository.GitCommit(c) for c in self.repo.iter_commits(treeish, max_count=count, skip=skip))
+
+    def commit(self, rev):
+        try:
+            return GitRepository.GitCommit(self.repo.commit(rev))
+        except BadObject:
+            raise RepositoryError("Repository '%s' has no branch '%s'" % (self.path, rev))
+
+    def submodules(self, base, tree):
+        # let us parse .gitmodules ourselves. the implementation
+        # of GitPython does not allow to iterate submodules of
+        # a specific path nor of a specific revision!!
+
+        try:
+            result = []
+            path = tree + "/.gitmodules"
+            data = self.blob(path).data.split("\n")
+
+            previous = -1
+            for n in xrange(0, len(data)):
+                line = data[n]
+                if line.startswith("[submodule"):
+                    if not previous == -1:
+                        result.append(GitRepository.GitSubmodule(data[previous:n]))
+                    previous = n
+
+            if not previous == -1:
+                result.append(GitRepository.GitSubmodule(data[previous:len(data)]))
+
+            return sorted([x for x in result if x.path_base == base], key=lambda x: x.path_name)
+        except RepositoryError:
+            pass
+
+        return []
+
+    def history(self, path):
+        breadcrumbs = path.split("/")
+        return (
+            GitRepository.GitCommit(c) for c in
+                self.repo.iter_commits(breadcrumbs[0], "/".join(breadcrumbs[1:]))
+        )
+
+    def blame(self, path):
+        breadcrumbs = path.split("/")
+        return ((GitRepository.GitCommit(c), b) for c,b in
+            self.repo.blame(breadcrumbs[0], "/".join(breadcrumbs[1:]))
+        )
+
+    def commit_count(self, start):
+        try:
+            commit = self.repo.commit(start)
+            return commit.count()
+        except BadObject:
+            raise RepositoryError("Repository '%s' has no branch '%s'" % (self.path, start))
+
+    def archive(self, treeish):
+       try:
+            from tempfile import TemporaryFile
+            with TemporaryFile(mode='w+b') as fp:
+                self.repo.archive(fp, treeish)
+                fp.flush()
+                fp.seek(0)
+                data = fp.read()
+
+            return data
+       except GitCommandError:
+            raise RepositoryError("Repository '%s' has no tree '%s'" % (self.path, treeish))
+
