@@ -10,6 +10,7 @@ from git import Repo, GitCommandError
 from git.exc import BadObject
 from pyggi.lib.repository import Repository, RepositoryError, EmptyRepositoryError
 from pyggi.lib.config import config
+from pyggi.lib.utils import get_clone_urls
 
 class GitRepository(Repository):
     class GitSubmodule(object):
@@ -214,8 +215,7 @@ class GitRepository(Repository):
 
     @property
     def clone_urls(self):
-        urls = dict(config.items('clone'))
-        return dict([(proto, urls[proto] % self.name) for proto in urls.keys()])
+        return dict([(proto, url.format(repository=self.name)) for proto, url in get_clone_urls().items()])
 
     @property
     def readme(self):
@@ -302,11 +302,11 @@ class GitRepository(Repository):
             return None
 
     def _traverse_tree(self, path):
-        rev, path = (path+"/").split("/", 1)
+        rev, path = (path + "/").split("/", 1)
         tree = self.repo.tree(rev)
         if path == "":
             return (x for x in [tree])
-        return tree.traverse(predicate=lambda i,d: i.path == path[:-1])
+        return tree.traverse(predicate=lambda i, d: i.path == path[:-1])
 
     def blob(self, path):
         try:
@@ -371,7 +371,7 @@ class GitRepository(Repository):
 
     def blame(self, path):
         breadcrumbs = path.split("/")
-        return ((GitRepository.GitCommit(c), b) for c,b in
+        return ((GitRepository.GitCommit(c), b) for c, b in
             self.repo.blame(breadcrumbs[0], "/".join(breadcrumbs[1:]))
         )
 

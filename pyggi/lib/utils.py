@@ -15,7 +15,7 @@ class DummyCache(object):
     def set(*args, **kwargs):
         pass
 
-if not (config.has_option('cache', 'enabled') and config.getboolean('cache','enabled')):
+if not (config.has_option('cache', 'enabled') and config.getboolean('cache', 'enabled')):
     cache = DummyCache()
 else:
     if current_app.debug:
@@ -24,10 +24,14 @@ else:
     else:
         try:
             from werkzeug.contrib.cache import MemcachedCache
-            cache = MemcachedCache([x.strip() for x in config.get('cache','uris').split(",") if not len(x.strip()) == 0])
+            cache = MemcachedCache([x.strip() for x in config.get('cache', 'uris').split(",") if not len(x.strip()) == 0])
         except:
             cache = DummyCache()
             logging.critical("could not connect to memcache daemon - disabling caching")
+
+def get_clone_urls():
+    from flask import request
+    return request.environ.get('wsgiorg.routing_args', (None, {}))[1].get('repository_clone_urls') or dict(config.items('clone'))
 
 def get_repository_base():
     from flask import request
